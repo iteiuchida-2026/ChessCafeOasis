@@ -174,16 +174,12 @@ Assets/
 [Bootstrap]
 |　
 [Title] ---(オプション) / (クレジット)
-|　　 ↑
-↓ 　　|
+|
 [Lobby] ---（プロフィール）/（ランキング）/（※追加画面...）
-|     ↑
-|     |-------
-|            |
-（ルーム設定）|
-|　　        |
-↓            |　　
-[Game] ------- 
+|            
+（ルーム設定）
+|　　        　
+[Game]
 ```
 
 - **画面イメージ**  
@@ -219,24 +215,19 @@ _メソッド
 [PlayerManager]
   |         |─ （PlayerController）
   |         └─ （inputHandler）
-  |                    |
-  | ─ [SceneManager]   |
-  |                    |                
-  |                    |                
-  | ─ [LobbyManager]   |
-  |                    |
-  |                    |                 
+  |                   
+  | ─ [SceneManager] 
+  |                                              
+  | ─ [LobbyManager] 
+  |                            
   |────────────[GameManager]
-  |                  |  └─  （PieceFactory）
-  |                  |
-  |                  |
-  |                  ├─[MoveRuleManager]
+  |                  |    ├─[MoveRuleManager]
 [UIManager]          |    ├─ （Piece）
 [AudioManager]       |    └─ （PieceMovement）
                      |
-                     |
-                     ├─[ChessBoardManager]
-                          └─  (TileController)
+                     └─[ChessBoardManager]
+                          ├─  (TileController)
+                          └─  （PieceFactory）
 ```
 
 
