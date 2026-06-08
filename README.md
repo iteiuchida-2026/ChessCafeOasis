@@ -209,6 +209,37 @@ Assets/
 | **inputHandler**| プレイヤーのマウスクリックを検出するクラス。| どのマス・駒が選択されたかを判定する。 | | Gameシーン。|
 | **PlayerController**| プレイヤーの行動処理係。| プレイヤーの移動周りの処理を行う。| 3D空間実装以降に主に使用する。| Lobbyシーン。|
 
+- **クラス設計試案**  
+```
+[Managerクラス]
+（クラス）
+_メソッド
+
+
+[PlayerManager]
+  |         |─ （PlayerController）
+  |         └─ （inputHandler）
+  |                    |
+  | ─ [SceneManager]   |
+  |                    |                
+  |                    |                
+  | ─ [LobbyManager]   |
+  |                    |
+  |                    |                 
+  |────────────[GameManager]
+  |                  |  └─  （PieceFactory）
+  |                  |
+  |                  |
+  |                  ├─[MoveRuleManager]
+[UIManager]          |    ├─ （Piece）
+[AudioManager]       |    └─ （PieceMovement）
+                     |
+                     |
+                     ├─[ChessBoardManager]
+                          └─  (TileController)
+```
+
+
 - **クラス設計資料**  
   - 簡易クラス図 :
   - クラス設計図 :
@@ -302,9 +333,9 @@ Assets/
 | 資料名| 添付ファイル/URL| 備考|
 |------|------|------|
 |チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)|Geminiで出力|
-|チェスロジック実装のたたき台|||
+|チェスロジック実装の試案|||
 |チェスロジックの予定クラス図|||
-|オフライン対戦モードの計画たたき台|||
+|オフライン対戦モードの計画試案|||
 |UML図|||
 
 ---
@@ -344,7 +375,9 @@ Assets/
 
 | サイト名（書籍名） | 内容 | URL |
 |------|------|------|
-||||
+|日本チェス連盟|チェスのルール|https://japanchess.org/chess_rule/|
+|サルでもわかるBlender|Blenderの使い方｜基本操作と画面の見方を覚えよう！|https://saru-blender.com/howtouse|
+|Polygon Runway|Blenderでチェスの駒を作るチュートリアル | Polygon Runway||https://www.youtube.com/watch?v=Iu8jV7g9Oqk&t=1s|
 
 ---
 
