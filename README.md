@@ -331,7 +331,7 @@ _メソッド
 |6/5(金)| プロジェクト作成、Readmeたたき台追加、アセットダウンロード、git作成|概ね予定通りの進行。|3+2||
 |6/6(土)| ゲーム要素の洗い出し・整理、READMEの追加整理||6||
 |6/7(日)| READMEの追加整理、コード計画| Assetの盤面と駒から自作する方針へ変更する。|9||
-|6/8(月)| READMEの追加整理、コード計画、Blenderによるチェスセットの作成| 学校PCでのBlender作業は動作が重いため見送り。発表までの日程が延びたのでスケジュール振り直し。ナイフ投影が上手くいかない。| 7+3|<img width="802" height="572" alt="タイトルなし" src="https://github.com/user-attachments/assets/43473b71-2bf4-4d8f-8656-4757a10ed323" />|
+|6/8(月)| READMEの追加整理、コード計画、Blenderによるチェスセットの作成| 学校PCでのBlender作業は動作が重いため自宅で作業。発表までの日程が延びたのでスケジュール振り直し。ナイフ投影が上手くいかない。| 7+3|<img width="802" height="572" alt="タイトルなし" src="https://github.com/user-attachments/assets/43473b71-2bf4-4d8f-8656-4757a10ed323" />|
 ||||||
 ||||||
 ||||||
@@ -389,7 +389,7 @@ _メソッド
 | サイト名（書籍名） | 内容 | URL |
 |------|------|------|
 |日本チェス連盟|チェスのルール|https://japanchess.org/chess_rule/|
-|Pythonプログラミングでチェスを作る||https://saito-saito-saito.github.io/chess/|
+|Pythonプログラミングでチェスを作る|チェスコードの参考|https://saito-saito-saito.github.io/chess/|
 |サルでもわかるBlender|Blenderの使い方｜基本操作と画面の見方を覚えよう！|https://saru-blender.com/howtouse|
 |Polygon Runway|Blenderでチェスの駒を作るチュートリアル |https://www.youtube.com/watch?v=Iu8jV7g9Oqk&t=1s|
 
