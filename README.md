@@ -368,7 +368,7 @@ Menu            PlayerName                 |_______|
 |6/6(土)| ゲーム要素の洗い出し・整理、READMEの追加整理||6||
 |6/7(日)| READMEの追加整理、コード計画| Assetの盤面と駒から自作する方針へ変更する。|9||
 |6/8(月)| READMEの追加整理、コード計画、Blenderによるチェスセットの作成| 学校PCでのBlender作業は動作が重いため自宅で作業。発表までの日程が延びたのでスケジュール振り直し。ナイフ投影が上手くいかない。| 7+3|<img width="802" height="572" alt="タイトルなし" src="https://github.com/user-attachments/assets/43473b71-2bf4-4d8f-8656-4757a10ed323" />|
-|6/9(火)| READMEの追加整理、コード計画、Blenderによるチェスセットの作成||5+||
+|6/9(火)| READMEの追加整理、コード計画、Blenderによるチェスセットの作成| ナイトとビショップ切り込み以外は形にはできた| 5+2|<img width="1152" height="729" alt="タイトルなし1" src="https://github.com/user-attachments/assets/4d7e7f6a-c8f6-40a9-a7e0-00dbe1d6fcf2" />|
 ||||||
 ||||||
 ||||||
