@@ -248,16 +248,16 @@ Menu            PlayerName                 |_______|
 | **AudioManager**| サウンド・BGM係。| 各シーンでオーディオを取り扱う。| singletonで各シーンで利用。 | Bootstrapに配置してシングルトンパターンとする。|
 | **UIManager**| 各シーン別の画面表示係。| UIの表示、制御。 | 各シーンへ配置して処理する。| Boostrap以外の各シーン|
 | **RoomSetter**| ゲームRoomの設定係。| プレイヤーが選択した条件の保存。 | | Gameシーン。|
-| **Recorder**| ゲームの記録係。| ターンの切り替え、持ち時間の記録と棋譜の記録を担当する。 | | Gameシーン。|
+| **RecordManager**| ゲームの記録管理係。| ターンの切り替え、持ち時間の記録と棋譜の記録を担当する。 | | Gameシーン。|
 | **ChessRuleReferee**| ゲームの審判係。| 勝敗判定、各駒の移動ルール、キャスリングやアンパサン等の特殊ルールの監視判定を行う。| Gameシーン内で利用。| Gameシーン。|
 | **ChessBoardManager**| 8*8の盤面管理係。| 各々のマスにどの駒が存在するか配列やリストで記録する。| Gameシーン内で利用。 | Gameシーン。|
 | **TileController**| 個々のマスオブジェクトにアタッチするクラス。| マスの座標（x,y）を持ち、選択された際のハイライト処理を行う。| Gameシーン内でのみ利用予定。 | Gameシーン。|
 | **piece**| 駒の基本クラス。 | 駒の種類、プレイヤーの色、現在位置を持つ。 | このクラスを継承して各駒のスクリプトを作成。| Gameシーン。|
-| **PieceMovement**| 駒の移動に関する計算処理クラス。| 移動可能なマスの計算を行う。 | | Gameシーン。|
+| **PieceBaseInfo**| 駒の基本情報クラス。| ScriptableObjectで駒の基本情報を作成する。| 名前、色、動ける最大マス数、初期配置マス。| Gameシーン。|
 | **PieceFactory**| チェスゲーム開始時の駒配置を担当するクラス。| 初期配置位置にprefabを生成、初期化する。 | | Gameシーン。|
 | **inputHandler**| プレイヤーのマウスクリックを検出するクラス。| どのマス・駒が選択されたかを判定する。 | | Gameシーン。|
 | **PlayerController**| プレイヤーの行動処理係。| プレイヤーの移動周りの処理を行う。| 3D空間実装以降に主に使用する。| Lobbyシーン。|
-| **PieceBaseinfo**| 駒の基本情報クラス。| ScriptableObjectで駒の基本情報を作成する。| 名前、色、動ける最大マス数、初期配置マス。| Gameシーン。|
+
 
 - **クラス設計試案**  
 ```
@@ -277,9 +277,8 @@ _メソッド
   |────────────[GameManager]
   |                      ├─ （RoomSetter）
  [AudioManager]          ├─ [ChessRuleReferee]                 
- [UIManager]             |                ├─ （Piece）
-                         |                ├─       └─ （PieceBaseInfo）
-                         |                └─ （PieceMovement）
+ [UIManager]             |                └─ （Piece）
+                         |                        └─ （PieceBaseInfo）
                          ├─ [RecordManager]
                          |
                          └─[ChessBoardManager]
