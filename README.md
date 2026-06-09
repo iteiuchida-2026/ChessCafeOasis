@@ -261,29 +261,25 @@ Menu            PlayerName                 |_______|
 
 - **クラス設計試案**  
 ```
-[Managerクラス]
-（クラス）
-_メソッド
-
-
 [PlayerManager]
-  |         |─ （PlayerController）
-  |         └─ （inputHandler）
+  |         |─  [PlayerController]
+  |         └─  [inputHandler]
   |                   
   | ─ [SceneManager] 
 　|                             
   | ─ [LobbyManager]      
   |                            
   |────────────[GameManager]
-  |                      ├─ （RoomSetter）
+  |                      ├─ [RoomSetter]
  [AudioManager]          ├─ [ChessRuleReferee]                 
- [UIManager]             |                └─ （Piece）
-                         |                        └─ （PieceBaseInfo）
+ [UIManager]             | 
                          ├─ [RecordManager]
                          |
                          └─[ChessBoardManager]
-                                          ├─  (TileController)
-                                          └─ （PieceFactory）
+                                          ├─ [Piece]
+                                          |       └─ [PieceBaseInfo]
+                                          ├─  [TileController]
+                                          └─  [PieceFactory]
 ```
 
 
