@@ -185,15 +185,15 @@ Assets/
 
 - **タイトル画面イメージ**  
 ```
-          |─────────────────────────|
-          |　　　ChessCafeOasis　　　|
-          |─────────────────────────|
-                |───────────|
-                |　　Enter　 |
-                |───────────|
-        |──────────|       |──────────|
-        |　Option　|       |　Credit　|
-        |──────────|       |──────────|
+  |─────────────────────────|
+  |　　　ChessCafeOasis　　　|
+  |─────────────────────────|
+        |───────────|
+        |　　Enter　 |
+        |───────────|
+|──────────|       |──────────|
+|　Option　|       |　Credit　|
+|──────────|       |──────────|
 ```
 
 - **ルーム設定画面イメージ**  
@@ -244,9 +244,12 @@ Menu            PlayerName                 |_______|
 | **GameManager**| チェスゲーム内の進行係、審判。| ゲーム進行、ターン管理、状態管理、勝敗管理。 | Singletonで各シーンで利用。Gameシーン内で主に使用。| Bootstrapに配置してシングルトンパターンとする。|
 | **LobbyManager**| ロビー内のゲームの進行係、監督。| NPCキャラクターの管理、ゲーム進行、状態管理。 | Singletonで各シーンで利用。3D空間実装以降Lobbyシーン内で主に使用。| Bootstrapに配置してシングルトンパターンとする。|
 | **PlayerManager**| プレイヤーの監視係。| 入力処理の受付、アニメーションの切り替え。| Singletonで各シーンで利用。3D空間実装以降に主に使用する。| Bootstrapに配置してシングルトンパターンとする。|
-| **UIManager**| 画面表示係。| UIの表示、制御。 | Singletonで各シーンで利用。| Bootstrapに配置してシングルトンパターンとする。|
 | **SceneManager**| シーン遷移係。| Bootstrap⇔Title⇔Lobby⇔Gameの切り替えを行う。| Singletonで各シーンで利用。ネットワーク利用時に他Managerに切り替える可能性があるため役割が少ないが分離しておく。| Bootstrapに配置してシングルトンパターンとする。|
 | **AudioManager**| サウンド・BGM係。| 各シーンでオーディオを取り扱う。| singletonで各シーンで利用。 | Bootstrapに配置してシングルトンパターンとする。|
+| **UIManager**| 各シーン別の画面表示係。| UIの表示、制御。 | 各シーンへ配置して処理する。| Boostrap以外の各シーン|
+| **RoomSetter**| ゲームRoomの設定係。| プレイヤーが選択した条件の保存。 | | Gameシーン。|
+| **MatchTimeController**| ゲームRoomの時計係。| 時計の計算を行う。 | | Gameシーン。|
+| **GameRecorder**| 棋譜の記録係。| 試合のログを記録する。 | | Gameシーン。|
 | **MoveRuleManager**| 駒の移動監視係。| 各駒の移動ルール、キャスリングやアンパサン等の特殊ルールの監視判定を行う。| Gameシーン内で利用。| Gameシーン。|
 | **ChessBoardManager**| 8*8の盤面管理係。| 各々のマスにどの駒が存在するか配列やリストで記録する。| Gameシーン内で利用。 | Gameシーン。|
 | **TileController**| 個々のマスオブジェクトにアタッチするクラス。| マスの座標（x,y）を持ち、選択された際のハイライト処理を行う。| Gameシーン内でのみ利用予定。 | Gameシーン。|
@@ -268,17 +271,22 @@ _メソッド
   |         └─ （inputHandler）
   |                   
   | ─ [SceneManager] 
-  |                                              
-  | ─ [LobbyManager] 
+　|                             
+  | ─ [LobbyManager]      
   |                            
   |────────────[GameManager]
-  |                  |    ├─[MoveRuleManager]
-[UIManager]          |    ├─ （Piece）
-[AudioManager]       |    └─ （PieceMovement）
+  |                  |    ├─ （RoomSetter）
+ [AudioManager]      |    ├─ [MoveRuleManager]                 
+ [UIManager]         |    |                ├─ （Piece）
+                     |    |                └─ （PieceMovement）
+                     |    ├─ （MatchTimeController）
+                     |    └─ （GameRecorder）
                      |
                      └─[ChessBoardManager]
                           ├─  (TileController)
                           └─  （PieceFactory）
+
+            
 ```
 
 
