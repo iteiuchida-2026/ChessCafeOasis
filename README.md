@@ -247,7 +247,7 @@ Menu            PlayerName                 |_______|
 | **SceneManager**| シーン遷移係。| Bootstrap⇔Title⇔Lobby⇔Gameの切り替えを行う。| Singletonで各シーンで利用。ネットワーク利用時に他Managerに切り替える可能性があるため役割が少ないが分離しておく。| Bootstrapに配置してシングルトンパターンとする。|
 | **AudioManager**| サウンド・BGM係。| 各シーンでオーディオを取り扱う。| singletonで各シーンで利用。 | Bootstrapに配置してシングルトンパターンとする。|
 | **UIManager**| 各シーン別の画面表示係。| UIの表示、制御。 | 各シーンへ配置して処理する。| Boostrap以外の各シーン|
-| **RoomSetter**| ゲームRoomの設定係。| プレイヤーが選択した条件の保存。 | | Gameシーン。|
+| **GameRoomSetUp**| ゲームRoomの設定係。| プレイヤーが選択した条件の保存。 | | Gameシーン。|
 | **RecordManager**| ゲームの記録管理係。| ターンの切り替え、持ち時間の記録と棋譜の記録を担当する。 | | Gameシーン。|
 | **ChessRuleReferee**| ゲームの審判係。| 勝敗判定、各駒の移動ルール、キャスリングやアンパサン等の特殊ルールの監視判定を行う。| Gameシーン内で利用。| Gameシーン。|
 | **ChessBoardManager**| 8*8の盤面管理係。| 各々のマスにどの駒が存在するか配列やリストで記録する。| Gameシーン内で利用。 | Gameシーン。|
@@ -269,7 +269,7 @@ Menu            PlayerName                 |_______|
   | ─ [LobbyManager]      
   |                            
   |────────────[GameManager]
-  |                      ├─ [RoomSetter]
+  |                      ├─ [GameRoomSetUp]
  [AudioManager]          ├─ [ChessRuleReferee]                 
  [UIManager]             | 
                          ├─ [RecordManager]
