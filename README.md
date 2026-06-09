@@ -262,9 +262,8 @@ Menu            PlayerName                 |_______|
 - **クラス設計試案**  
 ```
 [PlayerManager]
-  |         |─  [PlayerController]
-  |         └─  [inputHandler]
-  |                   
+  |         └─  [PlayerController]
+  |    
   | ─ [SceneManager] 
 　|                             
   | ─ [LobbyManager]      
@@ -279,7 +278,8 @@ Menu            PlayerName                 |_______|
                                           ├─ [Piece]
                                           |       └─ [PieceBaseInfo]
                                           ├─  [TileController]
-                                          └─  [PieceFactory]
+                                          ├─  [PieceFactory]
+                                          └─  [inputHandler]
 ```
 
 
