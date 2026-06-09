@@ -250,7 +250,7 @@ Menu            PlayerName                 |_______|
 | **RoomSetter**| ゲームRoomの設定係。| プレイヤーが選択した条件の保存。 | | Gameシーン。|
 | **MatchTimeController**| ゲームRoomの時計係。| 時計の計算を行う。 | | Gameシーン。|
 | **GameRecorder**| 棋譜の記録係。| 試合のログを記録する。 | | Gameシーン。|
-| **MoveRuleManager**| 駒の移動監視係。| 各駒の移動ルール、キャスリングやアンパサン等の特殊ルールの監視判定を行う。| Gameシーン内で利用。| Gameシーン。|
+| **PieceMoveManager**| 駒の移動監視係。| 各駒の移動ルール、キャスリングやアンパサン等の特殊ルールの監視判定を行う。| Gameシーン内で利用。| Gameシーン。|
 | **ChessBoardManager**| 8*8の盤面管理係。| 各々のマスにどの駒が存在するか配列やリストで記録する。| Gameシーン内で利用。 | Gameシーン。|
 | **TileController**| 個々のマスオブジェクトにアタッチするクラス。| マスの座標（x,y）を持ち、選択された際のハイライト処理を行う。| Gameシーン内でのみ利用予定。 | Gameシーン。|
 | **piece**| 駒の基本クラス。 | 駒の種類、プレイヤーの色、現在位置を持つ。 | このクラスを継承して各駒のスクリプトを作成。| Gameシーン。|
@@ -275,18 +275,18 @@ _メソッド
   | ─ [LobbyManager]      
   |                            
   |────────────[GameManager]
-  |                  |    ├─ （RoomSetter）
- [AudioManager]      |    ├─ [MoveRuleManager]                 
- [UIManager]         |    |                ├─ （Piece）
-                     |    |                └─ （PieceMovement）
-                     |    ├─ （MatchTimeController）
-                     |    └─ （GameRecorder）
-                     |
-                     └─[ChessBoardManager]
-                          ├─  (TileController)
-                          └─  （PieceFactory）
-
-            
+  |                      |
+ [AudioManager]          ├─ [PieceMoveManager]                 
+ [UIManager]             |                ├─ （Piece）
+                         |                └─ （PieceMovement）
+                         |
+                         ├─[ChessBoardManager]
+                         |                 ├─  (TileController)
+                         |                 └─ （PieceFactory）
+                         |
+                         ├─ （RoomSetter）
+                         ├─ （MatchTimeController）
+                         └─ （GameRecorder）
 ```
 
 
