@@ -17,6 +17,8 @@
 - [主要クラス](#major-class)
 - [進行スケジュール（目安）](#schedule)
 - [進捗メモ](#progress-notes)
+- [ドキュメント](#document)
+- [タスク一覧](#to-do-list)
 - [エラーログ](#error-log)
 - [発表内容（予定）](#presentation-plan)
 - [参考資料](#references)
@@ -279,12 +281,6 @@ Menu            PlayerName                 |_______|
                                           ├─  [PieceFactory]
                                           └─  [inputHandler]
 ```
-
-
-- **クラス設計資料**
-  - ゲームの流れメモ :
-  - クラス設計試案 :
-
 ---
 
 ## 使用予定のUnity機能 <a id="unity-features"></a>
@@ -355,13 +351,14 @@ Menu            PlayerName                 |_______|
 
 ---
 
-## 制作資料 <a id="setup-materials"></a>
+## ドキュメント <a id="document"></a>
 
 | 資料名| 添付ファイル/URL| 備考|
 |------|------|------|
-|チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)|Geminiで出力|
-|チェスロジック実装の試案|||
-|チェスロジックの予定クラス図|||
+| チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)|Geminiで出力|
+| ゲームの流れ|[ゲームの流れ.pdf](https://github.com/user-attachments/files/28824492/default.pdf)|テキストで作成|
+| クラス設計試案|[クラス設計試案.pdf](https://github.com/user-attachments/files/28824497/default.pdf)|テキストで作成|
+| READMEとゲームの流れからAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)|Gemini|
 |オフライン対戦モードの計画試案|||
 |UML図|||
 
