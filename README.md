@@ -348,7 +348,7 @@ Menu            PlayerName                 |_______|
 |6/8(月)| READMEの追加整理、コード計画、Blenderによるチェスセットの作成| 学校PCでのBlender作業は動作が重いため自宅で作業。発表までの日程が延びたのでスケジュール振り直し。ナイフ投影が上手くいかない。| 7+3|<img width="802" height="572" alt="タイトルなし" src="https://github.com/user-attachments/assets/43473b71-2bf4-4d8f-8656-4757a10ed323" />|
 |6/9(火)| READMEの追加整理、コード計画、Blenderによるチェスセットの作成| ナイトとビショップ切り込み以外は形にはできた| 5+2|<img width="1152" height="729" alt="タイトルなし1" src="https://github.com/user-attachments/assets/4d7e7f6a-c8f6-40a9-a7e0-00dbe1d6fcf2" />|
 |6/10(水)| READMEの追加整理、コード計画、メモのアップロード| 体調不良でほぼ作業できなかった。| 1||
-|6/11(木)| READMEの追加整理、コード計画、ドキュメントのアップロード、|| 7+||
+|6/11(木)| READMEの追加整理、コード計画、ドキュメントのアップロード、プロジェクトへの落とし込み、シーン追加、フォルダ追加、スクリプト追加。| 昨日分まで含めて最低限の作業目安まで実施済み。| 7+|<img width="1631" height="701" alt="タイトルなし" src="https://github.com/user-attachments/assets/66cd3a08-e930-4e30-9282-9eb7b7dafa97" />|
 ||||||
 ||||||
 ||||||
@@ -362,7 +362,7 @@ Menu            PlayerName                 |_______|
 | チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)|Geminiで出力|
 | ゲームの流れ|[ゲームの流れ.pdf](https://github.com/user-attachments/files/28824492/default.pdf)|テキストで作成|
 | クラス設計試案|[クラス設計試案.pdf](https://github.com/user-attachments/files/28824497/default.pdf)|テキストで作成|
-| READMEとゲームの流れからAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)|Gemini|
+| READMEとゲームの流れを読み込んだAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)|Gemini|
 |オフライン対戦モードの計画試案|||
 |UML図|||
 
@@ -373,7 +373,7 @@ Menu            PlayerName                 |_______|
 
 | Git-Project | URL |
 |------|------|
-|||
+|@ChessCafeOasis|https://github.com/users/KazunoriUchida2026/projects/2|
 
 ---
 
