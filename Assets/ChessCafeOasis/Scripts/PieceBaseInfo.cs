@@ -1,4 +1,7 @@
 using UnityEngine;
+
+//////// スクリプトの説明：【各駒にアタッチするScriptableObject型の基本情報。駒の名前、種類、色、最大移動可能マス数、初期配置マスを持つ】////////
+
 public enum PieceType // 駒の種類を定義
 {
     Pawn, // ポーン
@@ -14,7 +17,7 @@ public enum PieceColor // 駒の色を定義
     Black // 黒
 }
 
-public enum BoardSquare // チェス盤のマスを定義
+public enum BoardSquare // チェス盤のマスを定義（チェス盤の配置とは異なる、名称のみの羅列）
 {
     a1, a2, a3, a4, a5, a6, a7, a8,
     b1, b2, b3, b4, b5, b6, b7, b8,
@@ -26,7 +29,7 @@ public enum BoardSquare // チェス盤のマスを定義
     h1, h2, h3, h4, h5, h6, h7, h8,
 }
 
-// チェス駒それぞれに持つ情報
+// チェス駒それぞれに持つ情報：駒の名前、種類、色、最大移動可能マス数、初期配置マス
 [CreateAssetMenu(fileName = "PieceBaseInfo", menuName = "Scriptable Objects/PieceBaseInfo")]
 public class PieceBaseInfo : ScriptableObject
 {

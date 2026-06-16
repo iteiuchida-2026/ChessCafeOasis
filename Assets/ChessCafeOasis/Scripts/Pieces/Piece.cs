@@ -1,6 +1,7 @@
 using UnityEngine;
 
-// Override前提のPieceクラスの基本クラス
+//////// スクリプトの説明：【Pieceの基本スクリプト、これを継承して各駒用のスクリプトを作成する】////////
+
 public class Piece : MonoBehaviour
 {
     // PieceBaseInfoをアタッチして駒の基本情報を設定する
