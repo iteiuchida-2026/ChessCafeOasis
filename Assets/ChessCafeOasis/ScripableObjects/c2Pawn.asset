@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec3b1b7a6b5838e48ac008aec849792d, type: 3}
-  m_Name: testPawn
+  m_Name: c2Pawn
   m_EditorClassIdentifier: Assembly-CSharp::PieceBaseInfo
-  pieceName: a2Pawn
+  pieceName: c2Pawn
   pieceType: 0
   pieceColor: 0
   maxMoveSquares: 1
-  startingSquare: 1
+  startingSquare: 17
