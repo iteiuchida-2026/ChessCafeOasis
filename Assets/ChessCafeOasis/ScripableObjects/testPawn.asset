@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec3b1b7a6b5838e48ac008aec849792d, type: 3}
   m_Name: testPawn
   m_EditorClassIdentifier: Assembly-CSharp::PieceBaseInfo
-  pieceName: 
+  pieceName: a2Pawn
   pieceType: 0
   pieceColor: 0
-  maxMoveSquares: 0
-  startingSquare: {fileID: 0}
+  maxMoveSquares: 1
+  startingSquare: 1
