@@ -25,6 +25,23 @@ public class InputHandler : MonoBehaviour
                 }
             }
         }
+
         // タッチパネルのタッチによる検知
+        if (Touchscreen.current != null) // nullチェック
+        {
+            if (Input.touchCount > 0) // ひとつ以上のタッチがある場合
+            {
+                Touch touch = Input.GetTouch(0); // 一つ目のタッチを取得
+
+                Ray ray = Camera.main.ScreenPointToRay(touch.position); // rayを飛ばす
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit)) // rayが当たった場合
+                {
+                    clickedGameObject = hit.collider.gameObject; // コライダーのゲームオブジェクトを検出してclickedGameObjectに格納
+                    Debug.Log($"タッチされたオブジェクト = {clickedGameObject}");
+                }
+            }
+        }
     }
 }
