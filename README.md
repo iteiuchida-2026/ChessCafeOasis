@@ -412,6 +412,13 @@ Menu            PlayerName                 |_______|
 |Pythonプログラミングでチェスを作る|チェスコードの参考|https://saito-saito-saito.github.io/chess/|
 |サルでもわかるBlender|Blenderの使い方｜基本操作と画面の見方を覚えよう！|https://saru-blender.com/howtouse|
 |Polygon Runway|Blenderでチェスの駒を作るチュートリアル |https://www.youtube.com/watch?v=Iu8jV7g9Oqk&t=1s|
+|YuumeDocs|【ゲーム開発のためのC#入門講座・応用拡張編】オーバーライドで再利用性を強化しよう【#4】|https://yuumekou.net/posts/learnings/csharp/5-4/|
+|ともくんのゲーム作り部屋.|【Unity】オーバーライドで継承したメソッドの内容を書き換えられる！|https://tomokun-games.com/unity-override/|
+||||
+||||
+||||
+||||
+||||
 
 ---
 
