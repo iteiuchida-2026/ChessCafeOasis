@@ -414,8 +414,8 @@ Menu            PlayerName                 |_______|
 |Polygon Runway|Blenderでチェスの駒を作るチュートリアル |https://www.youtube.com/watch?v=Iu8jV7g9Oqk&t=1s|
 |YuumeDocs|【ゲーム開発のためのC#入門講座・応用拡張編】オーバーライドで再利用性を強化しよう【#4】|https://yuumekou.net/posts/learnings/csharp/5-4/|
 |ともくんのゲーム作り部屋.|【Unity】オーバーライドで継承したメソッドの内容を書き換えられる！|https://tomokun-games.com/unity-override/|
-||||
-||||
+|MRが楽しい|Unityでスクリーンへのタッチ状態を取得する その３（タップからレイキャストを飛ばして3Dポインターのように動かす）|https://bluebirdofoz.hatenablog.com/entry/2024/09/10/233128|
+|Cova|【Unity】Unityで学ぶデザインパターン14: Command パターン【デザパタ】|https://qiita.com/Cova8bitdot/items/9a88f7fc0782c729f97c|
 ||||
 ||||
 ||||
