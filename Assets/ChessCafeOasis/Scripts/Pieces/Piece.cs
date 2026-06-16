@@ -1,10 +1,13 @@
 using UnityEngine;
 
+// Override前提のPieceクラスの基本クラス
 public class Piece : MonoBehaviour
 {
+    // PieceBaseInfoをアタッチして駒の基本情報を設定する
     [Header("駒の基本情報を設定")]
     [SerializeField] private PieceBaseInfo pieceBaseInfo;
 
+    // Piece側でPieceBaseInfoの情報を保持するための変数を初期化
     private string pieceName { get; set; } // 駒の名前
     private string pieceType { get; set; } // 駒の種類
     private string pieceColor { get; set; } // 駒の色
@@ -13,7 +16,7 @@ public class Piece : MonoBehaviour
 
 
     // スタート時にPieceBaseInfoから情報を取得しておく
-    private void Start()
+    public virtual void Start()
     {
         pieceName = pieceBaseInfo.pieceName; // 駒の名前をPieceBaseInfoから取得
         pieceType = pieceBaseInfo.pieceType.ToString(); // 駒の種類をPieceBaseInfoから取得
@@ -27,20 +30,20 @@ public class Piece : MonoBehaviour
 
     }
 
-    // 移動する
-    public void Move()
+    // 移動処理
+    public virtual void Move()
     {
 
     }
 
-    // 駒を取る
-    public void Take()
+    // 駒を取る処理
+    public virtual void Take()
     {
 
     }
 
-    // 駒が取られる（thisObject）
-    public void OnTaken()
+    // 駒が取られる処理（thisObject）
+    public virtual void OnTaken()
     {
 
     }
