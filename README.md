@@ -353,7 +353,7 @@ Menu            PlayerName                 |_______|
 |6/13(土)| なし| 体調不良で作業なし。|0||
 |6/14(日)| Blenderによるチェスセットの作成| 非常に時間がかかってBlenderでは作業完了したが、Unityへマテリアルがインポートできないことが判明する。Unity側で主にチェス盤の制作と調整が必要になる。 | 13| <img width="776" height="681" alt="タイトルなし2" src="https://github.com/user-attachments/assets/212c16a7-4210-4c44-be7a-f9d3453a938f" />|
 |6/15(月)| Blenderによるチェスセットの作成、Unityへのデータ移行まで完了。| 体調不良で訓練校は欠席。チェスの駒は問題なく移動できた。チェス盤周りは再度作成し個別に移行。| 6|<img width="1032" height="671" alt="タイトルなし3" src="https://github.com/user-attachments/assets/3797ecff-493a-496f-b96d-e3a524fe559b" />|
-|6/16(火)| スクリプト実装作業。| 駒周辺のスクリプトの作成中。| 7+||
+|6/16(火)| スクリプト実装作業。| 駒周辺のスクリプトの作成中。| 7+1||
 ||||||
 ||||||
 
@@ -364,10 +364,11 @@ Menu            PlayerName                 |_______|
 
 | 資料名| 添付ファイル/URL| 備考|
 |------|------|------|
-| チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)|Geminiで出力|
-| ゲームの流れ|[ゲームの流れ.pdf](https://github.com/user-attachments/files/28824492/default.pdf)|テキストで作成|
-| クラス設計試案|[クラス設計試案.pdf](https://github.com/user-attachments/files/28824497/default.pdf)|テキストで作成|
-| READMEとゲームの流れを読み込んだAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)|Gemini|
+| チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)| Geminiで出力|
+| ゲームの流れ|[ゲームの流れ.pdf](https://github.com/user-attachments/files/28824492/default.pdf)| テキストで作成|
+| クラス設計試案|[クラス設計試案.pdf](https://github.com/user-attachments/files/28824497/default.pdf)| テキストで作成|
+| READMEとゲームの流れを読み込んだAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)| Gemini|
+| 2次元配列を用いたChessBoardManagerのコード例|[二次元配列を用いたコード例.pdf](https://github.com/user-attachments/files/29002379/default.pdf)| Gemini|
 |オフライン対戦モードの計画試案|||
 |UML図|||
 
