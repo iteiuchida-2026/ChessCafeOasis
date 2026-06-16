@@ -420,6 +420,10 @@ Menu            PlayerName                 |_______|
 | サイト名（素材名） | 仕様用途 | URL |
 |------|------|------|
 |Blender| チェスセットの作成|https://www.blender.jp/|
+|ProBuilder| Blenderで作成したデータの編集|https://docs.unity3d.com/ja/Packages/com.unity.probuilder@5.0/manual/index.html|
+|ambientCG| チェスの木目の表現に使用したマテリアル|https://ambientcg.com/|
+||||
+||||
 ||||
 ||||
 
