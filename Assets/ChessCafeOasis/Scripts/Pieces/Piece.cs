@@ -9,7 +9,7 @@ public class Piece : MonoBehaviour
     private string pieceType { get; set; } // 駒の種類
     private string pieceColor { get; set; } // 駒の色
     private int maxMoveSquares { get; set; } // 駒の最大移動可能マス数
-    private GameObject startingSquare { get; set; } // 駒の初期配置マス
+    private string startingSquare { get; set; } // 駒の初期配置マス
 
 
     // スタート時にPieceBaseInfoから情報を取得しておく
@@ -19,7 +19,7 @@ public class Piece : MonoBehaviour
         pieceType = pieceBaseInfo.pieceType.ToString(); // 駒の種類をPieceBaseInfoから取得
         pieceColor = pieceBaseInfo.pieceColor.ToString(); // 駒の色をPieceBaseInfoから取得
         maxMoveSquares = pieceBaseInfo.maxMoveSquares; // 駒の最大移動可能マス数をPieceBaseInfoから取得
-        startingSquare = pieceBaseInfo.startingSquare; // 駒の初期配置マスをPieceBaseInfoから取得
+        startingSquare = pieceBaseInfo.startingSquare.ToString(); // 駒の初期配置マスをPieceBaseInfoから取得
     }
 
     private void Update()
