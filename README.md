@@ -256,7 +256,7 @@ Menu            PlayerName                 |_______|
 | **TileController**| 個々のマスオブジェクトにアタッチするクラス。| マスの座標（x,y）を持ち、選択された際のハイライト処理を行う。| Gameシーン内でのみ利用予定。 | Gameシーン。|
 | **piece**| 駒の基本クラス。 | 駒の種類、プレイヤーの色、現在位置を持つ。 | このクラスを継承して各駒のスクリプトを作成。| Gameシーン。|
 | **PieceBaseInfo**| 駒の基本情報クラス。| ScriptableObjectで駒の基本情報を作成する。| 名前、色、動ける最大マス数、初期配置マス。| Gameシーン。|
-| **PieceFactory**| チェスゲーム開始時の駒配置を担当するクラス。| 初期配置位置にprefabを生成、初期化する。 | | Gameシーン。|
+| **PieceManager**| 駒の管理係。| 初期配置位置にprefabを生成、初期化。駒の3Dオブジェクトの移動、削除を担当。 | | Gameシーン。|
 | **inputHandler**| プレイヤーのマウスクリックを検出するクラス。| どのマス・駒が選択されたかを判定する。 | | Gameシーン。|
 | **PlayerController**| プレイヤーの行動処理係。| プレイヤーの移動周りの処理を行う。| 3D空間実装以降に主に使用する。| Lobbyシーン。|
 
@@ -279,10 +279,10 @@ Menu            PlayerName                 |_______|
                          |                └─ [TimeManager]
                          |
                          └─[ChessBoardManager]
-                                          ├─ [Piece]
-                                          |       └─ [PieceBaseInfo]
+                                          ├─  [PieceManager]
+                                          |              └─  [Piece]
+                                          |                      └─ [PieceBaseInfo]
                                           ├─  [TileController]
-                                          ├─  [PieceFactory]
                                           └─  [inputHandler]
 ```
 ---
