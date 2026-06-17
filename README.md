@@ -422,7 +422,7 @@ Menu            PlayerName                 |_______|
 |MRが楽しい|Unityでスクリーンへのタッチ状態を取得する その３（タップからレイキャストを飛ばして3Dポインターのように動かす）|https://bluebirdofoz.hatenablog.com/entry/2024/09/10/233128|
 |Cova|【Unity】Unityで学ぶデザインパターン14: Command パターン【デザパタ】|https://qiita.com/Cova8bitdot/items/9a88f7fc0782c729f97c|
 |Unityの教科書 Unity 6完全対応版|Rayによる検知判定|https://www.sbcr.jp/product/4815628192/|
-||||
+|ソフトライム|Unityでのシングルトン入門|https://soft-rime.com/post-28282/|
 ||||
 
 ---
