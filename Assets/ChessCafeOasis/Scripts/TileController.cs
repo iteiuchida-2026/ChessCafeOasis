@@ -1,16 +1,13 @@
 using UnityEngine;
 
+//////// スクリプトの説明：【3Dのチェス盤のマスにアタッチする。駒の移動時にマスを光らせる。】////////
+
 public class TileController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // マスを光らせる
+    public void LightUpSquare()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // 後ほど追加する
+        Debug.Log($"{gameObject}のマスが光ります。");
     }
 }
