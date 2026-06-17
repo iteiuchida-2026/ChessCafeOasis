@@ -9,11 +9,8 @@ public class Piece : MonoBehaviour
     [SerializeField] private PieceBaseInfo pieceBaseInfo;
 
     // Piece側でPieceBaseInfoの情報を保持するための変数を初期化
-    public string pieceName { get; set; } // 駒の名前
-    public string pieceType { get; set; } // 駒の種類
-    public string pieceColor { get; set; } // 駒の色
-    public int maxMoveSquares { get; set; } // 駒の最大移動可能マス数
-    public string startingSquare { get; set; } // 駒の初期配置マス
+    public string pieceType { get; set; }
+    public string pieceColor { get; set; }
 
     // 駒の現在位置把握用の設定
     public string currentSquare { get; set; } // 駒の現在位置
@@ -22,8 +19,8 @@ public class Piece : MonoBehaviour
     // スタート時にPieceBaseInfoから情報を取得しておく
     public virtual void Start()
     {
-        pieceType = pieceBaseInfo.pieceType.ToString(); // 駒の種類をPieceBaseInfoから取得
-        pieceColor = pieceBaseInfo.pieceColor.ToString(); // 駒の色をPieceBaseInfoから取得
+        pieceType = pieceBaseInfo.pieceType.ToString();
+        pieceColor = pieceBaseInfo.pieceColor.ToString();
     }
 
     private void Update()
