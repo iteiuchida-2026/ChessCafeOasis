@@ -3,7 +3,13 @@ using UnityEngine;
 
 //////// スクリプトの説明：【チェス盤の各マスにどの駒が存在するかデータで記録し管理する】////////
 
-// 駒の種類と色を定義
+//////// データの流れ①：＜InputManagerでクリックしたオブジェクト情報＞　→　＜ChessBoardManager＞ ////////
+//////// データの流れ②：＜InputManagerでクリックしたオブジェクト情報＞　→　＜ChessBoardManager＞ ////////
+
+
+
+
+// ◆概要：データ層のチェス盤用に駒の種類と色を定義
 public enum ChessPieceType
 {
     None, // 空のマス
@@ -11,22 +17,29 @@ public enum ChessPieceType
     BlackPawn, BlackKnight, BlackBishop, BlackRook, BlackQueen, BlackKing
 }
 
+
+// ◆概要：
+// ①チェス盤面情報をデータ層で管理
+// ②GameManager ⇔ ChessBoardManager ⇔ 管理対象クラスとの中継役兼指示役
 public class ChessBoardManager : MonoBehaviour
 {
-    // ChessBoardManagerが指示を出すクラスをアタッチする
+    [Header("管理対象クラス")]
     [SerializeField] private PieceManager pieceManager;
     [SerializeField] private List<TileController> tileControllers;
-    [SerializeField] private InputHandler inputHandler;
 
-    // 8*8の盤面データ層
+    [Header("チェス盤の各マスオブジェクト")]
+    [SerializeField] private GameObject[] tileObjects;
+
+    // 8*8の盤面データ層の配列
     private ChessPieceType[,] boardState = new ChessPieceType[8, 8];
 
+    // 起動時にデータ層のチェス盤面を初期配置に設定する
     private void Awake()
     {
         InitializeBoard();
     }
 
-    // 盤面データ層の初期配置を設定する
+    // ▼データ層のチェス盤面を初期配置に設定するメソッド
     private void InitializeBoard()
     {
         // すべてのマスを一旦空にする
@@ -61,27 +74,29 @@ public class ChessBoardManager : MonoBehaviour
         for (int x = 0; x < 8; x++) boardState[x, 6] = ChessPieceType.BlackPawn;
     }
 
-    // 他のスクリプトが特定のマスの状態を調べるメソッド
+    // ▼他のスクリプトが特定のマスの状態を調べるメソッド
     public ChessPieceType GetPieceAt(int x, int y)
     {
-        // 盤面外を確認する場合のガード処理
-        if (x < 0 || x >= 8 || y < 0 || y >= 8)
+        if (x < 0 || x >= 8 || y < 0 || y >= 8) // 盤面外を確認する場合のガード処理
         {
             return ChessPieceType.None;
         }
         return boardState[x, y];
     }
 
-    // 駒の移動が問題ない場合の盤面データ更新
+    // ▼駒の移動が問題ない場合の盤面データ更新メソッド
     public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
     {
-        // 移動元の駒を取得
-        ChessPieceType movingPiece = boardState[fromX, fromY];
+        ChessPieceType movingPiece = boardState[fromX, fromY]; // 移動元の駒を取得
 
-        // 移動元のマスを空にする
-        boardState[fromX, fromY] = ChessPieceType.None;
+        boardState[fromX, fromY] = ChessPieceType.None; // 移動元のマスを空にする
 
-        // 移動先のマスに駒を置く
-        boardState[toX, toY] = movingPiece;
+        boardState[toX, toY] = movingPiece; // 移動先のマスに駒を置く
+    }
+
+    // ▼InputHandlerからクリックされたオブジェクトを受け取るメソッド
+    public void ClickedGameObject(GameObject gameObject)
+    {
+
     }
 }
