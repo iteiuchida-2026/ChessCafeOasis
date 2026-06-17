@@ -22,11 +22,8 @@ public class Piece : MonoBehaviour
     // スタート時にPieceBaseInfoから情報を取得しておく
     public virtual void Start()
     {
-        pieceName = pieceBaseInfo.pieceName; // 駒の名前をPieceBaseInfoから取得
         pieceType = pieceBaseInfo.pieceType.ToString(); // 駒の種類をPieceBaseInfoから取得
         pieceColor = pieceBaseInfo.pieceColor.ToString(); // 駒の色をPieceBaseInfoから取得
-        maxMoveSquares = pieceBaseInfo.maxMoveSquares; // 駒の最大移動可能マス数をPieceBaseInfoから取得
-        startingSquare = pieceBaseInfo.startingSquare.ToString(); // 駒の初期配置マスをPieceBaseInfoから取得
     }
 
     private void Update()
