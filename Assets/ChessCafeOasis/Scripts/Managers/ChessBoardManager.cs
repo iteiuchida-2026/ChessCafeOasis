@@ -33,6 +33,9 @@ public class ChessBoardManager : MonoBehaviour
     // 8*8の盤面データ層の配列
     private ChessPieceType[,] boardState = new ChessPieceType[8, 8];
 
+    // クリックされたゲームオブジェクト保持用の変数を宣言
+    private GameObject clickedGameObject;
+
     // 起動時にデータ層のチェス盤面を初期配置に設定する
     private void Awake()
     {
@@ -97,6 +100,37 @@ public class ChessBoardManager : MonoBehaviour
     // ▼InputHandlerからクリックされたオブジェクトを受け取るメソッド
     public void ClickedGameObject(GameObject gameObject)
     {
+        clickedGameObject = gameObject; // 受け取ったGameObject情報をChessBoardManager内の変数に格納しておく
+        IdentifyGameObject(clickedGameObject);
+    }
+
+    // ▼クリックされたオブジェクトが駒かマスかを調べるメソッド
+    private void IdentifyGameObject(GameObject gameObject)
+    {
+        // ①駒の場合、情報を取得するメソッドへ渡す
+        if (gameObject.CompareTag("Piece"))
+        {
+            GetClickedPieceInfo(gameObject);
+        }
+        // ②マスの場合、マス上にある駒を調べるメソッドへ渡す
+        else if (gameObject.CompareTag("Square"))
+        {
+            CheckUpPieceOnSquare(gameObject);
+        }
+        else return;
+    }
+
+    //▼クリックされたオブジェクトがマスの場合、マスと同じ座標にある駒を調べるメソッド
+    private void CheckUpPieceOnSquare(GameObject gameObject)
+    {
 
     }
+
+    // ▼クリックされたオブジェクトが駒の場合、情報を取得するメソッド
+    private void GetClickedPieceInfo(GameObject gameObject)
+    {
+
+    }
+
+
 }
