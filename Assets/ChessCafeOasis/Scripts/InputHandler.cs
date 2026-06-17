@@ -5,12 +5,17 @@ using UnityEngine.InputSystem;
 
 //////// データの流れ①：＜InputManagerでクリックしたオブジェクト情報＞　→　＜ChessBoardManager＞ ////////
 
+
+
+// ◆概要：プレイヤー操作の検知
 public class InputHandler : MonoBehaviour
 {
+    [Header("情報送付先クラス")]
     [SerializeField] private ChessBoardManager chessBoardManager;
 
     private GameObject clickedGameObject; // クリックされたゲームオブジェクト用の変数を宣言
 
+    // ▼マウスとタッチパネルでプレイヤーの操作を検知
     private void Update()
     {
         // ①マウスクリックによる検知
@@ -46,10 +51,10 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    // Rayがhitした場合、コライダーを検出したオブジェクト情報をChessBoardManagerに渡すメソッド
+    // ▼オブジェクト情報をChessBoardManagerに渡すメソッド
     private void OnHitRay(RaycastHit hit)
     {
-        clickedGameObject = hit.collider.gameObject; // コライダーのゲームオブジェクトを検出してclickedGameObjectに格納
+        clickedGameObject = hit.collider.gameObject; // hitしたコライダーのゲームオブジェクトを検出してclickedGameObjectに格納
 
         Debug.Log($"クリックされたオブジェクト = {clickedGameObject}");
 
