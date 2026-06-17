@@ -11,7 +11,7 @@ public class InputHandler : MonoBehaviour
     private void Update()
     {
         // マウスクリックによる検知
-        if (Mouse.current != null)　// nullチェック
+        if (Mouse.current != null) // マウス接続があれば以下の処理が有効
         {
             if (Mouse.current.leftButton.wasPressedThisFrame) // マウスの左クリックが押された瞬間
             {
@@ -27,7 +27,7 @@ public class InputHandler : MonoBehaviour
         }
 
         // タッチパネルのタッチによる検知
-        if (Touchscreen.current != null) // nullチェック
+        if (Touchscreen.current != null) // タッチスクリーンがあれば以下の処理が有効
         {
             if (Input.touchCount > 0) // ひとつ以上のタッチがある場合
             {

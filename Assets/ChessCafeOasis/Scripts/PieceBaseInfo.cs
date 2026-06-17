@@ -4,17 +4,17 @@ using UnityEngine;
 
 public enum PieceType // 駒の種類を定義
 {
-    Pawn, // ポーン
-    Knight, // ナイト
-    Bishop, // ビショップ
-    Rook, // ルーク
-    Queen, // クイーン
-    King //キング
+    Pawn,
+    Knight,
+    Bishop,
+    Rook,
+    Queen,
+    King
 }
 public enum PieceColor // 駒の色を定義
 {
-    White, // 白
-    Black // 黒
+    White,
+    Black
 }
 
 public enum BoardSquare // チェス盤のマスを定義（チェス盤の配置とは異なる、名称のみの羅列）
