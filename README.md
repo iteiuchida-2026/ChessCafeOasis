@@ -322,8 +322,8 @@ Menu            PlayerName                 |_______|
 |10日目|6/14(日) | スクリプト実装作業| 実装作業| 1| ☑| 作業の大幅な遅れあり。 |
 |11日目|6/15(月) | チェスルールに沿った動作実装の調整 | ■調整テスト| 1| ☑| 作業の大幅な遅れあり。 |
 |12日目|6/16(火) | チェスルールに沿った動作実装のプレイテストと調整| ■調整テスト| 1| ☑| 作業の大幅な遅れあり。|
-|13日目|6/17(水) | タイトル、クレジット、サウンド、UI、フォント等の素材準備| 実装準備| 2|☑| 作業の大幅な遅れあり。|
-|14日目|6/18(木) | 各種素材の実装、スクリプト実装開始 | 実装作業| 2|||
+|13日目|6/17(水) | タイトル、クレジット、サウンド、UI、フォント等の素材準備| 実装準備| 2| ☑| 作業の大幅な遅れあり。|
+|14日目|6/18(木) | 各種素材の実装、スクリプト実装開始 | 実装作業| 2| ☑| 作業の大幅な遅れあり。|
 |15日目|6/19(金) | 各種素材の実装、スクリプト実装 | 実装作業| 2|||
 |16日目|6/20(土) | タイトル、クレジット、サウンド、UIの実装までの調整| ■調整テスト| 2||（休校）|
 |17日目|6/21(日) | オフライン対戦機能実装に向けた構成の再確認、調整| 実装準備 | 3||（休校）|
@@ -354,8 +354,13 @@ Menu            PlayerName                 |_______|
 |6/14(日)| Blenderによるチェスセットの作成| 非常に時間がかかってBlenderでは作業完了したが、Unityへマテリアルがインポートできないことが判明する。Unity側で主にチェス盤の制作と調整が必要になる。 | 13| <img width="776" height="681" alt="タイトルなし2" src="https://github.com/user-attachments/assets/212c16a7-4210-4c44-be7a-f9d3453a938f" />|
 |6/15(月)| Blenderによるチェスセットの作成、Unityへのデータ移行まで完了。| 体調不良で訓練校は欠席。チェスの駒は問題なく移動できた。チェス盤周りは再度作成し個別に移行。| 6|<img width="1032" height="671" alt="タイトルなし3" src="https://github.com/user-attachments/assets/3797ecff-493a-496f-b96d-e3a524fe559b" />|
 |6/16(火)| スクリプト実装作業。| 駒周辺のスクリプトの作成中。| 7+1||
-|6/17(水)| スクリプト実装作業。| 駒周辺のスクリプトの作成中。| 7+||
+|6/17(水)| スクリプト実装作業。| 駒周辺のスクリプトの作成中。| 7||
+|6/18(木)| スクリプト実装作業。| 駒周辺のスクリプトの作成中。| 7+||
 ||||||
+||||||
+||||||
+||||||
+
 
 
 ---
@@ -370,6 +375,10 @@ Menu            PlayerName                 |_______|
 | READMEとゲームの流れを読み込んだAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)| Gemini|
 | 2次元配列を用いたChessBoardManagerのコード例|[二次元配列を用いたコード例.pdf](https://github.com/user-attachments/files/29002379/default.pdf)| Gemini|
 | Piece.csの状態管理方法についてのGeminiへの相談回答|[Piece.csに対する状態管理についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29028937/Piece.cs.Gemini.pdf)| Gemini|
+| ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答|[ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080904/ChessBoardManager.cs.3D.Gemini.pdf)|Gemini|
+| PieceManager.csのPrefab生成に関するGeminiへ相談した回答|[PieceManager.csのPrefab生成に関するGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080910/PieceManager.cs.Prefab.Gemini.pdf)|Gemini|
+||||
+||||
 |オフライン対戦モードの計画試案|||
 |UML図|||
 
