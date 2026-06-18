@@ -112,12 +112,12 @@ public class ChessBoardManager : MonoBehaviour
         return null;
     }
 
-    // ▼【③ マスOBJ】インデックスからマスを取得するメソッド
-    public GameObject GetPieceAtTileObjectsArray(Vector2Int index)
+    // ▼【③ マスOBJ】2次元配列からマスを取得するメソッド
+    public GameObject GetPieceAtTileObjectsArray(int x, int y)
     {
-        if (index.x >= 0 && index.x < 8 && index.y >= 0 && index.y < 8)
+        if (x >= 0 && x < 8 && y >= 0 && y < 8)
         {
-            return tileObjectsArray[index.x, index.y];
+            return tileObjectsArray[x, y];
         }
         return null;
     }
