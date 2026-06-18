@@ -19,8 +19,9 @@ public enum ChessPieceType
 
 
 // ◆概要：
-// ①チェス盤面情報をデータ層で管理
-// ②GameManager ⇔ ChessBoardManager ⇔ 管理対象クラスとの中継役兼指示役
+// ①チェス盤面情報をデータ層のみで管理（シミュレート用）
+// ②3Dチェス盤面情報の管理（実物）
+// ③GameManager ⇔ ChessBoardManager ⇔ 管理対象クラスとの中継役兼指示役
 public class ChessBoardManager : MonoBehaviour
 {
     [Header("管理対象クラス")]
@@ -30,19 +31,17 @@ public class ChessBoardManager : MonoBehaviour
     [Header("チェス盤の各マスオブジェクト")]
     [SerializeField] private GameObject[] tileObjects;
 
-    // 8*8の盤面データ層の配列
-    private ChessPieceType[,] boardState = new ChessPieceType[8, 8];
+    private ChessPieceType[,] boardState = new ChessPieceType[8, 8]; // 【① データ】8*8の盤面データ層の配列
+    private GameObject[,] pieceGrid = new GameObject[8, 8]; // 【② 3D】8*8の3D上の駒を管理する配列
+    private GameObject clickedGameObject; // 【② 3D】クリックされたゲームオブジェクト保持用の変数を宣言
 
-    // クリックされたゲームオブジェクト保持用の変数を宣言
-    private GameObject clickedGameObject;
 
-    // 起動時にデータ層のチェス盤面を初期配置に設定する
     private void Awake()
     {
-        InitializeBoard();
+        InitializeBoard(); // 【① データ】起動時にデータ層のチェス盤面を初期配置に設定する
     }
 
-    // ▼データ層のチェス盤面を初期配置に設定するメソッド
+    // ▼【① データ】データ層のチェス盤面を初期配置に設定するメソッド
     private void InitializeBoard()
     {
         // すべてのマスを一旦空にする
@@ -77,7 +76,7 @@ public class ChessBoardManager : MonoBehaviour
         for (int x = 0; x < 8; x++) boardState[x, 6] = ChessPieceType.BlackPawn;
     }
 
-    // ▼他のスクリプトが特定のマスの状態を調べるメソッド
+    // ▼【① データ】他のスクリプトがデータ層の特定マスの状態を調べるメソッド
     public ChessPieceType GetPieceAt(int x, int y)
     {
         if (x < 0 || x >= 8 || y < 0 || y >= 8) // 盤面外を確認する場合のガード処理
@@ -87,7 +86,7 @@ public class ChessBoardManager : MonoBehaviour
         return boardState[x, y];
     }
 
-    // ▼駒の移動が問題ない場合の盤面データ更新メソッド
+    // ▼【① データ】駒の移動が問題ない場合のデータ層盤面データ更新メソッド
     public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
     {
         ChessPieceType movingPiece = boardState[fromX, fromY]; // 移動元の駒を取得
@@ -97,22 +96,15 @@ public class ChessBoardManager : MonoBehaviour
         boardState[toX, toY] = movingPiece; // 移動先のマスに駒を置く
     }
 
-    // ▼InputHandlerからクリックされたオブジェクトを受け取るメソッド
-    public void ClickedGameObject(GameObject gameObject)
+    // ▼【② 3D】オブジェクトが駒かマスかを調べるメソッド
+    public void IdentifyGameObject(GameObject gameObject)
     {
-        clickedGameObject = gameObject; // 受け取ったGameObject情報をChessBoardManager内の変数に格納しておく
-        IdentifyGameObject(clickedGameObject);
-    }
-
-    // ▼クリックされたオブジェクトが駒かマスかを調べるメソッド
-    private void IdentifyGameObject(GameObject gameObject)
-    {
-        // ①駒の場合、情報を取得するメソッドへ渡す
+        // A.駒の場合、情報を取得するメソッドへ渡す
         if (gameObject.CompareTag("Piece"))
         {
             GetClickedPieceInfo(gameObject);
         }
-        // ②マスの場合、マス上にある駒を調べるメソッドへ渡す
+        // B.マスの場合、マス上にある駒を調べるメソッドへ渡す
         else if (gameObject.CompareTag("Square"))
         {
             CheckUpPieceOnSquare(gameObject);
@@ -120,16 +112,20 @@ public class ChessBoardManager : MonoBehaviour
         else return;
     }
 
-    //▼クリックされたオブジェクトがマスの場合、マスと同じ座標にある駒を調べるメソッド
+    //▼【② 3D】クリックされたオブジェクトがマスの場合、マスと同じ座標にある駒を調べるメソッド
     private void CheckUpPieceOnSquare(GameObject gameObject)
     {
 
     }
 
-    // ▼クリックされたオブジェクトが駒の場合、情報を取得するメソッド
+    // ▼【② 3D】クリックされたオブジェクトが駒の場合、情報を取得するメソッド
     private void GetClickedPieceInfo(GameObject gameObject)
     {
-
+        string clickedGameObjectPieceColor = gameObject.GetComponent<Piece>().pieceColor;
+        string clickedGameObjectPieceType = gameObject.GetComponent<Piece>().pieceType;
+        string clickedGameObjectCurrentSquare = gameObject.GetComponent<Piece>().currentSquare;
+        bool clickedGameObjectHasMoved = gameObject.GetComponent<Piece>().HasMoved;
+        bool clickedGameObjectIsPromoted = gameObject.GetComponent<Piece>().IsPromoted;
     }
 
 
