@@ -54,10 +54,16 @@ public class InputHandler : MonoBehaviour
     // ▼オブジェクト情報をChessBoardManagerに渡すメソッド
     private void OnHitRay(RaycastHit hit)
     {
-        clickedGameObject = hit.collider.gameObject; // hitしたコライダーのゲームオブジェクトを検出してclickedGameObjectに格納
+        if (hit.collider != null)
+        {
+            clickedGameObject = hit.collider.gameObject; // hitしたコライダーのゲームオブジェクトを検出してclickedGameObjectに格納
 
-        Debug.Log($"クリックされたオブジェクト = {clickedGameObject}");
+            Debug.Log($"クリックされたオブジェクト = {clickedGameObject}");
 
-        chessBoardManager.ClickedGameObject(clickedGameObject); // ChessBoardManagerにクリックされたゲームオブジェクトの情報を渡す
+            chessBoardManager.IdentifyGameObject(clickedGameObject); // ChessBoardManagerにクリックされたゲームオブジェクトの情報を渡す
+        }
+        Debug.Log("選択先のコライダーがありません。");
+        return;
+
     }
 }

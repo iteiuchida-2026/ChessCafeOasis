@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 //////// スクリプトの説明：【チェス盤の各マスにどの駒が存在するかデータで記録し管理する】////////
@@ -19,117 +18,154 @@ public enum ChessPieceType
 
 
 // ◆概要：
-// ①チェス盤面情報をデータ層で管理
-// ②GameManager ⇔ ChessBoardManager ⇔ 管理対象クラスとの中継役兼指示役
+// ①チェス盤面情報をデータ層のみで管理（シミュレート用）
+// ②3Dチェス盤面情報の管理（実物）
+// ③GameManager ⇔ ChessBoardManager ⇔ 管理対象クラスとの中継役兼指示役
 public class ChessBoardManager : MonoBehaviour
 {
     [Header("管理対象クラス")]
     [SerializeField] private PieceManager pieceManager;
-    [SerializeField] private List<TileController> tileControllers;
+    [SerializeField] private GameObject[] tileObjects = new GameObject[64];
 
-    [Header("チェス盤の各マスオブジェクト")]
-    [SerializeField] private GameObject[] tileObjects;
+    private ChessPieceType[,] dataLayerBoardState = new ChessPieceType[8, 8]; // 【① データ】8*8の盤面データ層の配列
+    private GameObject[,] realLayerBoardState = new GameObject[8, 8]; // 【② 3D】8*8の3D上の駒を管理する配列
+    private GameObject clickedGameObject; // 【② 3D】クリックされたゲームオブジェクト保持用の変数を宣言
+    private GameObject[,] tileObjectsArray = new GameObject[8, 8]; //【③ マスOBJ】 tileObjectsを8*8の実際のチェス盤に合わせるため2次元配列を用意
 
-    // 8*8の盤面データ層の配列
-    private ChessPieceType[,] boardState = new ChessPieceType[8, 8];
 
-    // クリックされたゲームオブジェクト保持用の変数を宣言
-    private GameObject clickedGameObject;
-
-    // 起動時にデータ層のチェス盤面を初期配置に設定する
     private void Awake()
     {
-        InitializeBoard();
+        InitializeDataLayerBoard(); // 【① データ】起動時にデータ層のチェス盤面を初期配置に設定する
+
+        // serializeしたtileObjectsを2次元配列に変換
+        for (int y = 0; y < 8; y++)
+        {
+            for (int x = 0; x < 8; x++)
+            {
+                tileObjectsArray[x, y] = tileObjects[y * 8 + x];
+            }
+        }
     }
 
-    // ▼データ層のチェス盤面を初期配置に設定するメソッド
-    private void InitializeBoard()
+    // ▼【① データ】データ層のチェス盤面を初期配置に設定するメソッド
+    private void InitializeDataLayerBoard()
     {
         // すべてのマスを一旦空にする
         for (int x = 0; x < 8; x++)
         {
             for (int y = 0; y < 8; y++)
             {
-                boardState[x, y] = ChessPieceType.None;
+                dataLayerBoardState[x, y] = ChessPieceType.None;
             }
         }
 
         // 白の駒を配置する
-        boardState[0, 0] = ChessPieceType.WhiteRook;
-        boardState[1, 0] = ChessPieceType.WhiteKnight;
-        boardState[2, 0] = ChessPieceType.WhiteBishop;
-        boardState[3, 0] = ChessPieceType.WhiteQueen;
-        boardState[4, 0] = ChessPieceType.WhiteKing;
-        boardState[5, 0] = ChessPieceType.WhiteBishop;
-        boardState[6, 0] = ChessPieceType.WhiteKnight;
-        boardState[7, 0] = ChessPieceType.WhiteRook;
-        for (int x = 0; x < 8; x++) boardState[x, 1] = ChessPieceType.WhitePawn;
+        dataLayerBoardState[0, 0] = ChessPieceType.WhiteRook;
+        dataLayerBoardState[1, 0] = ChessPieceType.WhiteKnight;
+        dataLayerBoardState[2, 0] = ChessPieceType.WhiteBishop;
+        dataLayerBoardState[3, 0] = ChessPieceType.WhiteQueen;
+        dataLayerBoardState[4, 0] = ChessPieceType.WhiteKing;
+        dataLayerBoardState[5, 0] = ChessPieceType.WhiteBishop;
+        dataLayerBoardState[6, 0] = ChessPieceType.WhiteKnight;
+        dataLayerBoardState[7, 0] = ChessPieceType.WhiteRook;
+        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 1] = ChessPieceType.WhitePawn;
 
         // 黒の駒を配置する
-        boardState[0, 7] = ChessPieceType.BlackRook;
-        boardState[1, 7] = ChessPieceType.BlackKnight;
-        boardState[2, 7] = ChessPieceType.BlackBishop;
-        boardState[3, 7] = ChessPieceType.BlackQueen;
-        boardState[4, 7] = ChessPieceType.BlackKing;
-        boardState[5, 7] = ChessPieceType.BlackBishop;
-        boardState[6, 7] = ChessPieceType.BlackKnight;
-        boardState[7, 7] = ChessPieceType.BlackRook;
-        for (int x = 0; x < 8; x++) boardState[x, 6] = ChessPieceType.BlackPawn;
+        dataLayerBoardState[0, 7] = ChessPieceType.BlackRook;
+        dataLayerBoardState[1, 7] = ChessPieceType.BlackKnight;
+        dataLayerBoardState[2, 7] = ChessPieceType.BlackBishop;
+        dataLayerBoardState[3, 7] = ChessPieceType.BlackQueen;
+        dataLayerBoardState[4, 7] = ChessPieceType.BlackKing;
+        dataLayerBoardState[5, 7] = ChessPieceType.BlackBishop;
+        dataLayerBoardState[6, 7] = ChessPieceType.BlackKnight;
+        dataLayerBoardState[7, 7] = ChessPieceType.BlackRook;
+        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 6] = ChessPieceType.BlackPawn;
     }
 
-    // ▼他のスクリプトが特定のマスの状態を調べるメソッド
-    public ChessPieceType GetPieceAt(int x, int y)
+    // ▼【① データ】駒の移動が問題ない場合のデータ層盤面データ更新メソッド
+    public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
     {
-        if (x < 0 || x >= 8 || y < 0 || y >= 8) // 盤面外を確認する場合のガード処理
+        ChessPieceType movingPiece = dataLayerBoardState[fromX, fromY]; // 移動元の駒を取得
+
+        dataLayerBoardState[fromX, fromY] = ChessPieceType.None; // 移動元のマスを空にする
+
+        dataLayerBoardState[toX, toY] = movingPiece; // 移動先のマスに駒を置く
+    }
+
+    // ▼【① データ】インデックスからデータ層特定マスの状態を調べるメソッド
+    public ChessPieceType GetPieceAtDataLayer(Vector2Int index)
+    {
+        if (index.x < 0 || index.x >= 8 || index.y < 0 || index.y >= 8) // 盤面外を確認する場合のガード処理
         {
             return ChessPieceType.None;
         }
-        return boardState[x, y];
+        return dataLayerBoardState[index.x, index.y];
     }
 
-    // ▼駒の移動が問題ない場合の盤面データ更新メソッド
-    public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
+    // ▼【② 3D】インデックスから駒を取得するメソッド
+    public GameObject GetPieceAtRealLayer(Vector2Int index)
     {
-        ChessPieceType movingPiece = boardState[fromX, fromY]; // 移動元の駒を取得
-
-        boardState[fromX, fromY] = ChessPieceType.None; // 移動元のマスを空にする
-
-        boardState[toX, toY] = movingPiece; // 移動先のマスに駒を置く
-    }
-
-    // ▼InputHandlerからクリックされたオブジェクトを受け取るメソッド
-    public void ClickedGameObject(GameObject gameObject)
-    {
-        clickedGameObject = gameObject; // 受け取ったGameObject情報をChessBoardManager内の変数に格納しておく
-        IdentifyGameObject(clickedGameObject);
-    }
-
-    // ▼クリックされたオブジェクトが駒かマスかを調べるメソッド
-    private void IdentifyGameObject(GameObject gameObject)
-    {
-        // ①駒の場合、情報を取得するメソッドへ渡す
-        if (gameObject.CompareTag("Piece"))
+        if (index.x >= 0 && index.x < 8 && index.y >= 0 && index.y < 8)
         {
-            GetClickedPieceInfo(gameObject);
+            return realLayerBoardState[index.x, index.y];
         }
-        // ②マスの場合、マス上にある駒を調べるメソッドへ渡す
-        else if (gameObject.CompareTag("Square"))
-        {
-            CheckUpPieceOnSquare(gameObject);
-        }
-        else return;
+        return null;
     }
 
-    //▼クリックされたオブジェクトがマスの場合、マスと同じ座標にある駒を調べるメソッド
-    private void CheckUpPieceOnSquare(GameObject gameObject)
+    // ▼【③ マスOBJ】2次元配列からマスを取得するメソッド
+    public GameObject GetPieceAtTileObjectsArray(int x, int y)
     {
-
+        if (x >= 0 && x < 8 && y >= 0 && y < 8)
+        {
+            return tileObjectsArray[x, y];
+        }
+        return null;
     }
 
-    // ▼クリックされたオブジェクトが駒の場合、情報を取得するメソッド
+    // ▼【② 3D】オブジェクトが駒かマスかを調べるメソッド
+    public void IdentifyGameObject(GameObject gameObject)
+    {
+        // クリックされたオブジェクトがマスだった場合
+        if (gameObject.TryGetComponent<TileController>(out TileController clickedSquare))
+        {
+            Vector2Int clickedSquareIndex = clickedSquare.BoardIndex;
+            Debug.Log($"クリックされたマス:{clickedSquare.AlgebraicNotation}(インデックス:{clickedSquareIndex})");
+
+            GameObject pieceOnSquare = GetPieceAtRealLayer(clickedSquareIndex); // 共通のインデックスからマスに乗っている駒オブジェクトを取得
+
+            if (pieceOnSquare != null)
+            {
+                Debug.Log($"そのマスには{pieceOnSquare.name}が乗っています。");
+                GetClickedPieceInfo(pieceOnSquare); // 駒情報を取得するメソッドへ渡す
+            }
+            else
+            {
+                Debug.Log("そのマスは空です。");
+            }
+        }
+
+        // クリックされたオブジェクトが駒だった場合
+        else if (gameObject.TryGetComponent<Piece>(out Piece clickedPiece))
+        {
+            GameObject clickedPieceGameObject = clickedPiece.gameObject;
+            Debug.Log($"その駒は{clickedPieceGameObject.name}です。");
+            GetClickedPieceInfo(clickedPieceGameObject); // 駒情報を取得するメソッドへ渡す
+        }
+        else
+        {
+            Debug.Log("クリックされたゲームオブジェクトはマスでも駒でもありません。");
+            return;
+        }
+    }
+
+    // ▼【② 3D】クリックされたオブジェクトが駒の場合、情報を取得するメソッド
     private void GetClickedPieceInfo(GameObject gameObject)
     {
-
+        string clickedGameObjectPieceColor = gameObject.GetComponent<Piece>().pieceColor;
+        string clickedGameObjectPieceType = gameObject.GetComponent<Piece>().pieceType;
+        Vector2Int clickedGameObjectCurrentSquare = gameObject.GetComponent<Piece>().currentIndex;
+        bool clickedGameObjectHasMoved = gameObject.GetComponent<Piece>().HasMoved;
+        bool clickedGameObjectIsPromoted = gameObject.GetComponent<Piece>().IsPromoted;
     }
 
 
