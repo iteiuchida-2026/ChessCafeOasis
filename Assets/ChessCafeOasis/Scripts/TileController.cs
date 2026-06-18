@@ -4,6 +4,7 @@ using UnityEngine;
 public class TileController : MonoBehaviour
 {
     [Header("チェス盤の座標設定")]
+    [Tooltip("ここでは(0,0)～(7,7)の範囲で該当する値を設定する。例：a1 = (0,0) / b3 = (1,2)")]
     [SerializeField] private Vector2Int boardIndex;
 
     public Vector2Int BoardIndex => boardIndex;
