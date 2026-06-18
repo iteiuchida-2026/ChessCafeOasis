@@ -13,7 +13,7 @@ public class Piece : MonoBehaviour
     public string pieceColor { get; set; }
 
     // 駒の現在位置把握用の設定
-    public string currentSquare { get; set; } // 駒の現在位置
+    public Vector2Int currentIndex { get; set; } // 駒の現在位置
 
     // ルール判定用のフラグ
     public bool HasMoved { get; private set; } = false; // キャスリング判定用

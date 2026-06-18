@@ -149,7 +149,7 @@ public class ChessBoardManager : MonoBehaviour
     {
         string clickedGameObjectPieceColor = gameObject.GetComponent<Piece>().pieceColor;
         string clickedGameObjectPieceType = gameObject.GetComponent<Piece>().pieceType;
-        string clickedGameObjectCurrentSquare = gameObject.GetComponent<Piece>().currentSquare;
+        Vector2Int clickedGameObjectCurrentSquare = gameObject.GetComponent<Piece>().currentIndex;
         bool clickedGameObjectHasMoved = gameObject.GetComponent<Piece>().HasMoved;
         bool clickedGameObjectIsPromoted = gameObject.GetComponent<Piece>().IsPromoted;
     }
