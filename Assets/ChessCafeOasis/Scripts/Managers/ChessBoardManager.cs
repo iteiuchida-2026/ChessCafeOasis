@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 //////// スクリプトの説明：【チェス盤の各マスにどの駒が存在するかデータで記録し管理する】////////
@@ -26,9 +25,6 @@ public class ChessBoardManager : MonoBehaviour
 {
     [Header("管理対象クラス")]
     [SerializeField] private PieceManager pieceManager;
-    [SerializeField] private List<TileController> tileControllers;
-
-    [Header("チェス盤の各マスオブジェクト")]
     [SerializeField] private GameObject[] tileObjects;
 
     private ChessPieceType[,] DataLayerBoardState = new ChessPieceType[8, 8]; // 【① データ】8*8の盤面データ層の配列
