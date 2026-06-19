@@ -70,7 +70,10 @@ public class PieceManager : MonoBehaviour
 
             GameObject spawnedPiece = Instantiate(piecePrefab, spawnPosition, Quaternion.identity);
 
-            spawnedPiece.transform.SetParent(targetSquare.transform);
+            //一度削除
+            //spawnedPiece.transform.SetParent(targetSquare.transform); // 生成した駒をマスの子要素にする
+
+            spawnedPiece.GetComponent<Piece>().currentIndex = targetSquare.GetComponent<TileController>().BoardIndex; // 生成時に対象マスのインデックスを現在位置を設定
         }
     }
 }
