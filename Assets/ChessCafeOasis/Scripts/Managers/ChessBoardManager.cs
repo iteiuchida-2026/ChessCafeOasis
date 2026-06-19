@@ -60,26 +60,26 @@ public class ChessBoardManager : MonoBehaviour
         }
 
         // 白の駒を配置する
-        dataLayerBoardState[0, 0] = ChessPieceType.WhiteRook;
-        dataLayerBoardState[1, 0] = ChessPieceType.WhiteKnight;
-        dataLayerBoardState[2, 0] = ChessPieceType.WhiteBishop;
-        dataLayerBoardState[3, 0] = ChessPieceType.WhiteQueen;
-        dataLayerBoardState[4, 0] = ChessPieceType.WhiteKing;
-        dataLayerBoardState[5, 0] = ChessPieceType.WhiteBishop;
-        dataLayerBoardState[6, 0] = ChessPieceType.WhiteKnight;
         dataLayerBoardState[7, 0] = ChessPieceType.WhiteRook;
-        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 1] = ChessPieceType.WhitePawn;
+        dataLayerBoardState[7, 1] = ChessPieceType.WhiteKnight;
+        dataLayerBoardState[7, 2] = ChessPieceType.WhiteBishop;
+        dataLayerBoardState[7, 3] = ChessPieceType.WhiteQueen;
+        dataLayerBoardState[7, 4] = ChessPieceType.WhiteKing;
+        dataLayerBoardState[7, 5] = ChessPieceType.WhiteBishop;
+        dataLayerBoardState[7, 6] = ChessPieceType.WhiteKnight;
+        dataLayerBoardState[7, 7] = ChessPieceType.WhiteRook;
+        for (int y = 0; y < 8; y++) dataLayerBoardState[7, y] = ChessPieceType.WhitePawn;
 
         // 黒の駒を配置する
+        dataLayerBoardState[0, 0] = ChessPieceType.BlackRook;
+        dataLayerBoardState[0, 1] = ChessPieceType.BlackKnight;
+        dataLayerBoardState[0, 2] = ChessPieceType.BlackBishop;
+        dataLayerBoardState[0, 3] = ChessPieceType.BlackQueen;
+        dataLayerBoardState[0, 4] = ChessPieceType.BlackKing;
+        dataLayerBoardState[0, 5] = ChessPieceType.BlackBishop;
+        dataLayerBoardState[0, 6] = ChessPieceType.BlackKnight;
         dataLayerBoardState[0, 7] = ChessPieceType.BlackRook;
-        dataLayerBoardState[1, 7] = ChessPieceType.BlackKnight;
-        dataLayerBoardState[2, 7] = ChessPieceType.BlackBishop;
-        dataLayerBoardState[3, 7] = ChessPieceType.BlackQueen;
-        dataLayerBoardState[4, 7] = ChessPieceType.BlackKing;
-        dataLayerBoardState[5, 7] = ChessPieceType.BlackBishop;
-        dataLayerBoardState[6, 7] = ChessPieceType.BlackKnight;
-        dataLayerBoardState[7, 7] = ChessPieceType.BlackRook;
-        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 6] = ChessPieceType.BlackPawn;
+        for (int y = 0; y < 8; y++) dataLayerBoardState[0, y] = ChessPieceType.BlackPawn;
     }
 
     // ▼【① データ】駒の移動が問題ない場合のデータ層盤面データ更新メソッド
