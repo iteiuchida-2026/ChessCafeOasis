@@ -2342,18 +2342,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20feecd58062b644fba1baf7d9084eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PieceManager
-  WhitePawnPrefab: {fileID: 0}
-  WhiteKnightPrefab: {fileID: 0}
-  WhiteBishopPrefab: {fileID: 0}
-  WhiteRookPrefab: {fileID: 0}
-  WhiteQueenPrefab: {fileID: 0}
-  WhiteKingPrefab: {fileID: 0}
-  BlackPawnPrefab: {fileID: 0}
-  BlackKnightPrefab: {fileID: 0}
-  BlackBishopPrefab: {fileID: 0}
-  BlackRookPrefab: {fileID: 0}
-  BlackQueenPrefab: {fileID: 0}
-  BlackKingPrefab: {fileID: 0}
+  WhitePawnPrefab: {fileID: 8929596684460591686, guid: a3867ef0cb4481e44a330ba4b9d3d051, type: 3}
+  WhiteKnightPrefab: {fileID: 4682274428525750342, guid: a12f6745e647c4443851403b53dcbb92, type: 3}
+  WhiteBishopPrefab: {fileID: 501755081629409071, guid: be147b645f2d2074a85d25029a2b15fb, type: 3}
+  WhiteRookPrefab: {fileID: 6944030873175373263, guid: 140f5939a543ab94fb7252be53f6477c, type: 3}
+  WhiteQueenPrefab: {fileID: 1863239921283540221, guid: 2414d321664ed6b498bef0da17ed5fa6, type: 3}
+  WhiteKingPrefab: {fileID: 7207041917278876997, guid: 939b37060d2499540a47fa3d801e3b5b, type: 3}
+  BlackPawnPrefab: {fileID: 2082340106018293506, guid: 8647c4ff14ce25541b90945e850378c8, type: 3}
+  BlackKnightPrefab: {fileID: 5034715767878688487, guid: 88bfcb637e5ce0540ac9bf9bcfbf58b6, type: 3}
+  BlackBishopPrefab: {fileID: 5095424075943155320, guid: 4361a4a3bfc5dff48b23f1adc1b73064, type: 3}
+  BlackRookPrefab: {fileID: 8085885680382512367, guid: ae11e2a45c081cf4ebd1edb3722527ad, type: 3}
+  BlackQueenPrefab: {fileID: 3666362055619701086, guid: 53c1e30e7de40904a960372e9fac7ab1, type: 3}
+  BlackKingPrefab: {fileID: 605051031392636223, guid: 3bae1e321c49cd34589655a7ad8f96cf, type: 3}
   chessBoardManager: {fileID: 1985683269}
   spawnY_Offset: 0.5
 --- !u!4 &2143483389
