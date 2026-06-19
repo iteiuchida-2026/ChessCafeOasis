@@ -1,4 +1,6 @@
 // ルークの駒用スクリプト
+using UnityEngine;
+
 public class Piece_Rook : Piece
 {
     public override void Start()
@@ -6,7 +8,7 @@ public class Piece_Rook : Piece
         base.Start();
     }
 
-    public override void Move()
+    public override void Move(Vector2Int index)
     {
         // 駒それぞれの移動処理を後ほど追加する
     }
