@@ -22,15 +22,51 @@ public class PieceManager : MonoBehaviour
     [SerializeField] private ChessBoardManager chessBoardManager;
 
     [Header("駒を生成する際のY軸（高さ）調整値")]
-    [SerializeField] private float SpawnY_Offset = 0.5f;
+    [SerializeField] private float spawnY_Offset = 0.5f;
 
     private void Start()
     {
         InitializeAllPiece();
     }
 
+    // ▼初期配置位置に各ピースを配置するメソッド
     private void InitializeAllPiece()
     {
-        GameObject a1 = chessBoardManager.GetPieceAtTileObjectsArray(0, 0);
+        SpawnPiece(WhiteRookPrefab, 0, 0);
+        SpawnPiece(WhiteBishopPrefab, 0, 1);
+        SpawnPiece(WhiteKnightPrefab, 0, 2);
+        SpawnPiece(WhiteQueenPrefab, 0, 3);
+        SpawnPiece(WhiteKingPrefab, 0, 4);
+        SpawnPiece(WhiteBishopPrefab, 0, 5);
+        SpawnPiece(WhiteKnightPrefab, 0, 6);
+        SpawnPiece(WhiteRookPrefab, 0, 7);
+
+        SpawnPiece(BlackRookPrefab, 7, 0);
+        SpawnPiece(BlackBishopPrefab, 7, 1);
+        SpawnPiece(BlackKnightPrefab, 7, 2);
+        SpawnPiece(BlackQueenPrefab, 7, 3);
+        SpawnPiece(BlackKingPrefab, 7, 4);
+        SpawnPiece(BlackBishopPrefab, 7, 5);
+        SpawnPiece(BlackKnightPrefab, 7, 6);
+        SpawnPiece(BlackRookPrefab, 7, 7);
+
+        for (int y = 0; y < 8; y++)
+        {
+            SpawnPiece(WhitePawnPrefab, 1, y);
+            SpawnPiece(BlackPawnPrefab, 6, y);
+        }
+    }
+
+    // ▼駒を生成するメソッド
+    public void SpawnPiece(GameObject piecePrefab, int x, int y)
+    {
+        GameObject targetSquare = chessBoardManager.GetPieceAtTileObjectsArray(x, y);
+        if (targetSquare != null) Debug.Log("targetSquareがnullです");
+
+        Vector3 spawnPosition = targetSquare.transform.position;
+
+        spawnPosition.y += spawnY_Offset; // y軸の高さを調整してめり込まないようにする
+
+        GameObject spawnedPiece = Instantiate(piecePrefab, spawnPosition, Quaternion.identity);
     }
 }
