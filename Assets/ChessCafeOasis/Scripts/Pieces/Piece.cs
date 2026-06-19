@@ -39,9 +39,11 @@ public class Piece : MonoBehaviour
 
 
     // ▼移動メソッド（各駒でOverrideしてカスタマイズして使用する）
-    public virtual void Move()
+    public virtual void Move(Vector2Int index)
     {
         // 移動処理が入る予定
+
+        currentIndex = index; // 駒の現在位置を移動先のindexで更新
 
         HasMoved = true;
     }
