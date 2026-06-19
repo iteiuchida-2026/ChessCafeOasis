@@ -22,7 +22,7 @@ public class PieceManager : MonoBehaviour
     [SerializeField] private ChessBoardManager chessBoardManager;
 
     [Header("駒を生成する際のY軸（高さ）調整値")]
-    [SerializeField] private float spawnY_Offset = 0.5f;
+    [SerializeField] private float spawnY_Offset = 0f;
 
     private void Start()
     {
@@ -62,12 +62,15 @@ public class PieceManager : MonoBehaviour
     public void SpawnPiece(GameObject piecePrefab, int x, int y)
     {
         GameObject targetSquare = chessBoardManager.GetPieceAtTileObjectsArray(x, y);
-        if (targetSquare != null) Debug.Log("targetSquareがnullです");
+        if (targetSquare != null)
+        {
+            Vector3 spawnPosition = targetSquare.transform.position;
 
-        Vector3 spawnPosition = targetSquare.transform.position;
+            spawnPosition.y += spawnY_Offset; // y軸の高さを調整してめり込まないようにする
 
-        spawnPosition.y += spawnY_Offset; // y軸の高さを調整してめり込まないようにする
+            GameObject spawnedPiece = Instantiate(piecePrefab, spawnPosition, Quaternion.identity);
 
-        GameObject spawnedPiece = Instantiate(piecePrefab, spawnPosition, Quaternion.identity);
+            spawnedPiece.transform.SetParent(targetSquare.transform);
+        }
     }
 }
