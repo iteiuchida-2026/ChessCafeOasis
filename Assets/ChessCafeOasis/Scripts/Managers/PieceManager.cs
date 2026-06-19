@@ -30,30 +30,31 @@ public class PieceManager : MonoBehaviour
     }
 
     // ▼初期配置位置に各ピースを配置するメソッド
+    // ★盤面の値に留意
     private void InitializeAllPiece()
     {
-        SpawnPiece(WhiteRookPrefab, 0, 0);
-        SpawnPiece(WhiteBishopPrefab, 0, 1);
-        SpawnPiece(WhiteKnightPrefab, 0, 2);
-        SpawnPiece(WhiteQueenPrefab, 0, 3);
-        SpawnPiece(WhiteKingPrefab, 0, 4);
-        SpawnPiece(WhiteBishopPrefab, 0, 5);
-        SpawnPiece(WhiteKnightPrefab, 0, 6);
         SpawnPiece(WhiteRookPrefab, 0, 7);
+        SpawnPiece(WhiteBishopPrefab, 1, 7);
+        SpawnPiece(WhiteKnightPrefab, 2, 7);
+        SpawnPiece(WhiteQueenPrefab, 3, 7);
+        SpawnPiece(WhiteKingPrefab, 4, 7);
+        SpawnPiece(WhiteBishopPrefab, 5, 7);
+        SpawnPiece(WhiteKnightPrefab, 6, 7);
+        SpawnPiece(WhiteRookPrefab, 7, 7);
 
+        SpawnPiece(BlackRookPrefab, 0, 0);
+        SpawnPiece(BlackBishopPrefab, 1, 0);
+        SpawnPiece(BlackKnightPrefab, 2, 0);
+        SpawnPiece(BlackQueenPrefab, 3, 0);
+        SpawnPiece(BlackKingPrefab, 4, 0);
+        SpawnPiece(BlackBishopPrefab, 5, 0);
+        SpawnPiece(BlackKnightPrefab, 6, 0);
         SpawnPiece(BlackRookPrefab, 7, 0);
-        SpawnPiece(BlackBishopPrefab, 7, 1);
-        SpawnPiece(BlackKnightPrefab, 7, 2);
-        SpawnPiece(BlackQueenPrefab, 7, 3);
-        SpawnPiece(BlackKingPrefab, 7, 4);
-        SpawnPiece(BlackBishopPrefab, 7, 5);
-        SpawnPiece(BlackKnightPrefab, 7, 6);
-        SpawnPiece(BlackRookPrefab, 7, 7);
 
-        for (int y = 0; y < 8; y++)
+        for (int x = 0; x < 8; x++)
         {
-            SpawnPiece(WhitePawnPrefab, 1, y);
-            SpawnPiece(BlackPawnPrefab, 6, y);
+            SpawnPiece(WhitePawnPrefab, x, 6);
+            SpawnPiece(BlackPawnPrefab, x, 1);
         }
     }
 

@@ -5,19 +5,20 @@ using UnityEngine;
 //////// データの流れ①：＜InputManagerでクリックしたオブジェクト情報＞　→　＜ChessBoardManager＞ ////////
 //////// データの流れ②：＜InputManagerでクリックしたオブジェクト情報＞　→　＜ChessBoardManager＞ ////////
 
-////// ★盤面の値：//////
-////// データ層の２次元配列は、(0,0)がチェス盤のa8に該当する。白番から見る向きで、a1は(7,0)//////
+////// ★盤面の値：                                                                              //////
+////// すべての配列および座標は以下のとおりに統一する。
+////// (0,0)がチェス盤のa8に該当する。白番から見る向きで、a1は(7,0)                              //////
 ////// ________________________________________________________________________________________  //////
-////// |(0,0 / a8)|(0,1 / b8)|(0,2 / c8)|(0,3 / d8)|(0,4 / e8)|(0,5 / f8)|(0,6 / g8)|(0,7 / h8)| //////
-////// |(1,0 / a7)|(1,1 / b7)|(1,2 / c7)|(1,3 / d7)|(1,4 / e7)|(1,5 / f7)|(1,6 / g7)|(1,7 / h7)| //////
+////// |(0,0 / a8)|(1,0 / b8)|(2,0 / c8)|(3,0 / d8)|(4,0 / e8)|(5,0 / f8)|(6,0 / g8)|(7,0 / h8)| //////
+////// |(0,1 / a7)|(1,1 / b7)|(2,1 / c7)|(3,1 / d7)|(4,1 / e7)|(5,1 / f7)|(6,1 / g7)|(7,1 / h7)| //////
 ////// ||||||||| //////
 ////// ||||||||| //////
 ////// ||||||||| //////
 ////// ||||||||| //////
 ////// ||||||||| //////
 ////// ||||||||| //////
-////// |(6,0 / a2)|(6,1 / b2)|(6,2 / c2)|(6,3 / d2)|(6,4 / e2)|(6,5 / f2)|(6,6 / g2)|(6,7 / h2)| //////
-////// |(7,0 / a1)|(7,1 / b1)|(7,2 / c1)|(7,3 / d1)|(7,4 / e1)|(7,5 / f1)|(7,6 / g1)|(7,7 / h1)| //////
+////// |(0,6 / a2)|(1,6 / b2)|(2,6 / c2)|(3,6 / d2)|(4,6 / e2)|(5,6 / f2)|(6,6 / g2)|(7,6 / h2)| //////
+////// |(0,7 / a1)|(1,7 / b1)|(2,7 / c1)|(3,7 / d1)|(4,7 / e1)|(5,7 / f1)|(6,7 / g1)|(7,7 / h1)| //////
 ////// ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣  //////
 
 // ◆概要：データ層のチェス盤用に駒の種類と色を定義
@@ -73,26 +74,26 @@ public class ChessBoardManager : MonoBehaviour
         }
 
         // 白の駒を配置する
-        dataLayerBoardState[7, 0] = ChessPieceType.WhiteRook;
-        dataLayerBoardState[7, 1] = ChessPieceType.WhiteKnight;
-        dataLayerBoardState[7, 2] = ChessPieceType.WhiteBishop;
-        dataLayerBoardState[7, 3] = ChessPieceType.WhiteQueen;
-        dataLayerBoardState[7, 4] = ChessPieceType.WhiteKing;
-        dataLayerBoardState[7, 5] = ChessPieceType.WhiteBishop;
-        dataLayerBoardState[7, 6] = ChessPieceType.WhiteKnight;
+        dataLayerBoardState[0, 7] = ChessPieceType.WhiteRook;
+        dataLayerBoardState[1, 7] = ChessPieceType.WhiteKnight;
+        dataLayerBoardState[2, 7] = ChessPieceType.WhiteBishop;
+        dataLayerBoardState[3, 7] = ChessPieceType.WhiteQueen;
+        dataLayerBoardState[4, 7] = ChessPieceType.WhiteKing;
+        dataLayerBoardState[5, 7] = ChessPieceType.WhiteBishop;
+        dataLayerBoardState[6, 7] = ChessPieceType.WhiteKnight;
         dataLayerBoardState[7, 7] = ChessPieceType.WhiteRook;
-        for (int y = 0; y < 8; y++) dataLayerBoardState[7, y] = ChessPieceType.WhitePawn;
+        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 7] = ChessPieceType.WhitePawn;
 
         // 黒の駒を配置する
         dataLayerBoardState[0, 0] = ChessPieceType.BlackRook;
-        dataLayerBoardState[0, 1] = ChessPieceType.BlackKnight;
-        dataLayerBoardState[0, 2] = ChessPieceType.BlackBishop;
-        dataLayerBoardState[0, 3] = ChessPieceType.BlackQueen;
-        dataLayerBoardState[0, 4] = ChessPieceType.BlackKing;
-        dataLayerBoardState[0, 5] = ChessPieceType.BlackBishop;
-        dataLayerBoardState[0, 6] = ChessPieceType.BlackKnight;
-        dataLayerBoardState[0, 7] = ChessPieceType.BlackRook;
-        for (int y = 0; y < 8; y++) dataLayerBoardState[0, y] = ChessPieceType.BlackPawn;
+        dataLayerBoardState[1, 0] = ChessPieceType.BlackKnight;
+        dataLayerBoardState[2, 0] = ChessPieceType.BlackBishop;
+        dataLayerBoardState[3, 0] = ChessPieceType.BlackQueen;
+        dataLayerBoardState[4, 0] = ChessPieceType.BlackKing;
+        dataLayerBoardState[5, 0] = ChessPieceType.BlackBishop;
+        dataLayerBoardState[6, 0] = ChessPieceType.BlackKnight;
+        dataLayerBoardState[7, 0] = ChessPieceType.BlackRook;
+        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 1] = ChessPieceType.BlackPawn;
     }
 
     // ▼【① データ】駒の移動が問題ない場合のデータ層盤面データ更新メソッド

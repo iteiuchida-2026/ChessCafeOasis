@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 5, y: 2}
+  boardIndex: {x: 5, y: 5}
 --- !u!114 &96133713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 5, y: 4}
+  boardIndex: {x: 5, y: 3}
 --- !u!114 &97666797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 1, y: 5}
+  boardIndex: {x: 1, y: 2}
 --- !u!114 &193272133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 2, y: 0}
+  boardIndex: {x: 2, y: 7}
 --- !u!114 &203939611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 5, y: 3}
+  boardIndex: {x: 5, y: 4}
 --- !u!1001 &231638786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 3, y: 7}
+  boardIndex: {x: 3, y: 0}
 --- !u!114 &281808288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 7, y: 6}
+  boardIndex: {x: 7, y: 1}
 --- !u!114 &292264560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 7, y: 7}
+  boardIndex: {x: 7, y: 0}
 --- !u!114 &379617108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 3, y: 2}
+  boardIndex: {x: 3, y: 5}
 --- !u!114 &398546432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 2, y: 2}
+  boardIndex: {x: 2, y: 5}
 --- !u!114 &399417691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 7, y: 3}
+  boardIndex: {x: 7, y: 4}
 --- !u!114 &426766428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 3, y: 4}
+  boardIndex: {x: 3, y: 3}
 --- !u!114 &442056387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 5, y: 0}
+  boardIndex: {x: 5, y: 7}
 --- !u!114 &444487749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 1, y: 0}
+  boardIndex: {x: 1, y: 7}
 --- !u!114 &509546549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 0, y: 5}
+  boardIndex: {x: 0, y: 2}
 --- !u!114 &531141087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 0, y: 7}
+  boardIndex: {x: 0, y: 0}
 --- !u!114 &599551719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 3, y: 0}
+  boardIndex: {x: 3, y: 7}
 --- !u!1001 &612446498
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -996,7 +996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 0, y: 4}
+  boardIndex: {x: 0, y: 3}
 --- !u!114 &612446565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 0, y: 3}
+  boardIndex: {x: 0, y: 4}
 --- !u!114 &612446566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,7 +1022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 0, y: 2}
+  boardIndex: {x: 0, y: 5}
 --- !u!114 &612446567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1035,7 +1035,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 0, y: 1}
+  boardIndex: {x: 0, y: 6}
 --- !u!114 &612446568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1048,7 +1048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 0, y: 0}
+  boardIndex: {x: 0, y: 7}
 --- !u!114 &619508763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,7 +1061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 6, y: 6}
+  boardIndex: {x: 6, y: 1}
 --- !u!1 &641007177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,7 +1118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 1, y: 4}
+  boardIndex: {x: 1, y: 3}
 --- !u!114 &682943892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1131,7 +1131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 4, y: 7}
+  boardIndex: {x: 4, y: 0}
 --- !u!114 &762523603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 1, y: 6}
+  boardIndex: {x: 1, y: 1}
 --- !u!114 &796964836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,7 +1157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 6, y: 2}
+  boardIndex: {x: 6, y: 5}
 --- !u!114 &815730326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,7 +1170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 1, y: 7}
+  boardIndex: {x: 1, y: 0}
 --- !u!114 &819670851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1183,7 +1183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 4, y: 3}
+  boardIndex: {x: 4, y: 4}
 --- !u!1 &922771651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,7 +1284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 6, y: 7}
+  boardIndex: {x: 6, y: 0}
 --- !u!114 &995017514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1297,7 +1297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 6, y: 5}
+  boardIndex: {x: 6, y: 2}
 --- !u!114 &996900748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1310,7 +1310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 4, y: 6}
+  boardIndex: {x: 4, y: 1}
 --- !u!114 &1000025889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 3, y: 6}
+  boardIndex: {x: 3, y: 1}
 --- !u!114 &1041425166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1336,7 +1336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 2, y: 5}
+  boardIndex: {x: 2, y: 2}
 --- !u!114 &1046666597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1349,7 +1349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 2, y: 1}
+  boardIndex: {x: 2, y: 6}
 --- !u!114 &1070392683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 4, y: 4}
+  boardIndex: {x: 4, y: 3}
 --- !u!114 &1073455719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1375,7 +1375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 4, y: 1}
+  boardIndex: {x: 4, y: 6}
 --- !u!1001 &1114813758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1757,7 +1757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 3, y: 1}
+  boardIndex: {x: 3, y: 6}
 --- !u!114 &1199892368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1770,7 +1770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 2, y: 6}
+  boardIndex: {x: 2, y: 1}
 --- !u!114 &1210312188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,7 +1783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 5, y: 1}
+  boardIndex: {x: 5, y: 6}
 --- !u!1 &1283494209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,7 +1840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 1, y: 1}
+  boardIndex: {x: 1, y: 6}
 --- !u!114 &1353490891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1853,7 +1853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 4, y: 2}
+  boardIndex: {x: 4, y: 5}
 --- !u!114 &1380673618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1866,7 +1866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 2, y: 7}
+  boardIndex: {x: 2, y: 0}
 --- !u!1 &1393758883
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,7 +2016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 5, y: 6}
+  boardIndex: {x: 5, y: 1}
 --- !u!1 &1437198144
 GameObject:
   m_ObjectHideFlags: 0
@@ -2156,7 +2156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 3, y: 5}
+  boardIndex: {x: 3, y: 2}
 --- !u!114 &1504859413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2169,7 +2169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 7, y: 0}
+  boardIndex: {x: 7, y: 7}
 --- !u!114 &1512365675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2182,7 +2182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 1, y: 2}
+  boardIndex: {x: 1, y: 5}
 --- !u!114 &1513818230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2195,7 +2195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 7, y: 4}
+  boardIndex: {x: 7, y: 3}
 --- !u!1 &1518545901
 GameObject:
   m_ObjectHideFlags: 0
@@ -2241,7 +2241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 7, y: 1}
+  boardIndex: {x: 7, y: 6}
 --- !u!114 &1654285997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2254,7 +2254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 6, y: 1}
+  boardIndex: {x: 6, y: 6}
 --- !u!114 &1658131926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2267,7 +2267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 5, y: 5}
+  boardIndex: {x: 5, y: 2}
 --- !u!114 &1669579719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2280,7 +2280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 0, y: 6}
+  boardIndex: {x: 0, y: 1}
 --- !u!114 &1730088719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2293,7 +2293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 7, y: 2}
+  boardIndex: {x: 7, y: 5}
 --- !u!114 &1740963662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2306,7 +2306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 4, y: 0}
+  boardIndex: {x: 4, y: 7}
 --- !u!114 &1775937080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2319,7 +2319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 7, y: 5}
+  boardIndex: {x: 7, y: 2}
 --- !u!1 &1788620543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,7 +2377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 6, y: 0}
+  boardIndex: {x: 6, y: 7}
 --- !u!114 &1812978258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2390,7 +2390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 6, y: 3}
+  boardIndex: {x: 6, y: 4}
 --- !u!114 &1823498520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2403,7 +2403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 4, y: 5}
+  boardIndex: {x: 4, y: 2}
 --- !u!114 &1847425484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2416,7 +2416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 1, y: 3}
+  boardIndex: {x: 1, y: 4}
 --- !u!114 &1889477547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2429,7 +2429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 6, y: 4}
+  boardIndex: {x: 6, y: 3}
 --- !u!114 &1948296406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2442,7 +2442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 3, y: 3}
+  boardIndex: {x: 3, y: 4}
 --- !u!1 &1985683268
 GameObject:
   m_ObjectHideFlags: 0
@@ -2876,7 +2876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 2, y: 3}
+  boardIndex: {x: 2, y: 4}
 --- !u!114 &2044594516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2889,7 +2889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 5, y: 7}
+  boardIndex: {x: 5, y: 0}
 --- !u!114 &2123987325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2902,7 +2902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 2, y: 4}
+  boardIndex: {x: 2, y: 3}
 --- !u!1 &2143483387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2932,8 +2932,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20feecd58062b644fba1baf7d9084eda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PieceManager
-  PiecePrefabs: []
+  WhitePawnPrefab: {fileID: 0}
+  WhiteKnightPrefab: {fileID: 0}
+  WhiteBishopPrefab: {fileID: 0}
+  WhiteRookPrefab: {fileID: 0}
+  WhiteQueenPrefab: {fileID: 0}
+  WhiteKingPrefab: {fileID: 0}
+  BlackPawnPrefab: {fileID: 0}
+  BlackKnightPrefab: {fileID: 0}
+  BlackBishopPrefab: {fileID: 0}
+  BlackRookPrefab: {fileID: 0}
+  BlackQueenPrefab: {fileID: 0}
+  BlackKingPrefab: {fileID: 0}
   chessBoardManager: {fileID: 1985683269}
+  spawnY_Offset: 0.5
 --- !u!4 &2143483389
 Transform:
   m_ObjectHideFlags: 0
