@@ -38,14 +38,17 @@ public class Piece : MonoBehaviour
 
 
 
-    // 移動処理
-    public virtual void Move()
+    // ▼移動メソッド（各駒でOverrideしてカスタマイズして使用する）
+    public virtual void Move(Vector2Int index)
     {
         // 移動処理が入る予定
+
+        currentIndex = index; // 駒の現在位置を移動先のindexで更新
 
         HasMoved = true;
     }
 
+    // ▼プロモーションメソッド（ポーンのみOverrideして使用する）
     public virtual void Promote()
     {
         IsPromoted = true;
@@ -54,14 +57,7 @@ public class Piece : MonoBehaviour
     }
 
 
-    //// 駒を取る処理（保留）
-    //public virtual void Take()
-    //{
-
-    //}
-
-
-    // 駒が取られる処理（thisObject）
+    // ▼駒が取られるメソッド（各駒でOverrideしてカスタマイズして使用する）
     public virtual void OnTaken()
     {
         currentStatus = PieceStatus.Destroyed;

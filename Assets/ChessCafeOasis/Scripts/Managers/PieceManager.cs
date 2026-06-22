@@ -22,15 +22,58 @@ public class PieceManager : MonoBehaviour
     [SerializeField] private ChessBoardManager chessBoardManager;
 
     [Header("駒を生成する際のY軸（高さ）調整値")]
-    [SerializeField] private float SpawnY_Offset = 0.5f;
+    [SerializeField] private float spawnY_Offset = 0f;
 
     private void Start()
     {
         InitializeAllPiece();
     }
 
+    // ▼初期配置位置に各ピースを配置するメソッド
+    // ★盤面の値に留意
     private void InitializeAllPiece()
     {
-        GameObject a1 = chessBoardManager.GetPieceAtTileObjectsArray(0, 0);
+        SpawnPiece(WhiteRookPrefab, 0, 7);
+        SpawnPiece(WhiteBishopPrefab, 1, 7);
+        SpawnPiece(WhiteKnightPrefab, 2, 7);
+        SpawnPiece(WhiteQueenPrefab, 3, 7);
+        SpawnPiece(WhiteKingPrefab, 4, 7);
+        SpawnPiece(WhiteBishopPrefab, 5, 7);
+        SpawnPiece(WhiteKnightPrefab, 6, 7);
+        SpawnPiece(WhiteRookPrefab, 7, 7);
+
+        SpawnPiece(BlackRookPrefab, 0, 0);
+        SpawnPiece(BlackBishopPrefab, 1, 0);
+        SpawnPiece(BlackKnightPrefab, 2, 0);
+        SpawnPiece(BlackQueenPrefab, 3, 0);
+        SpawnPiece(BlackKingPrefab, 4, 0);
+        SpawnPiece(BlackBishopPrefab, 5, 0);
+        SpawnPiece(BlackKnightPrefab, 6, 0);
+        SpawnPiece(BlackRookPrefab, 7, 0);
+
+        for (int x = 0; x < 8; x++)
+        {
+            SpawnPiece(WhitePawnPrefab, x, 6);
+            SpawnPiece(BlackPawnPrefab, x, 1);
+        }
+    }
+
+    // ▼駒を生成するメソッド
+    public void SpawnPiece(GameObject piecePrefab, int x, int y)
+    {
+        GameObject targetSquare = chessBoardManager.GetPieceAtTileObjectsArray(x, y);
+        if (targetSquare != null)
+        {
+            Vector3 spawnPosition = targetSquare.transform.position;
+
+            spawnPosition.y += spawnY_Offset; // y軸の高さを調整してめり込まないようにする
+
+            GameObject spawnedPiece = Instantiate(piecePrefab, spawnPosition, Quaternion.identity);
+
+            //一度削除
+            //spawnedPiece.transform.SetParent(targetSquare.transform); // 生成した駒をマスの子要素にする
+
+            spawnedPiece.GetComponent<Piece>().currentIndex = targetSquare.GetComponent<TileController>().BoardIndex; // 生成時に対象マスのインデックスを現在位置を設定
+        }
     }
 }
