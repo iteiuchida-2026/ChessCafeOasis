@@ -10,11 +10,11 @@ public abstract class Piece : MonoBehaviour
     [SerializeField] private PieceBaseInfo pieceBaseInfo;
 
     // Piece側でPieceBaseInfoの情報を保持するための変数を初期化
-    public string pieceType { get; set; }
-    public string pieceColor { get; set; }
+    public string PieceType { get; set; }
+    public string PieceColor { get; set; }
 
     // 駒の現在位置把握用の設定
-    public Vector2Int currentIndex { get; set; } // 駒の現在位置
+    public Vector2Int CurrentIndex { get; set; } // 駒の現在位置
 
     // ルール判定用のフラグ
     public bool HasMoved { get; private set; } = false; // キャスリング判定用
@@ -28,7 +28,7 @@ public abstract class Piece : MonoBehaviour
         Destroyed
     }
 
-    public PieceStatus currentStatus { get; private set; } = PieceStatus.Active;
+    public PieceStatus CurrentStatus { get; private set; } = PieceStatus.Active;
 
     public abstract List<Vector2Int> GetMoveVectors(); // 派生クラス側で移動ベクトルを定義して返す
 
@@ -37,8 +37,8 @@ public abstract class Piece : MonoBehaviour
     // スタート時にPieceBaseInfoから情報を取得しておく
     public virtual void Start()
     {
-        pieceType = pieceBaseInfo.pieceType.ToString();
-        pieceColor = pieceBaseInfo.pieceColor.ToString();
+        PieceType = pieceBaseInfo.pieceType.ToString();
+        PieceColor = pieceBaseInfo.pieceColor.ToString();
     }
 
 
@@ -48,7 +48,7 @@ public abstract class Piece : MonoBehaviour
     {
         // 移動処理が入る予定
 
-        currentIndex = index; // 駒の現在位置を移動先のindexで更新
+        CurrentIndex = index; // 駒の現在位置を移動先のindexで更新
 
         HasMoved = true;
     }
@@ -65,7 +65,7 @@ public abstract class Piece : MonoBehaviour
     // ▼駒が取られるメソッド（各駒でOverrideしてカスタマイズして使用する）
     public virtual void OnTaken()
     {
-        currentStatus = PieceStatus.Destroyed;
+        CurrentStatus = PieceStatus.Destroyed;
 
         // 現時点では削除処理とするが、今後はチェス盤外へ移動する演出としたい
         gameObject.SetActive(false);

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RecordManager recordManager;
     [SerializeField] private ChessBoardManager chessBoardManager;
 
-    public PlayerTurn currentTurn { get; set; } // 現在のプレイヤーターン変数を宣言
+    public PlayerTurn CurrentTurn { get; set; } // 現在のプレイヤーターン変数を宣言
 
     public static GameManager Instance { get; private set; } // シングルトンのインスタンスを作成
 
@@ -34,13 +34,13 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        currentTurn = PlayerTurn.White; // 先攻の白番を起動時に設定する
+        CurrentTurn = PlayerTurn.White; // 先攻の白番を起動時に設定する
     }
 
     // ▼ターンを切り替えるメソッド
     private void SwitchTurn()
     {
-        currentTurn = (currentTurn == PlayerTurn.White) ? PlayerTurn.Black : PlayerTurn.White;
+        CurrentTurn = (CurrentTurn == PlayerTurn.White) ? PlayerTurn.Black : PlayerTurn.White;
     }
 
 }
