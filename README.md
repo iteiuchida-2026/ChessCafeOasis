@@ -241,7 +241,7 @@ Menu            PlayerName                 |_______|
 
 | クラス名 | 役割 | 内容 | 備考 | 配置シーン |
 |------|------|------|------|------|
-| **GameManager**| チェスゲーム全体の監督。| 各スクリプト間の情報の中継ハブ役、かつ指示役。 | Singletonで各シーンで利用。Gameシーン内で主に使用。| Bootstrapに配置してシングルトンパターンとする。|
+| **GameManager**| チェスゲーム全体の監督。| 各スクリプト間の情報の中継ハブ役、かつ指示役。ターン数管理。 | Singletonで各シーンで利用。Gameシーン内で主に使用。| Bootstrapに配置してシングルトンパターンとする。|
 | **LobbyManager**| ロビー内のゲームの進行係、監督。| NPCキャラクターの管理、ゲーム進行、状態管理。 | Singletonで各シーンで利用。3D空間実装以降Lobbyシーン内で主に使用。| Bootstrapに配置してシングルトンパターンとする。|
 | **PlayerManager**| プレイヤーの監視係。| 入力処理の受付、アニメーションの切り替え。| Singletonで各シーンで利用。3D空間実装以降に主に使用する。| Bootstrapに配置してシングルトンパターンとする。|
 | **SceneManager**| シーン遷移係。| Bootstrap⇔Title⇔Lobby⇔Gameの切り替えを行う。| Singletonで各シーンで利用。ネットワーク利用時に他Managerに切り替える可能性があるため役割が少ないが分離しておく。| Bootstrapに配置してシングルトンパターンとする。|
@@ -254,7 +254,7 @@ Menu            PlayerName                 |_______|
 | **ChessRuleReferee**| ゲームの審判係。| 勝敗判定、各駒の移動ルール、キャスリングやアンパサン等の特殊ルールの監視判定を行う。| Gameシーン内で利用。| Gameシーン。|
 | **ChessBoardManager**| 8*8の盤面管理係。| 各々のマスにどの駒が存在するか配列やリストで記録する。| Gameシーン内で利用。 | Gameシーン。|
 | **TileController**| 個々のマスオブジェクトにアタッチするクラス。| マスの座標（x,y）を持ち、選択された際のハイライト処理を行う。| Gameシーン内でのみ利用予定。 | Gameシーン。|
-| **piece**| 駒の基本クラス。 | 駒の種類、プレイヤーの色、現在位置を持つ。 | このクラスを継承して各駒のスクリプトを作成。| Gameシーン。|
+| **piece**| 駒の基本クラス。 | 駒の種類、駒の色、駒の移動ベクトル、現在位置を持つ。 | このクラスを継承して各駒のスクリプトを作成。| Gameシーン。|
 | **PieceBaseInfo**| 駒の基本情報クラス。| ScriptableObjectで駒の基本情報を作成する。| 名前、色、動ける最大マス数、初期配置マス。| Gameシーン。|
 | **PieceManager**| 駒の管理係。| 初期配置位置にprefabを生成、初期化。駒の3Dオブジェクトの移動、削除を担当。 | | Gameシーン。|
 | **inputHandler**| プレイヤーのマウスクリックを検出するクラス。| どのマス・駒が選択されたかを判定する。 | | Gameシーン。|
@@ -377,7 +377,7 @@ Menu            PlayerName                 |_______|
 | Piece.csの状態管理方法についてのGeminiへの相談回答|[Piece.csに対する状態管理についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29028937/Piece.cs.Gemini.pdf)| Gemini|
 | ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答|[ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080904/ChessBoardManager.cs.3D.Gemini.pdf)|Gemini|
 | PieceManager.csのPrefab生成に関するGeminiへ相談した回答|[PieceManager.csのPrefab生成に関するGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080910/PieceManager.cs.Prefab.Gemini.pdf)|Gemini|
-||||
+|ChessRuleReferee.csの変数やメソッドの相談のGemini回答|[ChessRuleReferee.csの変数やメソッドの相談のGemini回答.pdf](https://github.com/user-attachments/files/29187269/ChessRuleReferee.cs.Gemini.pdf)|Gemini|
 ||||
 |オフライン対戦モードの計画試案|||
 |UML図|||
