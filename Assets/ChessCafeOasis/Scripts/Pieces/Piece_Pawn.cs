@@ -1,4 +1,5 @@
 // ポーンの駒用スクリプト（ポーンのみPromote()が有効）
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Piece_Pawn : Piece
@@ -7,6 +8,16 @@ public class Piece_Pawn : Piece
     {
         base.Start();
     }
+
+    public override List<Vector2Int> GetMoveVectors()
+    {
+        return new List<Vector2Int>
+        {
+
+        };
+    }
+
+    public override bool IsRangedPiece() => false; // ポーンは該当しない
 
     public override void Move(Vector2Int index)
     {

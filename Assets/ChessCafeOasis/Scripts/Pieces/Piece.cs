@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 //////// スクリプトの説明：【Pieceの基本スクリプト、これを継承して各駒用のスクリプトを作成する】////////
 
-public class Piece : MonoBehaviour
+public abstract class Piece : MonoBehaviour
 {
     // PieceBaseInfoをアタッチして駒の基本情報を設定する
     [Header("駒の基本情報を設定")]
@@ -28,6 +29,10 @@ public class Piece : MonoBehaviour
     }
 
     public PieceStatus currentStatus { get; private set; } = PieceStatus.Active;
+
+    public abstract List<Vector2Int> GetMoveVectors(); // 派生クラス側で移動ベクトルを定義して返す
+
+    public abstract bool IsRangedPiece(); // 連続して移動できる駒かどうか（ルーク、ビショップ、クイーンはtrue）
 
     // スタート時にPieceBaseInfoから情報を取得しておく
     public virtual void Start()
