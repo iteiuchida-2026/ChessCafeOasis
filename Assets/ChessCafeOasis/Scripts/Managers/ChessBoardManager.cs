@@ -39,8 +39,8 @@ public class ChessBoardManager : MonoBehaviour
     [SerializeField] private GameObject[] tileObjects = new GameObject[64];
 
     private ChessPieceType[,] dataLayerBoardState = new ChessPieceType[8, 8]; //【① データ】8*8の盤面データ層の配列
-    public Vector2Int whiteKingPos; //【① データ】データ層用白キングの現在のポジション
-    public Vector2Int blackKingPos; //【① データ】データ層用黒キングの現在のポジション
+    public Vector2Int whiteKingPos { get; set; } //【① データ】データ層用白キングの現在のポジション
+    public Vector2Int blackKingPos { get; set; } //【① データ】データ層用黒キングの現在のポジション
     private GameObject[,] realLayerBoardState = new GameObject[8, 8]; //【② 3D】8*8の3D上の駒を管理する配列
     private GameObject clickedGameObject; //【② 3D】クリックされたゲームオブジェクト保持用の変数を宣言
     private GameObject[,] tileObjectsArray = new GameObject[8, 8]; //【③ マスOBJ】 tileObjectsを8*8の実際のチェス盤に合わせるため2次元配列を用意
