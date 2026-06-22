@@ -43,7 +43,7 @@ public class ChessRuleReferee : MonoBehaviour
     }
 
     // ▼クイーンの移動判定
-    public bool CheckQQueenMove()
+    public bool CheckQueenMove()
     {
         return true;
     }
