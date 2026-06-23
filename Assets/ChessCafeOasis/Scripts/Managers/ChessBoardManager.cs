@@ -47,7 +47,6 @@ public enum ChessPieceType_DataLayer
 //    }
 //}
 
-
 // ◆概要：
 // ①チェス盤面情報をデータ層のみで管理（シミュレート用）
 // ②3Dチェス盤面情報の管理（実物）
@@ -232,6 +231,4 @@ public class ChessBoardManager : MonoBehaviour
     //    bool clickedGameObjectHasMoved = gameObject.GetComponent<Piece>().HasMoved;
     //    bool clickedGameObjectIsPromoted = gameObject.GetComponent<Piece>().IsPromoted;
     //}
-
-
 }

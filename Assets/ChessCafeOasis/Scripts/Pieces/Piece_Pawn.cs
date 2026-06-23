@@ -9,11 +9,13 @@ public class Piece_Pawn : Piece
         base.Start();
     }
 
+    // ポーン固有の初回のみ2歩進めるのはChessRuleReferee側で処理する
+
     public override List<Vector2Int> GetMoveVectors()
     {
         return new List<Vector2Int>
         {
-
+            new Vector2Int(0, 1), // 前
         };
     }
 
