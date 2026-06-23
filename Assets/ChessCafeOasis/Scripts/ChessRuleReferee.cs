@@ -3,6 +3,8 @@ using UnityEngine;
 
 //////// スクリプトの説明：【チェスのルール審判係。主に移動における判定を担当する】////////
 
+// ★アンパッサン、プロモーション、キャスリングは未処理
+
 
 public class ChessRuleReferee : MonoBehaviour
 {
@@ -67,23 +69,56 @@ public class ChessRuleReferee : MonoBehaviour
     {
         foreach (Vector2Int baseMoveVector in _baseMoveVectors)
         {
-            if (pawn.HasMoved == true) NotRangedPieceMoveCheck(baseMoveVector, targetPos); // 既に移動していたら1マスしか進めない
+            if (pawn.HasMoved == true) PawnMoveCheckAssist(baseMoveVector, targetPos); // 既に移動していたら1マスしか進めない
             else
             {
                 Vector2Int pawnFirstMoveVector = baseMoveVector + baseMoveVector; // まだ動いていないなら2マス進める
-                NotRangedPieceMoveCheck(pawnFirstMoveVector, targetPos);
+                PawnMoveCheckAssist(pawnFirstMoveVector, targetPos);
             }
         }
         return false;
     }
 
-    // ナイト、キングの移動走査用メソッド
+    // ▼ 移動走査用の補助メソッド（ナイト、キング用）
     private bool NotRangedPieceMoveCheck(Vector2Int baseMoveVector, Vector2Int targetPos)
     {
         _nextPos = _currentPos + baseMoveVector;
         if (_nextPos == targetPos && IsWithinBoard(_nextPos))
         {
             return IsTileEmpty(_nextPos) || IsEnemyPiece(_myColor, _nextPos);
+        }
+        return false;
+    }
+
+    // ▼ 移動走査用の補助メソッド（ポーン用）
+    private bool PawnMoveCheckAssist(Vector2Int baseMoveVector, Vector2Int targetPos)
+    {
+        // メソッド内の変数を共有
+        Vector2Int pawnRightAttackPos;
+        Vector2Int pawnLeftAttackPos;
+        Vector2Int pawnAttackPos;
+
+        if (_myColor == "White") // 駒の色が白の場合は正の向きで移動マスと攻撃マスを取得
+        {
+            _nextPos = _currentPos + baseMoveVector;
+
+            pawnRightAttackPos = new Vector2Int(1, 1);
+            pawnLeftAttackPos = new Vector2Int(-1, 1);
+            pawnAttackPos = _currentPos + pawnRightAttackPos + pawnLeftAttackPos;
+        }
+        else // 駒の色が黒の場合は負の向きで移動マスと攻撃マスを取得
+        {
+            _nextPos = _currentPos - baseMoveVector;
+
+            pawnRightAttackPos = new Vector2Int(-1, -1);
+            pawnLeftAttackPos = new Vector2Int(1, -1);
+            pawnAttackPos = _currentPos + pawnRightAttackPos + pawnLeftAttackPos;
+        }
+
+        // 移動先のマスが移動可能範囲内また、攻撃先のマスに相手の駒がいある場合はtrueを返す
+        if (_nextPos == targetPos && IsWithinBoard(_nextPos) || IsEnemyPiece(_myColor, pawnAttackPos))
+        {
+            return IsTileEmpty(_nextPos) || IsEnemyPiece(_myColor, pawnAttackPos);
         }
         return false;
     }
@@ -133,7 +168,4 @@ public class ChessRuleReferee : MonoBehaviour
         }
         return false;
     }
-
-
-
 }
