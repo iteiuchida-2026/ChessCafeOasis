@@ -73,12 +73,20 @@ public class GameManager : MonoBehaviour
         // 既に駒を選択中で今回クリックしたマスへ移動を試みる場合
         if (CurrentState == GameState.PieceSelected)
         {
-            if (chessRuleReferee.IsValidMove())
+            if (chessRuleReferee.IsValidMove()) // 引数の調整追加が必要
             {
                 // 合法手なら移動を実行
 
             }
         }
+    }
+
+    // ▼現在ターンの色を判断するメソッド
+    private bool IsCurrentTurnColor(PieceColor color)
+    {
+        if (CurrentState == GameState.WhiteTurn && color == PieceColor.White) return true;
+        if (CurrentState == GameState.BlackTurn && color == PieceColor.Black) return true;
+        return false;
     }
 
     // ▼ターン終了メソッド
