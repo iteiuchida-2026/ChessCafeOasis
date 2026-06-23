@@ -26,12 +26,12 @@ public class PieceManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeAllPiece();
+        InitializePieceObject();
     }
 
     // ▼初期配置位置に各ピースを配置するメソッド
     // ★盤面の値に留意
-    private void InitializeAllPiece()
+    public void InitializePieceObject()
     {
         SpawnPiece(WhiteRookPrefab, 0, 7);
         SpawnPiece(WhiteBishopPrefab, 1, 7);
