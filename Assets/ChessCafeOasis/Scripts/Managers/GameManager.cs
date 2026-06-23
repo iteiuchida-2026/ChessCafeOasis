@@ -2,6 +2,14 @@ using UnityEngine;
 
 //////// スクリプトの説明：【各スクリプト間の情報の中継ハブ役、かつ指示役。】////////
 
+//////// データの流れ③：＜ChessBoardManagerが■駒オブジェクト情報を取得＞ 　////////
+////////　→　＜GameManager：OnPieceClickedメソッドで該当ターンの駒か判別し、1回目のクリックで移動可能タイルを光らせる＞ ////////
+////////　→　＜GameManager：2回目のクリックで合法手なら移動を実行する＞ 　　////////
+////////　                                                              　　 ////////
+////////　データは状態で分岐する：                                      　　 ////////
+////////　＜A.1回目のクリックの場合：　→　ChessBoardManagerが■受け取る＞　 ////////
+////////　＜B.2回目のクリックの場合：　→　ChessRuleRefereeが■受け取る＞ 　////////
+
 // ◆概要：ゲームの状態をenumで用意する
 public enum GameState
 {
@@ -71,6 +79,12 @@ public class GameManager : MonoBehaviour
 
             }
         }
+    }
+
+    // ▼ターン終了メソッド
+    private void EndTurn()
+    {
+
     }
 
 }

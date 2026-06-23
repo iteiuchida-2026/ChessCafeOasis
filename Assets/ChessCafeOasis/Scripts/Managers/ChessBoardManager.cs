@@ -2,8 +2,7 @@ using UnityEngine;
 
 //////// スクリプトの説明：【チェス盤の各マスにどの駒が存在するかデータで記録し管理する】////////
 
-//////// データの流れ①：＜InputManagerでクリックしたオブジェクト情報＞　→　＜ChessBoardManager＞ ////////
-//////// データの流れ②：＜InputManagerでクリックしたオブジェクト情報＞　→　＜ChessBoardManager＞ ////////
+//////// データの流れ②：＜InputManagerでクリックした■オブジェクト情報　→　ChessBoardManager：IdentifyGameObjectメソッドで■駒オブジェクト情報を取得＞　→　＜GameManagerが■受け取る＞ ////////
 
 ////// ★盤面の値：                                                                              //////
 ////// すべての配列および座標は以下のとおりに統一する。
@@ -105,7 +104,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
 
-    // ▼【データ】駒の移動が問題ない場合のデータ層盤面データ更新メソッド
+    // ▼【データ】駒の移動許可後のデータ層の盤面データ更新メソッド
     public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
     {
         ChessPieceType_SimulatedBoard movingPiece = simulatedBoard[fromX, fromY]; // 移動元の駒を取得
@@ -114,6 +113,9 @@ public class ChessBoardManager : MonoBehaviour
 
         simulatedBoard[toX, toY] = movingPiece; // 移動先のマスに駒を置く
     }
+
+    // ▼【3D】駒の移動許可後の3D駒オブジェクト層のデータ更新 + 3Dオブジェクトの移動指示メソッド
+
 
     // ▼【データ】インデックスから指定された座標の状態を調べるメソッド
     public ChessPieceType_SimulatedBoard GetPieceAtDataLayer(Vector2Int index)
