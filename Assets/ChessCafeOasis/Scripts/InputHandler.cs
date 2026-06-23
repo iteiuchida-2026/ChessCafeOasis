@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 //////// スクリプトの説明：【マウスクリックとタッチパネルのタッチを検知して、Rayを飛ばした先にあるコライダーから対象物を判断する】 ////////
 
-//////// データの流れ①：＜InputManagerでクリックしたオブジェクト情報＞　→　＜ChessBoardManager＞ ////////
+//////// データの流れ①：＜InputManagerでクリックした■オブジェクト情報＞　→　＜ChessBoardManagerが■受け取る＞ ////////
 
 
 
