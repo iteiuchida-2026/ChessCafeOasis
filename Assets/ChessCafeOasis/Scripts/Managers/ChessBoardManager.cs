@@ -20,7 +20,7 @@ using UnityEngine;
 ////// ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣  //////
 
 // ◆概要：データ層の駒を定義
-public enum ChessPieceType_DataLayer
+public enum ChessPieceType_SimulatedBoard
 {
     None, // 空のマス
     WhitePawn, WhiteKnight, WhiteBishop, WhiteRook, WhiteQueen, WhiteKing,
@@ -39,53 +39,56 @@ public class ChessBoardManager : MonoBehaviour
     [SerializeField] private PieceManager pieceManager;
     [SerializeField] private GameObject[] tileObjects = new GameObject[64];
 
-    private ChessPieceType_DataLayer[,] dataLayerBoardState = new ChessPieceType_DataLayer[8, 8]; //【データ】8*8の盤面データ層の配列
+    private ChessPieceType_SimulatedBoard[,] simulatedBoard = new ChessPieceType_SimulatedBoard[8, 8]; //【データ】8*8の盤面データ層の配列
     public Vector2Int WhiteKingPos { get; set; } //【データ】白キングの現在のポジション
     public Vector2Int BlackKingPos { get; set; } //【データ】黒キングの現在のポジション
-    private GameObject[,] realLayerBoardState = new GameObject[8, 8]; //【3D】8*8配列
+    private GameObject[,] pieceObjectBoard = new GameObject[8, 8]; //【3D】8*8配列
     private GameObject clickedGameObject; //【3D】クリックされたゲームオブジェクト保持用の変数
-    private GameObject[,] tileObjectsArray = new GameObject[8, 8]; //【タイル】 8*8のチェス盤に合わせた2次元配列
+    private GameObject[,] tileBoard = new GameObject[8, 8]; //【タイル】 8*8のチェス盤に合わせた2次元配列
 
-    private void Awake()
+
+    // ▼初期化処理をまとめたメソッド
+    // ＜GameManagerから呼ばれる＞
+    public void InitializeSetUp()
     {
-        // 起動時にチェス盤面の初期化と配列の整列
-        InitializeDataLayerBoard(); // 【データ】初期配置に設定
-        RearrangeTileObjects(); // 【タイル】シリアライズしたタイルを2次元配列に変換
+        InitializeSimulatedBoard(); // 【データ】初期配置に設定
+        pieceManager.InitializePieceObject(); // 【3D】ピースマネジャーに各駒オブジェクトの初期化を指示
+        RearrangeTileObjects();// 【タイル】シリアライズしたタイルを2次元配列に変換
     }
 
     // ▼【データ】チェス盤面を初期配置に設定するメソッド
-    private void InitializeDataLayerBoard()
+    private void InitializeSimulatedBoard()
     {
         // すべてのマスを一旦空にする
         for (int x = 0; x < 8; x++)
         {
             for (int y = 0; y < 8; y++)
             {
-                dataLayerBoardState[x, y] = ChessPieceType_DataLayer.None;
+                simulatedBoard[x, y] = ChessPieceType_SimulatedBoard.None;
             }
         }
 
         // 白の駒を配置する
-        dataLayerBoardState[0, 7] = ChessPieceType_DataLayer.WhiteRook;
-        dataLayerBoardState[1, 7] = ChessPieceType_DataLayer.WhiteKnight;
-        dataLayerBoardState[2, 7] = ChessPieceType_DataLayer.WhiteBishop;
-        dataLayerBoardState[3, 7] = ChessPieceType_DataLayer.WhiteQueen;
-        dataLayerBoardState[4, 7] = ChessPieceType_DataLayer.WhiteKing;
-        dataLayerBoardState[5, 7] = ChessPieceType_DataLayer.WhiteBishop;
-        dataLayerBoardState[6, 7] = ChessPieceType_DataLayer.WhiteKnight;
-        dataLayerBoardState[7, 7] = ChessPieceType_DataLayer.WhiteRook;
-        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 7] = ChessPieceType_DataLayer.WhitePawn;
+        simulatedBoard[0, 7] = ChessPieceType_SimulatedBoard.WhiteRook;
+        simulatedBoard[1, 7] = ChessPieceType_SimulatedBoard.WhiteKnight;
+        simulatedBoard[2, 7] = ChessPieceType_SimulatedBoard.WhiteBishop;
+        simulatedBoard[3, 7] = ChessPieceType_SimulatedBoard.WhiteQueen;
+        simulatedBoard[4, 7] = ChessPieceType_SimulatedBoard.WhiteKing;
+        simulatedBoard[5, 7] = ChessPieceType_SimulatedBoard.WhiteBishop;
+        simulatedBoard[6, 7] = ChessPieceType_SimulatedBoard.WhiteKnight;
+        simulatedBoard[7, 7] = ChessPieceType_SimulatedBoard.WhiteRook;
+        for (int x = 0; x < 8; x++) simulatedBoard[x, 7] = ChessPieceType_SimulatedBoard.WhitePawn;
 
         // 黒の駒を配置する
-        dataLayerBoardState[0, 0] = ChessPieceType_DataLayer.BlackRook;
-        dataLayerBoardState[1, 0] = ChessPieceType_DataLayer.BlackKnight;
-        dataLayerBoardState[2, 0] = ChessPieceType_DataLayer.BlackBishop;
-        dataLayerBoardState[3, 0] = ChessPieceType_DataLayer.BlackQueen;
-        dataLayerBoardState[4, 0] = ChessPieceType_DataLayer.BlackKing;
-        dataLayerBoardState[5, 0] = ChessPieceType_DataLayer.BlackBishop;
-        dataLayerBoardState[6, 0] = ChessPieceType_DataLayer.BlackKnight;
-        dataLayerBoardState[7, 0] = ChessPieceType_DataLayer.BlackRook;
-        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 1] = ChessPieceType_DataLayer.BlackPawn;
+        simulatedBoard[0, 0] = ChessPieceType_SimulatedBoard.BlackRook;
+        simulatedBoard[1, 0] = ChessPieceType_SimulatedBoard.BlackKnight;
+        simulatedBoard[2, 0] = ChessPieceType_SimulatedBoard.BlackBishop;
+        simulatedBoard[3, 0] = ChessPieceType_SimulatedBoard.BlackQueen;
+        simulatedBoard[4, 0] = ChessPieceType_SimulatedBoard.BlackKing;
+        simulatedBoard[5, 0] = ChessPieceType_SimulatedBoard.BlackBishop;
+        simulatedBoard[6, 0] = ChessPieceType_SimulatedBoard.BlackKnight;
+        simulatedBoard[7, 0] = ChessPieceType_SimulatedBoard.BlackRook;
+        for (int x = 0; x < 8; x++) simulatedBoard[x, 1] = ChessPieceType_SimulatedBoard.BlackPawn;
     }
 
     // ▼【タイル】2次元配列に変換するメソッド
@@ -96,7 +99,7 @@ public class ChessBoardManager : MonoBehaviour
         {
             for (int x = 0; x < 8; x++)
             {
-                tileObjectsArray[x, y] = tileObjects[y * 8 + x];
+                tileBoard[x, y] = tileObjects[y * 8 + x];
             }
         }
     }
@@ -105,21 +108,21 @@ public class ChessBoardManager : MonoBehaviour
     // ▼【データ】駒の移動が問題ない場合のデータ層盤面データ更新メソッド
     public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
     {
-        ChessPieceType_DataLayer movingPiece = dataLayerBoardState[fromX, fromY]; // 移動元の駒を取得
+        ChessPieceType_SimulatedBoard movingPiece = simulatedBoard[fromX, fromY]; // 移動元の駒を取得
 
-        dataLayerBoardState[fromX, fromY] = ChessPieceType_DataLayer.None; // 移動元のマスを空にする
+        simulatedBoard[fromX, fromY] = ChessPieceType_SimulatedBoard.None; // 移動元のマスを空にする
 
-        dataLayerBoardState[toX, toY] = movingPiece; // 移動先のマスに駒を置く
+        simulatedBoard[toX, toY] = movingPiece; // 移動先のマスに駒を置く
     }
 
     // ▼【データ】インデックスから指定された座標の状態を調べるメソッド
-    public ChessPieceType_DataLayer GetPieceAtDataLayer(Vector2Int index)
+    public ChessPieceType_SimulatedBoard GetPieceAtDataLayer(Vector2Int index)
     {
         if (index.x < 0 || index.x >= 8 || index.y < 0 || index.y >= 8) // 盤面外を確認する場合のガード処理
         {
-            return ChessPieceType_DataLayer.None;
+            return ChessPieceType_SimulatedBoard.None;
         }
-        return dataLayerBoardState[index.x, index.y];
+        return simulatedBoard[index.x, index.y];
     }
 
     // ▼【3D】インデックスから駒を取得するメソッド
@@ -127,7 +130,7 @@ public class ChessBoardManager : MonoBehaviour
     {
         if (index.x >= 0 && index.x < 8 && index.y >= 0 && index.y < 8)
         {
-            return realLayerBoardState[index.x, index.y];
+            return pieceObjectBoard[index.x, index.y];
         }
         return null;
     }
@@ -137,7 +140,7 @@ public class ChessBoardManager : MonoBehaviour
     {
         if (x >= 0 && x < 8 && y >= 0 && y < 8)
         {
-            return tileObjectsArray[x, y];
+            return tileBoard[x, y];
         }
         return null;
     }

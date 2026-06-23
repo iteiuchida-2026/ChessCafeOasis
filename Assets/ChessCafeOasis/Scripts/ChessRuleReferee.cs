@@ -151,7 +151,7 @@ public class ChessRuleReferee : MonoBehaviour
     private bool IsWithinBoard(Vector2Int pos) => pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8;
 
     // ▼マスが空かチェックするメソッド
-    private bool IsTileEmpty(Vector2Int pos) => chessBoardManager.GetPieceAtDataLayer(pos) == ChessPieceType_DataLayer.None;
+    private bool IsTileEmpty(Vector2Int pos) => chessBoardManager.GetPieceAtDataLayer(pos) == ChessPieceType_SimulatedBoard.None;
 
     // ▼駒が敵の駒かどうかチェックするメソッド
     // 今回、駒の色データ等は3Dのオブジェクトにアタッチされている。
