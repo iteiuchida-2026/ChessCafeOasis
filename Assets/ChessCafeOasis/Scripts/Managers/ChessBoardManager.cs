@@ -27,26 +27,6 @@ public enum ChessPieceType_DataLayer
     BlackPawn, BlackKnight, BlackBishop, BlackRook, BlackQueen, BlackKing
 }
 
-//public enum PieceColor_DataLayer
-//{
-//    White,
-//    Black,
-//    None
-//}
-
-//// ◆概要：データ層のチェス駒のデータ構造
-//public struct ChessPieceData_DataLayer
-//{
-//    public ChessPieceType_DataLayer Type;
-//    public PieceColor_DataLayer Color;
-
-//    public ChessPieceData_DataLayer(ChessPieceType_DataLayer type, PieceColor_DataLayer color)
-//    {
-//        Type = type;
-//        Color = color;
-//    }
-//}
-
 // ◆概要：
 // ①チェス盤面情報をデータ層のみで管理（シミュレート用）
 // ②3Dチェス盤面情報の管理（実物）
@@ -64,8 +44,6 @@ public class ChessBoardManager : MonoBehaviour
     private GameObject clickedGameObject; //【② 3D】クリックされたゲームオブジェクト保持用の変数を宣言
     private GameObject[,] tileObjectsArray = new GameObject[8, 8]; //【③ マスOBJ】 tileObjectsを8*8の実際のチェス盤に合わせるため2次元配列を用意
 
-    //private Dictionary<string, ChessPieceData_DataLayer> chessPieces_DataLayer; //【① データ】データ層のチェス駒を管理するDictionary
-
     private void Awake()
     {
         InitializeDataLayerBoard(); // 【① データ】起動時にデータ層のチェス盤面を初期配置に設定する
@@ -79,26 +57,6 @@ public class ChessBoardManager : MonoBehaviour
             }
         }
     }
-
-    //private void Start()
-    //{
-    //    chessPieces_DataLayer = new Dictionary<string, ChessPieceData_DataLayer>()
-    //    {
-    //        { "White_Pawn", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhitePawn, PieceColor_DataLayer.White) },
-    //        { "White_knight", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteKnight, PieceColor_DataLayer.White)},
-    //        { "White_Bishop", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteBishop, PieceColor_DataLayer.White)},
-    //        { "White_Rook", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteRook, PieceColor_DataLayer.White)},
-    //        { "White_Queen", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteQueen, PieceColor_DataLayer.White) },
-    //        { "WhiteKing", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteKing, PieceColor_DataLayer.White) },
-    //        { "Black_Pawn", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackPawn, PieceColor_DataLayer.Black) },
-    //        { "Black_Knight", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackKnight, PieceColor_DataLayer.Black)},
-    //        { "Black_Bishop", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackBishop, PieceColor_DataLayer.Black)},
-    //        { "Black_Rook", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackRook, PieceColor_DataLayer.Black)},
-    //        { "Black_Queen", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackQueen, PieceColor_DataLayer.Black)},
-    //        { "Black_King", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackKing, PieceColor_DataLayer.Black)},
-    //        { "None", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.None, PieceColor_DataLayer.None)}
-    //    };
-    //}
 
     // ▼【① データ】データ層のチェス盤面を初期配置に設定するメソッド
     ////// ★盤面の値に留意 //////
@@ -136,15 +94,6 @@ public class ChessBoardManager : MonoBehaviour
         for (int x = 0; x < 8; x++) dataLayerBoardState[x, 1] = ChessPieceType_DataLayer.BlackPawn;
     }
 
-    // ▼【① データ】DictionaryのPieceDataを返しメソッド
-    //public void ReturnPieceInfo(string pieceId)
-    //{
-    //    if (chessPieces_DataLayer.TryGetValue(pieceId, out ChessPieceData_DataLayer pieceData))
-    //    {
-
-    //    }
-
-    //}
 
     // ▼【① データ】駒の移動が問題ない場合のデータ層盤面データ更新メソッド
     public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
@@ -221,14 +170,4 @@ public class ChessBoardManager : MonoBehaviour
             return;
         }
     }
-
-    //// ▼【② 3D】クリックされたオブジェクトが駒の場合、情報を取得するメソッド
-    //private void GetClickedPieceInfo(GameObject gameObject)
-    //{
-    //    string clickedGameObjectPieceColor = gameObject.GetComponent<Piece>().PieceColor;
-    //    string clickedGameObjectPieceType = gameObject.GetComponent<Piece>().PieceType;
-    //    Vector2Int clickedGameObjectCurrentSquare = gameObject.GetComponent<Piece>().CurrentIndex;
-    //    bool clickedGameObjectHasMoved = gameObject.GetComponent<Piece>().HasMoved;
-    //    bool clickedGameObjectIsPromoted = gameObject.GetComponent<Piece>().IsPromoted;
-    //}
 }
