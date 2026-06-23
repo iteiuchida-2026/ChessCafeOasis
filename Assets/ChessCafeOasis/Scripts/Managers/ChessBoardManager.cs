@@ -20,12 +20,32 @@ using UnityEngine;
 ////// ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣  //////
 
 // ◆概要：データ層のチェス盤用に駒の種類と色を定義
-public enum ChessPieceType
+public enum ChessPieceType_DataLayer
 {
     None, // 空のマス
     WhitePawn, WhiteKnight, WhiteBishop, WhiteRook, WhiteQueen, WhiteKing,
     BlackPawn, BlackKnight, BlackBishop, BlackRook, BlackQueen, BlackKing
 }
+
+//public enum PieceColor_DataLayer
+//{
+//    White,
+//    Black,
+//    None
+//}
+
+//// ◆概要：データ層のチェス駒のデータ構造
+//public struct ChessPieceData_DataLayer
+//{
+//    public ChessPieceType_DataLayer Type;
+//    public PieceColor_DataLayer Color;
+
+//    public ChessPieceData_DataLayer(ChessPieceType_DataLayer type, PieceColor_DataLayer color)
+//    {
+//        Type = type;
+//        Color = color;
+//    }
+//}
 
 
 // ◆概要：
@@ -38,11 +58,14 @@ public class ChessBoardManager : MonoBehaviour
     [SerializeField] private PieceManager pieceManager;
     [SerializeField] private GameObject[] tileObjects = new GameObject[64];
 
-    private ChessPieceType[,] dataLayerBoardState = new ChessPieceType[8, 8]; // 【① データ】8*8の盤面データ層の配列
-    private GameObject[,] realLayerBoardState = new GameObject[8, 8]; // 【② 3D】8*8の3D上の駒を管理する配列
-    private GameObject clickedGameObject; // 【② 3D】クリックされたゲームオブジェクト保持用の変数を宣言
+    private ChessPieceType_DataLayer[,] dataLayerBoardState = new ChessPieceType_DataLayer[8, 8]; //【① データ】8*8の盤面データ層の配列
+    public Vector2Int WhiteKingPos { get; set; } //【① データ】データ層用白キングの現在のポジション
+    public Vector2Int BlackKingPos { get; set; } //【① データ】データ層用黒キングの現在のポジション
+    private GameObject[,] realLayerBoardState = new GameObject[8, 8]; //【② 3D】8*8の3D上の駒を管理する配列
+    private GameObject clickedGameObject; //【② 3D】クリックされたゲームオブジェクト保持用の変数を宣言
     private GameObject[,] tileObjectsArray = new GameObject[8, 8]; //【③ マスOBJ】 tileObjectsを8*8の実際のチェス盤に合わせるため2次元配列を用意
 
+    //private Dictionary<string, ChessPieceData_DataLayer> chessPieces_DataLayer; //【① データ】データ層のチェス駒を管理するDictionary
 
     private void Awake()
     {
@@ -58,6 +81,26 @@ public class ChessBoardManager : MonoBehaviour
         }
     }
 
+    //private void Start()
+    //{
+    //    chessPieces_DataLayer = new Dictionary<string, ChessPieceData_DataLayer>()
+    //    {
+    //        { "White_Pawn", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhitePawn, PieceColor_DataLayer.White) },
+    //        { "White_knight", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteKnight, PieceColor_DataLayer.White)},
+    //        { "White_Bishop", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteBishop, PieceColor_DataLayer.White)},
+    //        { "White_Rook", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteRook, PieceColor_DataLayer.White)},
+    //        { "White_Queen", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteQueen, PieceColor_DataLayer.White) },
+    //        { "WhiteKing", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.WhiteKing, PieceColor_DataLayer.White) },
+    //        { "Black_Pawn", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackPawn, PieceColor_DataLayer.Black) },
+    //        { "Black_Knight", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackKnight, PieceColor_DataLayer.Black)},
+    //        { "Black_Bishop", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackBishop, PieceColor_DataLayer.Black)},
+    //        { "Black_Rook", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackRook, PieceColor_DataLayer.Black)},
+    //        { "Black_Queen", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackQueen, PieceColor_DataLayer.Black)},
+    //        { "Black_King", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.BlackKing, PieceColor_DataLayer.Black)},
+    //        { "None", new ChessPieceData_DataLayer(ChessPieceType_DataLayer.None, PieceColor_DataLayer.None)}
+    //    };
+    //}
+
     // ▼【① データ】データ層のチェス盤面を初期配置に設定するメソッド
     ////// ★盤面の値に留意 //////
     private void InitializeDataLayerBoard()
@@ -67,49 +110,59 @@ public class ChessBoardManager : MonoBehaviour
         {
             for (int y = 0; y < 8; y++)
             {
-                dataLayerBoardState[x, y] = ChessPieceType.None;
+                dataLayerBoardState[x, y] = ChessPieceType_DataLayer.None;
             }
         }
 
         // 白の駒を配置する
-        dataLayerBoardState[0, 7] = ChessPieceType.WhiteRook;
-        dataLayerBoardState[1, 7] = ChessPieceType.WhiteKnight;
-        dataLayerBoardState[2, 7] = ChessPieceType.WhiteBishop;
-        dataLayerBoardState[3, 7] = ChessPieceType.WhiteQueen;
-        dataLayerBoardState[4, 7] = ChessPieceType.WhiteKing;
-        dataLayerBoardState[5, 7] = ChessPieceType.WhiteBishop;
-        dataLayerBoardState[6, 7] = ChessPieceType.WhiteKnight;
-        dataLayerBoardState[7, 7] = ChessPieceType.WhiteRook;
-        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 7] = ChessPieceType.WhitePawn;
+        dataLayerBoardState[0, 7] = ChessPieceType_DataLayer.WhiteRook;
+        dataLayerBoardState[1, 7] = ChessPieceType_DataLayer.WhiteKnight;
+        dataLayerBoardState[2, 7] = ChessPieceType_DataLayer.WhiteBishop;
+        dataLayerBoardState[3, 7] = ChessPieceType_DataLayer.WhiteQueen;
+        dataLayerBoardState[4, 7] = ChessPieceType_DataLayer.WhiteKing;
+        dataLayerBoardState[5, 7] = ChessPieceType_DataLayer.WhiteBishop;
+        dataLayerBoardState[6, 7] = ChessPieceType_DataLayer.WhiteKnight;
+        dataLayerBoardState[7, 7] = ChessPieceType_DataLayer.WhiteRook;
+        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 7] = ChessPieceType_DataLayer.WhitePawn;
 
         // 黒の駒を配置する
-        dataLayerBoardState[0, 0] = ChessPieceType.BlackRook;
-        dataLayerBoardState[1, 0] = ChessPieceType.BlackKnight;
-        dataLayerBoardState[2, 0] = ChessPieceType.BlackBishop;
-        dataLayerBoardState[3, 0] = ChessPieceType.BlackQueen;
-        dataLayerBoardState[4, 0] = ChessPieceType.BlackKing;
-        dataLayerBoardState[5, 0] = ChessPieceType.BlackBishop;
-        dataLayerBoardState[6, 0] = ChessPieceType.BlackKnight;
-        dataLayerBoardState[7, 0] = ChessPieceType.BlackRook;
-        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 1] = ChessPieceType.BlackPawn;
+        dataLayerBoardState[0, 0] = ChessPieceType_DataLayer.BlackRook;
+        dataLayerBoardState[1, 0] = ChessPieceType_DataLayer.BlackKnight;
+        dataLayerBoardState[2, 0] = ChessPieceType_DataLayer.BlackBishop;
+        dataLayerBoardState[3, 0] = ChessPieceType_DataLayer.BlackQueen;
+        dataLayerBoardState[4, 0] = ChessPieceType_DataLayer.BlackKing;
+        dataLayerBoardState[5, 0] = ChessPieceType_DataLayer.BlackBishop;
+        dataLayerBoardState[6, 0] = ChessPieceType_DataLayer.BlackKnight;
+        dataLayerBoardState[7, 0] = ChessPieceType_DataLayer.BlackRook;
+        for (int x = 0; x < 8; x++) dataLayerBoardState[x, 1] = ChessPieceType_DataLayer.BlackPawn;
     }
+
+    // ▼【① データ】DictionaryのPieceDataを返しメソッド
+    //public void ReturnPieceInfo(string pieceId)
+    //{
+    //    if (chessPieces_DataLayer.TryGetValue(pieceId, out ChessPieceData_DataLayer pieceData))
+    //    {
+
+    //    }
+
+    //}
 
     // ▼【① データ】駒の移動が問題ない場合のデータ層盤面データ更新メソッド
     public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
     {
-        ChessPieceType movingPiece = dataLayerBoardState[fromX, fromY]; // 移動元の駒を取得
+        ChessPieceType_DataLayer movingPiece = dataLayerBoardState[fromX, fromY]; // 移動元の駒を取得
 
-        dataLayerBoardState[fromX, fromY] = ChessPieceType.None; // 移動元のマスを空にする
+        dataLayerBoardState[fromX, fromY] = ChessPieceType_DataLayer.None; // 移動元のマスを空にする
 
         dataLayerBoardState[toX, toY] = movingPiece; // 移動先のマスに駒を置く
     }
 
     // ▼【① データ】インデックスからデータ層特定マスの状態を調べるメソッド
-    public ChessPieceType GetPieceAtDataLayer(Vector2Int index)
+    public ChessPieceType_DataLayer GetPieceAtDataLayer(Vector2Int index)
     {
         if (index.x < 0 || index.x >= 8 || index.y < 0 || index.y >= 8) // 盤面外を確認する場合のガード処理
         {
-            return ChessPieceType.None;
+            return ChessPieceType_DataLayer.None;
         }
         return dataLayerBoardState[index.x, index.y];
     }
@@ -148,7 +201,7 @@ public class ChessBoardManager : MonoBehaviour
             if (pieceOnSquare != null)
             {
                 Debug.Log($"そのマスには{pieceOnSquare.name}が乗っています。");
-                GetClickedPieceInfo(pieceOnSquare); // 駒情報を取得するメソッドへ渡す
+                //GetClickedPieceInfo(pieceOnSquare); // 駒情報を取得するメソッドへ渡す
             }
             else
             {
@@ -161,7 +214,7 @@ public class ChessBoardManager : MonoBehaviour
         {
             GameObject clickedPieceGameObject = clickedPiece.gameObject;
             Debug.Log($"その駒は{clickedPieceGameObject.name}です。");
-            GetClickedPieceInfo(clickedPieceGameObject); // 駒情報を取得するメソッドへ渡す
+            //GetClickedPieceInfo(clickedPieceGameObject); // 駒情報を取得するメソッドへ渡す
         }
         else
         {
@@ -170,15 +223,15 @@ public class ChessBoardManager : MonoBehaviour
         }
     }
 
-    // ▼【② 3D】クリックされたオブジェクトが駒の場合、情報を取得するメソッド
-    private void GetClickedPieceInfo(GameObject gameObject)
-    {
-        string clickedGameObjectPieceColor = gameObject.GetComponent<Piece>().pieceColor;
-        string clickedGameObjectPieceType = gameObject.GetComponent<Piece>().pieceType;
-        Vector2Int clickedGameObjectCurrentSquare = gameObject.GetComponent<Piece>().currentIndex;
-        bool clickedGameObjectHasMoved = gameObject.GetComponent<Piece>().HasMoved;
-        bool clickedGameObjectIsPromoted = gameObject.GetComponent<Piece>().IsPromoted;
-    }
+    //// ▼【② 3D】クリックされたオブジェクトが駒の場合、情報を取得するメソッド
+    //private void GetClickedPieceInfo(GameObject gameObject)
+    //{
+    //    string clickedGameObjectPieceColor = gameObject.GetComponent<Piece>().PieceColor;
+    //    string clickedGameObjectPieceType = gameObject.GetComponent<Piece>().PieceType;
+    //    Vector2Int clickedGameObjectCurrentSquare = gameObject.GetComponent<Piece>().CurrentIndex;
+    //    bool clickedGameObjectHasMoved = gameObject.GetComponent<Piece>().HasMoved;
+    //    bool clickedGameObjectIsPromoted = gameObject.GetComponent<Piece>().IsPromoted;
+    //}
 
 
 }

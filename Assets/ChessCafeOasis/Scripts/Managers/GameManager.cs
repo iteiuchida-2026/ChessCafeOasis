@@ -2,6 +2,12 @@ using UnityEngine;
 
 //////// スクリプトの説明：【各スクリプト間の情報の中継ハブ役、かつ指示役。】////////
 
+// ◆概要：プレイヤーターンをenumで用意する
+public enum PlayerTurn
+{
+    White,
+    Black,
+}
 
 // ◆概要：
 public class GameManager : MonoBehaviour
@@ -11,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ChessRuleReferee chessRuleReferee;
     [SerializeField] private RecordManager recordManager;
     [SerializeField] private ChessBoardManager chessBoardManager;
+
+    public PlayerTurn CurrentTurn { get; set; } // 現在のプレイヤーターン変数を宣言
 
     public static GameManager Instance { get; private set; } // シングルトンのインスタンスを作成
 
@@ -25,10 +33,14 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        CurrentTurn = PlayerTurn.White; // 先攻の白番を起動時に設定する
     }
 
-    void Update()
+    // ▼ターンを切り替えるメソッド
+    private void SwitchTurn()
     {
-
+        CurrentTurn = (CurrentTurn == PlayerTurn.White) ? PlayerTurn.Black : PlayerTurn.White;
     }
+
 }

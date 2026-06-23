@@ -1,4 +1,5 @@
 // クイーンの駒用スクリプト
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Piece_Queen : Piece
@@ -7,6 +8,24 @@ public class Piece_Queen : Piece
     {
         base.Start();
     }
+
+
+    public override List<Vector2Int> GetMoveVectors()
+    {
+        return new List<Vector2Int>
+        {
+            new Vector2Int(0, 1), // 前
+            new Vector2Int(0, -1), // 後
+            new Vector2Int(1, 0), //右
+            new Vector2Int(-1, 0), //左
+            new Vector2Int(1, 1), // 右斜め前
+            new Vector2Int(-1, -1), // 左斜め後
+            new Vector2Int(-1, 1), //左斜め前
+            new Vector2Int(1, -1) //右斜め後
+        };
+    }
+
+    public override bool IsRangedPiece() => true; // 上下左右斜めに移動可能
 
     public override void Move(Vector2Int index)
     {
