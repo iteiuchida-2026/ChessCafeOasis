@@ -379,7 +379,7 @@ Menu            PlayerName                 |_______|
 | PieceManager.csのPrefab生成に関するGeminiへ相談した回答|[PieceManager.csのPrefab生成に関するGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080910/PieceManager.cs.Prefab.Gemini.pdf)|Gemini|
 |ChessRuleReferee.csの変数やメソッドの相談のGemini回答|[ChessRuleReferee.csの変数やメソッドの相談のGemini回答.pdf](https://github.com/user-attachments/files/29187269/ChessRuleReferee.cs.Gemini.pdf)|Gemini|
 |Piece.csの移動ベクトル定義に関するGeminiへの相談の回答|[Piece.csの移動ベクトル定義に関するGeminiへの相談の回答.pdf](https://github.com/user-attachments/files/29228494/Piece.cs.Gemini.pdf)||
-||||
+|GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答|[GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答.pdf](https://github.com/user-attachments/files/29235153/GameManager.cs.Gemini.pdf)||
 ||||
 ||||
 |オフライン対戦モードの計画試案|||
