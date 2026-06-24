@@ -132,13 +132,26 @@ public class ChessRuleReferee : MonoBehaviour
     // ▼アンパッサンの可否判定
     public bool CanEnPassant() // 引数は後ほど設定
     {
+
         return true;
     }
 
     // ▼プロモーションの可否判定
-    public bool CanPromote() // 引数は後ほど設定
+    public bool CanPromote(Piece piece) // 引数は後ほど設定
     {
-        return true;
+        if (piece.PieceType != PieceType.Pawn) return false;
+        if (piece.IsPromoted == false)
+        {
+            if (piece.PieceColor == PieceColor.White)
+            {
+                if (_nextPos.y == 0) return true; // 白ポーンならy座標が0でボード最奥
+            }
+            else
+            {
+                if (_nextPos.y == 7) return true; // 黒ポーンならy座標が7でボード最奥
+            }
+        }
+        return false;
     }
 
     // ▼キングのチェック判定
