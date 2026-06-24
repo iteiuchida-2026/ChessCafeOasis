@@ -124,26 +124,48 @@ public class ChessRuleReferee : MonoBehaviour
     }
 
     // ▼キャスリングの可否判定
-    public bool CanCastling(Piece piece, Vector2Int _nextPos)
+    // キングとルークの位置を変更する
+    // 条件① キングとキャスリング先のルークが一度も動いていない
+    // 条件② キングとキャスリング先のルークの間に駒がない
+    // 条件③ キングがチェックされていない
+    // 条件④ キングが移動するマスと通過するマスに敵の駒の攻撃範囲が入っていない
+    public bool CanCastling(Piece piece, Vector2Int targetRookPos)
     {
         if (piece.PieceType != PieceType.King) return false;
-        Piece targetRook = chessBoardManager.GetPieceAtPieceObjectBoard(_nextPos);
-        if (piece.HasMoved == false && targetRook.HasMoved == false) // 条件① キングとキャスリング先のルークが動いていない
+        if (IsKingInCheck() != false) return false; // 条件③
+        Piece targetRook = chessBoardManager.GetPieceAtPieceObjectBoard(targetRookPos);
+        if (piece.HasMoved == false && targetRook.HasMoved == false) // 条件①
         {
             // ＜KingとRookの間のマスに敵駒の利きがないかチェックするメソッド＞ // 条件②
+
             return true;
         }
         return false;
     }
 
     // ▼アンパッサンの可否判定
-    public bool CanEnPassant() // 引数は後ほど設定
+    // 相手のポーンが2マス進んで来た次の自分のターンに、自分のポーンが相手のポーンをとれる
+    // 条件① 自分のポーンが自陣から数えて5段目にいる
+    // 条件② 自分のポーンの真横（同じ段の隣の列）にいる相手のポーンが最初の位置から2マス進んだ
+    // 条件③ 相手のポーンが2マス進んだ直後のターン
+    public bool CanEnPassant(Piece piece)
     {
-
-        return true;
+        if (piece.PieceType != PieceType.Pawn) return false;
+        // ＜RecordManager.csのメソッドで直前の手が相手の両サイドどちらかのポーンの2マス前進かを判断＞ 条件③②
+        if (piece.PieceColor == PieceColor.White)
+        {
+            if (piece.CurrentIndex.y == 3) return true; // 条件① 白ポーンの場合はy座標が3で5段目 
+        }
+        else
+        {
+            if (piece.CurrentIndex.y == 4) return true; // 条件① 黒ポーンの場合はy座標が4で5段目
+        }
+        return false;
     }
 
     // ▼プロモーションの可否判定
+    // ポーンがキング以外の好きな駒に昇格できる
+    // 条件① 自分のポーンが敵陣最奥に到達
     public bool CanPromote(Piece piece, Vector2Int _nextPos)
     {
         if (piece.PieceType != PieceType.Pawn) return false;
@@ -151,11 +173,11 @@ public class ChessRuleReferee : MonoBehaviour
         {
             if (piece.PieceColor == PieceColor.White)
             {
-                if (_nextPos.y == 0) return true; // 白ポーンならy座標が0でボード最奥
+                if (_nextPos.y == 0) return true; // 条件① 白ポーンならy座標が0でボード最奥の8段目
             }
             else
             {
-                if (_nextPos.y == 7) return true; // 黒ポーンならy座標が7でボード最奥
+                if (_nextPos.y == 7) return true; // 条件① 黒ポーンならy座標が7でボード最奥の8段目
             }
         }
         return false;
