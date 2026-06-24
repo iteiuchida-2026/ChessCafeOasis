@@ -151,7 +151,7 @@ public class ChessBoardManager : MonoBehaviour
         return null;
     }
 
-    // ▼【3D】オブジェクトが駒かマスかを調べるメソッド
+    // ▼【3D】オブジェクトの座標を調べてGamaManagerへ渡すメソッド
     public void IdentifyGameObject(GameObject gameObject)
     {
         // クリックされたオブジェクトがマスだった場合
@@ -165,7 +165,7 @@ public class ChessBoardManager : MonoBehaviour
             if (pieceOnSquare != null)
             {
                 Debug.Log($"そのマスには{pieceOnSquare.name}が乗っています。");
-                //GetClickedPieceInfo(pieceOnSquare); // 駒情報を取得するメソッドへ渡す
+                GameManager.Instance.OnBoardClicked(clickedIndex); // GammeManagerへクリックされた座標を渡す
             }
             else
             {
@@ -178,7 +178,7 @@ public class ChessBoardManager : MonoBehaviour
         {
             clickedIndex = clickedPiece.CurrentIndex;
             Debug.Log($"その駒は{clickedPiece.name}です。");
-            //GetClickedPieceInfo(clickedPieceGameObject); // 駒情報を取得するメソッドへ渡す
+            GameManager.Instance.OnBoardClicked(clickedIndex); // GammeManagerへクリックされた座標を渡す
         }
         else
         {
