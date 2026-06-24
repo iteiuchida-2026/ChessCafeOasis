@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         // 既に駒を選択中で今回クリックしたマスへ移動を試みる場合
         if (CurrentState == GameState.PieceSelected)
         {
-            if (chessRuleReferee.IsValidMove(_selectedPiece, clickedIndex, chessBoardManager.GetSimulatedBoadrd())) // 引数の調整追加が必要
+            if (chessRuleReferee.IsValidMove(_selectedPiece, clickedIndex, chessBoardManager.GetSimulatedBoard())) // 引数の調整追加が必要
             {
                 // 合法手なら移動を実行
                 chessBoardManager.MovePiece(_selectedPos, clickedIndex);

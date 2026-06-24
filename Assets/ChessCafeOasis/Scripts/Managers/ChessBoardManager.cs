@@ -39,6 +39,7 @@ public class ChessBoardManager : MonoBehaviour
     [SerializeField] private TileController[] tileObjects = new TileController[64];
 
     private ChessPieceType_SimulatedBoard[,] simulatedBoard = new ChessPieceType_SimulatedBoard[8, 8]; //【データ】8*8の盤面データ層の配列
+    public ChessPieceType_SimulatedBoard[,] GetSimulatedBoard() => simulatedBoard; // アクセス用メソッド
     public Vector2Int WhiteKingPos { get; set; } //【データ】白キングの現在のポジション
     public Vector2Int BlackKingPos { get; set; } //【データ】黒キングの現在のポジション
     public Vector2Int clickedIndex { get; set; } // 【3D】クリックされた座標
