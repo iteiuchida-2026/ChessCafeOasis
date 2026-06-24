@@ -124,9 +124,16 @@ public class ChessRuleReferee : MonoBehaviour
     }
 
     // ▼キャスリングの可否判定
-    public bool CanCastling() // 引数は後ほど設定
+    public bool CanCastling(Piece piece, Vector2Int _nextPos)
     {
-        return true;
+        if (piece.PieceType != PieceType.King) return false;
+        Piece targetRook = chessBoardManager.GetPieceAtPieceObjectBoard(_nextPos);
+        if (piece.HasMoved == false && targetRook.HasMoved == false) // 条件① キングとキャスリング先のルークが動いていない
+        {
+            // ＜KingとRookの間のマスに敵駒の利きがないかチェックするメソッド＞ // 条件②
+            return true;
+        }
+        return false;
     }
 
     // ▼アンパッサンの可否判定
@@ -137,7 +144,7 @@ public class ChessRuleReferee : MonoBehaviour
     }
 
     // ▼プロモーションの可否判定
-    public bool CanPromote(Piece piece, Vector2Int _nextPos) // 引数は後ほど設定
+    public bool CanPromote(Piece piece, Vector2Int _nextPos)
     {
         if (piece.PieceType != PieceType.Pawn) return false;
         if (piece.IsPromoted == false)
