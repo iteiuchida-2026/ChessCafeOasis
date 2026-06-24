@@ -69,17 +69,23 @@ public class GameManager : MonoBehaviour
     }
 
     // ▼ChessBoardManagerから「駒がクリックされた」と通知を受け取るメソッド
-    public void OnPieceClicked(GameObject clickedPiece)
+    public void OnBoardClicked(Vector2Int clickedIndex)
     {
         if (CurrentState != GameState.WhiteTurn && CurrentState != GameState.BlackTurn && CurrentState != GameState.PieceSelected) return;
 
         // 既に駒を選択中で今回クリックしたマスへ移動を試みる場合
         if (CurrentState == GameState.PieceSelected)
         {
-            if (chessRuleReferee.IsValidMove(_selectedPos, clickedPos, chessBoardManager.GetPieceAtSimulatedBoard())) // 引数の調整追加が必要
+            if (chessRuleReferee.IsValidMove(_selectedPos, clickedIndex, chessBoardManager.GetPieceAtSimulatedBoard())) // 引数の調整追加が必要
             {
                 // 合法手なら移動を実行
-
+                chessBoardManager.MovePiece(_selectedPos, clickedIndex);
+                EndTurn();
+            }
+            else
+            {
+                // 不正な手なら選択解除、または自色の別の駒なら選択変更
+                TrySelectPiece(clickedIndex);
             }
         }
     }
