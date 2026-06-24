@@ -73,7 +73,28 @@ public class PieceManager : MonoBehaviour
             //一度削除
             //spawnedPiece.transform.SetParent(targetSquare.transform); // 生成した駒をマスの子要素にする
 
-            spawnedPiece.GetComponent<Piece>().CurrentIndex = targetSquare.GetComponent<TileController>().BoardIndex; // 生成時に対象マスのインデックスを現在位置を設定
+            spawnedPiece.GetComponent<Piece>().CurrentIndex = targetSquare.BoardIndex; // 生成時に対象マスのインデックスを現在位置を設定
+        }
+    }
+
+    // ▼駒のオブジェクトの移動メソッド
+    public void AnimateMove(Piece piece, Vector2Int to)
+    {
+        TileController destinationSquare = chessBoardManager.GetPieceAtTileBoard(to.x, to.y); // 移動先のタイルを取得
+
+        Piece destinationEnemyPiece = chessBoardManager.GetPieceAtPieceObjectBoard(to); // 移動先の敵の駒を取得
+
+        if (destinationSquare != null)
+        {
+            Vector3 movePosition = destinationSquare.transform.position; // 移動先の座標を取得
+
+            movePosition.y += spawnY_Offset;
+
+            destinationEnemyPiece.OnTaken(); // 移動先の敵の駒を削除処理
+
+            piece.transform.position = movePosition;
+
+            piece.Move(to); // 駒側で現在位置の更新とHasMovedフラグをOnにする
         }
     }
 }
