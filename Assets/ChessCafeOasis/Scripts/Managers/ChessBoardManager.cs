@@ -36,15 +36,15 @@ public class ChessBoardManager : MonoBehaviour
 {
     [Header("管理対象クラス")]
     [SerializeField] private PieceManager pieceManager;
-    [SerializeField] private GameObject[] tileObjects = new GameObject[64];
+    [SerializeField] private TileController[] tileObjects = new TileController[64];
 
     private ChessPieceType_SimulatedBoard[,] simulatedBoard = new ChessPieceType_SimulatedBoard[8, 8]; //【データ】8*8の盤面データ層の配列
     public Vector2Int WhiteKingPos { get; set; } //【データ】白キングの現在のポジション
     public Vector2Int BlackKingPos { get; set; } //【データ】黒キングの現在のポジション
     public Vector2Int clickedIndex { get; set; } // 【3D】クリックされた座標
-    private GameObject[,] pieceObjectBoard = new GameObject[8, 8]; //【3D】8*8配列
+    private Piece[,] pieceObjectBoard = new Piece[8, 8]; //【3D】8*8配列
     private GameObject clickedGameObject; //【3D】クリックされたゲームオブジェクト保持用の変数
-    private GameObject[,] tileBoard = new GameObject[8, 8]; //【タイル】 8*8のチェス盤に合わせた2次元配列
+    private TileController[,] tileBoard = new TileController[8, 8]; //【タイル】 8*8のチェス盤に合わせた2次元配列
 
     private void Awake()
     {
@@ -107,20 +107,6 @@ public class ChessBoardManager : MonoBehaviour
         }
     }
 
-
-    // ▼【データ】駒の移動許可後のデータ層の盤面データ更新メソッド
-    public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
-    {
-        ChessPieceType_SimulatedBoard movingPiece = simulatedBoard[fromX, fromY]; // 移動元の駒を取得
-
-        simulatedBoard[fromX, fromY] = ChessPieceType_SimulatedBoard.None; // 移動元のマスを空にする
-
-        simulatedBoard[toX, toY] = movingPiece; // 移動先のマスに駒を置く
-    }
-
-    // ▼【3D】駒の移動許可後の3D駒オブジェクト層のデータ更新 + 3Dオブジェクトの移動指示メソッド
-
-
     // ▼【データ】インデックスから指定された座標の状態を調べるメソッド
     public ChessPieceType_SimulatedBoard GetPieceAtSimulatedBoard(Vector2Int index)
     {
@@ -132,7 +118,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     // ▼【3D】インデックスから駒を取得するメソッド
-    public GameObject GetPieceAtPieceObjectBoard(Vector2Int index)
+    public Piece GetPieceAtPieceObjectBoard(Vector2Int index)
     {
         if (index.x >= 0 && index.x < 8 && index.y >= 0 && index.y < 8)
         {
@@ -142,7 +128,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     // ▼【タイル】2次元配列からマスを取得するメソッド
-    public GameObject GetPieceAtTileBoard(int x, int y)
+    public TileController GetPieceAtTileBoard(int x, int y)
     {
         if (x >= 0 && x < 8 && y >= 0 && y < 8)
         {
@@ -160,7 +146,7 @@ public class ChessBoardManager : MonoBehaviour
             clickedIndex = clickedSquare.BoardIndex;
             Debug.Log($"クリックされたマス:{clickedSquare.AlgebraicNotation}(インデックス:{clickedIndex})");
 
-            GameObject pieceOnSquare = GetPieceAtPieceObjectBoard(clickedIndex); // 共通のインデックスからマスに乗っている駒オブジェクトを取得
+            Piece pieceOnSquare = GetPieceAtPieceObjectBoard(clickedIndex); // 共通のインデックスからマスに乗っている駒オブジェクトを取得
 
             if (pieceOnSquare != null)
             {
@@ -185,5 +171,22 @@ public class ChessBoardManager : MonoBehaviour
             Debug.Log("クリックされたゲームオブジェクトはマスでも駒でもありません。");
             return;
         }
+    }
+
+    // ▼【データ】駒の移動許可後のデータ層の盤面データ更新メソッド
+    public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
+    {
+        ChessPieceType_SimulatedBoard movingPiece = simulatedBoard[fromX, fromY]; // 移動元の駒を取得
+
+        simulatedBoard[fromX, fromY] = ChessPieceType_SimulatedBoard.None; // 移動元のマスを空にする
+
+        simulatedBoard[toX, toY] = movingPiece; // 移動先のマスに駒を置く
+    }
+
+    // ▼【3D】駒の移動許可後の3D駒オブジェクト層のデータ更新 + 3Dオブジェクトの移動指示メソッド
+    public void MovePiece(Vector2Int from, Vector2Int to)
+    {
+        Piece piece = pieceObjectBoard[from.x, from.y];
+
     }
 }

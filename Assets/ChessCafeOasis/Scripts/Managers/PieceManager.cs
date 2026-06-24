@@ -61,7 +61,7 @@ public class PieceManager : MonoBehaviour
     // ▼駒を生成するメソッド
     public void SpawnPiece(GameObject piecePrefab, int x, int y)
     {
-        GameObject targetSquare = chessBoardManager.GetPieceAtTileBoard(x, y);
+        TileController targetSquare = chessBoardManager.GetPieceAtTileBoard(x, y);
         if (targetSquare != null)
         {
             Vector3 spawnPosition = targetSquare.transform.position;

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 //////// スクリプトの説明：【各スクリプト間の情報の中継ハブ役、かつ指示役。】////////
@@ -94,19 +93,12 @@ public class GameManager : MonoBehaviour
     private void TrySelectPiece(Vector2Int pos)
     {
         Piece piece = chessBoardManager.GetPieceAtPieceObjectBoard(pos);
-        if (Enum.TryParse(piece.PieceColor, out PieceColor pieceColor))
+        if (piece != null && IsCurrentTurnColor(piece.PieceColor))
         {
-            Debug.Log($"{pieceColor}に変換成功しました。");
-            if (piece != null && IsCurrentTurnColor(pieceColor))
-            {
-                _selectedPos = pos;
-                ChangeState(GameState.PieceSelected);
-                // ＜ここにタイルを光らせる処理を後ほど追加する＞
-            }
+            _selectedPos = pos;
+            ChangeState(GameState.PieceSelected);
+            // ＜ここにタイルを光らせる処理を後ほど追加する＞
         }
-        Debug.Log($"{piece.PieceColor}をEnumのPieceColorに変換できませんでした。");
-
-
     }
 
     // ▼現在ターンの色を判断するメソッド

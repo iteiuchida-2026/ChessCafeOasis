@@ -11,7 +11,7 @@ public abstract class Piece : MonoBehaviour
 
     // Piece側でPieceBaseInfoの情報を保持するための変数を初期化
     public string PieceType { get; set; }
-    public string PieceColor { get; set; }
+    public PieceColor PieceColor { get; set; }
 
     // 駒の現在位置把握用の設定
     public Vector2Int CurrentIndex { get; set; } // 駒の現在位置
@@ -38,7 +38,7 @@ public abstract class Piece : MonoBehaviour
     public virtual void Start()
     {
         PieceType = pieceBaseInfo.pieceType.ToString();
-        PieceColor = pieceBaseInfo.pieceColor.ToString();
+        PieceColor = pieceBaseInfo.pieceColor;
     }
 
 
