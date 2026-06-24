@@ -136,11 +136,75 @@ public class ChessRuleReferee : MonoBehaviour
         Piece targetRook = chessBoardManager.GetPieceAtPieceObjectBoard(targetRookPos);
         if (piece.HasMoved == false && targetRook.HasMoved == false) // 条件①
         {
-            // ＜KingとRookの間のマスに敵駒の利きがないかチェックするメソッド＞ // 条件②
+            CanCastlingAssistCheckNone(piece, targetRookPos); // 条件②
+            // ＜KingとRookの間のマスに敵駒の利きがないかチェックするメソッド＞ // 条件④
 
             return true;
         }
         return false;
+    }
+
+    // ▼キャスリング補助メソッド：キングとルークの間の駒があるか調べる
+    // このメソッドではキングとルークが既に動いているか等は考慮していない
+    public bool CanCastlingAssistCheckNone(Piece piece, Vector2Int targetRookPos)
+    {
+        // 白の場合： ルークの位置は a1(0, 7) もしくは h1(7, 7)となる
+        // キングの位置： e1(4, 7)
+        // 駒の有無チェック対象マス： b1(1, 7) c1(2, 7) d1(3, 7) f1(5, 7) g1(6, 7)
+        if (piece.PieceColor == PieceColor.White)　//
+        {
+            if (targetRookPos.x == 7 && targetRookPos.y == 7) // キャスリング対象：h1ルークの場合(7, 7)
+            {
+                ChessPieceType_SimulatedBoard f1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(5, 7).BoardIndex);
+                ChessPieceType_SimulatedBoard g1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(6, 7).BoardIndex);
+
+                if (f1 == ChessPieceType_SimulatedBoard.None && g1 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
+                {
+                    return true;
+                }
+            }
+            else // キャスリング対象：a1ルークの場合(0, 7)
+            {
+                ChessPieceType_SimulatedBoard b1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(1, 7).BoardIndex);
+                ChessPieceType_SimulatedBoard c1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(2, 7).BoardIndex);
+                ChessPieceType_SimulatedBoard d1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(3, 7).BoardIndex);
+
+                if (b1 == ChessPieceType_SimulatedBoard.None && c1 == ChessPieceType_SimulatedBoard.None && d1 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // 黒の場合： ルークの位置は a8(0, 0) もしくは h8(7, 0)となる
+        // キングの位置： e8(4, 0)
+        // 駒の有無チェック対象マス： b8(1, 0) c8(2, 0) d8(3, 0) f8(5, 0) g8(6, 0)
+        else
+        {
+            if (targetRookPos.x == 7 && targetRookPos.y == 0) // キャスリング対象：h8ルークの場合(7, 0)
+            {
+                ChessPieceType_SimulatedBoard f8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(5, 0).BoardIndex);
+                ChessPieceType_SimulatedBoard g8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(6, 0).BoardIndex);
+
+                if (f8 == ChessPieceType_SimulatedBoard.None && g8 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
+                {
+                    return true;
+                }
+            }
+            else // a8ルークの場合(0, 0)
+            {
+                ChessPieceType_SimulatedBoard b8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(1, 0).BoardIndex);
+                ChessPieceType_SimulatedBoard c8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(2, 0).BoardIndex);
+                ChessPieceType_SimulatedBoard d8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(3, 0).BoardIndex);
+
+                if (b8 == ChessPieceType_SimulatedBoard.None && c8 == ChessPieceType_SimulatedBoard.None && d8 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     // ▼アンパッサンの可否判定
