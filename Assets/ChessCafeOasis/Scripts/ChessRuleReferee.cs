@@ -15,20 +15,20 @@ public class ChessRuleReferee : MonoBehaviour
     [SerializeField] private RecordManager recordManager;
 
     // クラス内で共有する変数を宣言
-    private string _myColor;
+    private PieceColor _myColor;
     private Vector2Int _currentPos;
     private Vector2Int _nextPos;
     private List<Vector2Int> _baseMoveVectors;
 
     // ▼駒の移動の判定、移動時の障害物の有無、自殺手のチェックを行うメソッド。
     // 移動可能ならtrueを返す
-    public bool IsValidMove(Piece piece, Vector2Int targetPos)
+    public bool IsValidMove(Piece piece, Vector2Int targetPos, ChessPieceType_SimulatedBoard[,] simulatedBoard)
     {
         _baseMoveVectors = piece.GetMoveVectors(); // 3Dデータの各駒クラスから移動ベクトルの定義を取得
         _currentPos = piece.CurrentIndex; // 3Dデータの駒の現在位置を駒の保持情報より取得
         _myColor = piece.PieceColor; // 3Dデータの駒から色を取得
 
-        if (piece.PieceType == PieceType.Pawn.ToString()) // 駒がポーンの場合の処理
+        if (piece.PieceType == PieceType.Pawn) // 駒がポーンの場合の処理
         {
             return CheckPawnMove(piece, targetPos);
         }
@@ -98,7 +98,7 @@ public class ChessRuleReferee : MonoBehaviour
         Vector2Int pawnLeftAttackPos;
         Vector2Int pawnAttackPos;
 
-        if (_myColor == "White") // 駒の色が白の場合は正の向きで移動マスと攻撃マスを取得
+        if (_myColor == PieceColor.White) // 駒の色が白の場合は正の向きで移動マスと攻撃マスを取得
         {
             _nextPos = _currentPos + baseMoveVector;
 
@@ -124,21 +124,127 @@ public class ChessRuleReferee : MonoBehaviour
     }
 
     // ▼キャスリングの可否判定
-    public bool CanCastling() // 引数は後ほど設定
+    // キングとルークの位置を変更する
+    // 条件① キングとキャスリング先のルークが一度も動いていない
+    // 条件② キングとキャスリング先のルークの間に駒がない
+    // 条件③ キングがチェックされていない
+    // 条件④ キングが移動するマスと通過するマスに敵の駒の攻撃範囲が入っていない
+    public bool CanCastling(Piece piece, Vector2Int targetRookPos)
     {
-        return true;
+        if (piece.PieceType != PieceType.King) return false;
+        if (IsKingInCheck() != false) return false; // 条件③
+        Piece targetRook = chessBoardManager.GetPieceAtPieceObjectBoard(targetRookPos);
+        if (piece.HasMoved == false && targetRook.HasMoved == false) // 条件①
+        {
+            CanCastlingAssistCheckNone(piece, targetRookPos); // 条件②
+            // ＜KingとRookの間のマスに敵駒の利きがないかチェックするメソッド＞ // 条件④
+
+            return true;
+        }
+        return false;
+    }
+
+    // ▼キャスリング補助メソッド：キングとルークの間の駒があるか調べる
+    // このメソッドではキングとルークが既に動いているか等は考慮していない
+    public bool CanCastlingAssistCheckNone(Piece piece, Vector2Int targetRookPos)
+    {
+        // 白の場合： ルークの位置は a1(0, 7) もしくは h1(7, 7)となる
+        // キングの位置： e1(4, 7)
+        // 駒の有無チェック対象マス： b1(1, 7) c1(2, 7) d1(3, 7) f1(5, 7) g1(6, 7)
+        if (piece.PieceColor == PieceColor.White)　//
+        {
+            if (targetRookPos.x == 7 && targetRookPos.y == 7) // キャスリング対象：h1ルークの場合(7, 7)
+            {
+                ChessPieceType_SimulatedBoard f1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(5, 7).BoardIndex);
+                ChessPieceType_SimulatedBoard g1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(6, 7).BoardIndex);
+
+                if (f1 == ChessPieceType_SimulatedBoard.None && g1 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
+                {
+                    return true;
+                }
+            }
+            else // キャスリング対象：a1ルークの場合(0, 7)
+            {
+                ChessPieceType_SimulatedBoard b1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(1, 7).BoardIndex);
+                ChessPieceType_SimulatedBoard c1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(2, 7).BoardIndex);
+                ChessPieceType_SimulatedBoard d1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(3, 7).BoardIndex);
+
+                if (b1 == ChessPieceType_SimulatedBoard.None && c1 == ChessPieceType_SimulatedBoard.None && d1 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // 黒の場合： ルークの位置は a8(0, 0) もしくは h8(7, 0)となる
+        // キングの位置： e8(4, 0)
+        // 駒の有無チェック対象マス： b8(1, 0) c8(2, 0) d8(3, 0) f8(5, 0) g8(6, 0)
+        else
+        {
+            if (targetRookPos.x == 7 && targetRookPos.y == 0) // キャスリング対象：h8ルークの場合(7, 0)
+            {
+                ChessPieceType_SimulatedBoard f8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(5, 0).BoardIndex);
+                ChessPieceType_SimulatedBoard g8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(6, 0).BoardIndex);
+
+                if (f8 == ChessPieceType_SimulatedBoard.None && g8 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
+                {
+                    return true;
+                }
+            }
+            else // a8ルークの場合(0, 0)
+            {
+                ChessPieceType_SimulatedBoard b8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(1, 0).BoardIndex);
+                ChessPieceType_SimulatedBoard c8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(2, 0).BoardIndex);
+                ChessPieceType_SimulatedBoard d8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(3, 0).BoardIndex);
+
+                if (b8 == ChessPieceType_SimulatedBoard.None && c8 == ChessPieceType_SimulatedBoard.None && d8 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     // ▼アンパッサンの可否判定
-    public bool CanEnPassant() // 引数は後ほど設定
+    // 相手のポーンが2マス進んで来た次の自分のターンに、自分のポーンが相手のポーンをとれる
+    // 条件① 自分のポーンが自陣から数えて5段目にいる
+    // 条件② 自分のポーンの真横（同じ段の隣の列）にいる相手のポーンが最初の位置から2マス進んだ
+    // 条件③ 相手のポーンが2マス進んだ直後のターン
+    public bool CanEnPassant(Piece piece)
     {
-        return true;
+        if (piece.PieceType != PieceType.Pawn) return false;
+        // ＜RecordManager.csのメソッドで直前の手が相手の両サイドどちらかのポーンの2マス前進かを判断＞ 条件③②
+        if (piece.PieceColor == PieceColor.White)
+        {
+            if (piece.CurrentIndex.y == 3) return true; // 条件① 白ポーンの場合はy座標が3で5段目 
+        }
+        else
+        {
+            if (piece.CurrentIndex.y == 4) return true; // 条件① 黒ポーンの場合はy座標が4で5段目
+        }
+        return false;
     }
 
     // ▼プロモーションの可否判定
-    public bool CanPromote() // 引数は後ほど設定
+    // ポーンがキング以外の好きな駒に昇格できる
+    // 条件① 自分のポーンが敵陣最奥に到達
+    public bool CanPromote(Piece piece, Vector2Int _nextPos)
     {
-        return true;
+        if (piece.PieceType != PieceType.Pawn) return false;
+        if (piece.IsPromoted == false)
+        {
+            if (piece.PieceColor == PieceColor.White)
+            {
+                if (_nextPos.y == 0) return true; // 条件① 白ポーンならy座標が0でボード最奥の8段目
+            }
+            else
+            {
+                if (_nextPos.y == 7) return true; // 条件① 黒ポーンならy座標が7でボード最奥の8段目
+            }
+        }
+        return false;
     }
 
     // ▼キングのチェック判定
@@ -151,15 +257,15 @@ public class ChessRuleReferee : MonoBehaviour
     private bool IsWithinBoard(Vector2Int pos) => pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8;
 
     // ▼マスが空かチェックするメソッド
-    private bool IsTileEmpty(Vector2Int pos) => chessBoardManager.GetPieceAtDataLayer(pos) == ChessPieceType_SimulatedBoard.None;
+    private bool IsTileEmpty(Vector2Int pos) => chessBoardManager.GetPieceAtSimulatedBoard(pos) == ChessPieceType_SimulatedBoard.None;
 
     // ▼駒が敵の駒かどうかチェックするメソッド
     // 今回、駒の色データ等は3Dのオブジェクトにアタッチされている。
     // データ層の2次元配列と3D側の2次元配列からそれぞれ参照しているが、後から問題になる可能性があるため注意する
-    private bool IsEnemyPiece(string myColor, Vector2Int pos)
+    private bool IsEnemyPiece(PieceColor myColor, Vector2Int pos)
     {
-        GameObject targetGameObject = chessBoardManager.GetPieceAtRealLayer(pos); // 3Dデータ層から対象マスのピースを取得
-        string pieceColor = targetGameObject.GetComponent<Piece>().PieceColor; // ピースの色を取得
+        Piece targetGameObject = chessBoardManager.GetPieceAtPieceObjectBoard(pos); // 3Dデータ層から対象マスのピースを取得
+        PieceColor pieceColor = targetGameObject.GetComponent<Piece>().PieceColor; // ピースの色を取得
 
         // 色が最初に選択した駒と同じ色でない場合はtrueを返し、敵（相手）の駒を判断する。
         if (pieceColor != myColor)

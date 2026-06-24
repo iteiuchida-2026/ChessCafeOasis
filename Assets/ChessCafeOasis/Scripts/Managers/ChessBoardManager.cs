@@ -36,23 +36,28 @@ public class ChessBoardManager : MonoBehaviour
 {
     [Header("管理対象クラス")]
     [SerializeField] private PieceManager pieceManager;
-    [SerializeField] private GameObject[] tileObjects = new GameObject[64];
+    [SerializeField] private TileController[] tileObjects = new TileController[64];
 
     private ChessPieceType_SimulatedBoard[,] simulatedBoard = new ChessPieceType_SimulatedBoard[8, 8]; //【データ】8*8の盤面データ層の配列
+    public ChessPieceType_SimulatedBoard[,] GetSimulatedBoard() => simulatedBoard; // アクセス用メソッド
     public Vector2Int WhiteKingPos { get; set; } //【データ】白キングの現在のポジション
     public Vector2Int BlackKingPos { get; set; } //【データ】黒キングの現在のポジション
-    private GameObject[,] pieceObjectBoard = new GameObject[8, 8]; //【3D】8*8配列
+    public Vector2Int clickedIndex { get; set; } // 【3D】クリックされた座標
+    private Piece[,] pieceObjectBoard = new Piece[8, 8]; //【3D】8*8配列
     private GameObject clickedGameObject; //【3D】クリックされたゲームオブジェクト保持用の変数
-    private GameObject[,] tileBoard = new GameObject[8, 8]; //【タイル】 8*8のチェス盤に合わせた2次元配列
+    private TileController[,] tileBoard = new TileController[8, 8]; //【タイル】 8*8のチェス盤に合わせた2次元配列
 
+    private void Awake()
+    {
+        RearrangeTileObjects();// 【タイル】シリアライズしたタイルを2次元配列に変換
+    }
 
     // ▼初期化処理をまとめたメソッド
     // ＜GameManagerから呼ばれる＞
-    public void InitializeSetUp()
+    public void InitializeBoards()
     {
         InitializeSimulatedBoard(); // 【データ】初期配置に設定
         pieceManager.InitializePieceObject(); // 【3D】ピースマネジャーに各駒オブジェクトの初期化を指示
-        RearrangeTileObjects();// 【タイル】シリアライズしたタイルを2次元配列に変換
     }
 
     // ▼【データ】チェス盤面を初期配置に設定するメソッド
@@ -103,6 +108,71 @@ public class ChessBoardManager : MonoBehaviour
         }
     }
 
+    // ▼【データ】インデックスから指定された座標の状態を調べるメソッド
+    public ChessPieceType_SimulatedBoard GetPieceAtSimulatedBoard(Vector2Int index)
+    {
+        if (index.x < 0 || index.x >= 8 || index.y < 0 || index.y >= 8) // 盤面外を確認する場合のガード処理
+        {
+            return ChessPieceType_SimulatedBoard.None;
+        }
+        return simulatedBoard[index.x, index.y];
+    }
+
+    // ▼【3D】インデックスから駒を取得するメソッド
+    public Piece GetPieceAtPieceObjectBoard(Vector2Int index)
+    {
+        if (index.x >= 0 && index.x < 8 && index.y >= 0 && index.y < 8)
+        {
+            return pieceObjectBoard[index.x, index.y];
+        }
+        return null;
+    }
+
+    // ▼【タイル】2次元配列からマスを取得するメソッド
+    public TileController GetPieceAtTileBoard(int x, int y)
+    {
+        if (x >= 0 && x < 8 && y >= 0 && y < 8)
+        {
+            return tileBoard[x, y];
+        }
+        return null;
+    }
+
+    // ▼【3D】オブジェクトの座標を調べてGamaManagerへ渡すメソッド
+    public void IdentifyGameObject(GameObject gameObject)
+    {
+        // クリックされたオブジェクトがマスだった場合
+        if (gameObject.TryGetComponent(out TileController clickedSquare))
+        {
+            clickedIndex = clickedSquare.BoardIndex;
+            Debug.Log($"クリックされたマス:{clickedSquare.AlgebraicNotation}(インデックス:{clickedIndex})");
+
+            Piece pieceOnSquare = GetPieceAtPieceObjectBoard(clickedIndex); // 共通のインデックスからマスに乗っている駒オブジェクトを取得
+
+            if (pieceOnSquare != null)
+            {
+                Debug.Log($"そのマスには{pieceOnSquare.name}が乗っています。");
+                GameManager.Instance.OnBoardClicked(clickedIndex); // GammeManagerへクリックされた座標を渡す
+            }
+            else
+            {
+                Debug.Log("そのマスは空です。");
+            }
+        }
+
+        // クリックされたオブジェクトが駒だった場合
+        else if (gameObject.TryGetComponent(out Piece clickedPiece))
+        {
+            clickedIndex = clickedPiece.CurrentIndex;
+            Debug.Log($"その駒は{clickedPiece.name}です。");
+            GameManager.Instance.OnBoardClicked(clickedIndex); // GammeManagerへクリックされた座標を渡す
+        }
+        else
+        {
+            Debug.Log("クリックされたゲームオブジェクトはマスでも駒でもありません。");
+            return;
+        }
+    }
 
     // ▼【データ】駒の移動許可後のデータ層の盤面データ更新メソッド
     public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
@@ -115,71 +185,18 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     // ▼【3D】駒の移動許可後の3D駒オブジェクト層のデータ更新 + 3Dオブジェクトの移動指示メソッド
-
-
-    // ▼【データ】インデックスから指定された座標の状態を調べるメソッド
-    public ChessPieceType_SimulatedBoard GetPieceAtDataLayer(Vector2Int index)
+    public void MovePiece(Vector2Int from, Vector2Int to)
     {
-        if (index.x < 0 || index.x >= 8 || index.y < 0 || index.y >= 8) // 盤面外を確認する場合のガード処理
-        {
-            return ChessPieceType_SimulatedBoard.None;
-        }
-        return simulatedBoard[index.x, index.y];
-    }
+        Piece piece = pieceObjectBoard[from.x, from.y];
 
-    // ▼【3D】インデックスから駒を取得するメソッド
-    public GameObject GetPieceAtRealLayer(Vector2Int index)
-    {
-        if (index.x >= 0 && index.x < 8 && index.y >= 0 && index.y < 8)
-        {
-            return pieceObjectBoard[index.x, index.y];
-        }
-        return null;
-    }
+        // 配列データの更新
+        pieceObjectBoard[to.x, to.y] = piece;
+        pieceObjectBoard[from.x, from.y] = null;
 
-    // ▼【タイル】2次元配列からマスを取得するメソッド
-    public GameObject GetPieceAtTileObjectsArray(int x, int y)
-    {
-        if (x >= 0 && x < 8 && y >= 0 && y < 8)
-        {
-            return tileBoard[x, y];
-        }
-        return null;
-    }
+        simulatedBoard[to.x, to.y] = simulatedBoard[from.x, from.y];
+        simulatedBoard[from.x, from.y] = ChessPieceType_SimulatedBoard.None;
 
-    // ▼【3D】オブジェクトが駒かマスかを調べるメソッド
-    public void IdentifyGameObject(GameObject gameObject)
-    {
-        // クリックされたオブジェクトがマスだった場合
-        if (gameObject.TryGetComponent<TileController>(out TileController clickedSquare))
-        {
-            Vector2Int clickedSquareIndex = clickedSquare.BoardIndex;
-            Debug.Log($"クリックされたマス:{clickedSquare.AlgebraicNotation}(インデックス:{clickedSquareIndex})");
-
-            GameObject pieceOnSquare = GetPieceAtRealLayer(clickedSquareIndex); // 共通のインデックスからマスに乗っている駒オブジェクトを取得
-
-            if (pieceOnSquare != null)
-            {
-                Debug.Log($"そのマスには{pieceOnSquare.name}が乗っています。");
-                //GetClickedPieceInfo(pieceOnSquare); // 駒情報を取得するメソッドへ渡す
-            }
-            else
-            {
-                Debug.Log("そのマスは空です。");
-            }
-        }
-
-        // クリックされたオブジェクトが駒だった場合
-        else if (gameObject.TryGetComponent<Piece>(out Piece clickedPiece))
-        {
-            GameObject clickedPieceGameObject = clickedPiece.gameObject;
-            Debug.Log($"その駒は{clickedPieceGameObject.name}です。");
-            //GetClickedPieceInfo(clickedPieceGameObject); // 駒情報を取得するメソッドへ渡す
-        }
-        else
-        {
-            Debug.Log("クリックされたゲームオブジェクトはマスでも駒でもありません。");
-            return;
-        }
+        // PieceManager.csに3Dオブジェクトの物理的な移動を指示
+        pieceManager.AnimateMove(piece, to);
     }
 }

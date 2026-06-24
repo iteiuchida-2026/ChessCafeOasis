@@ -10,8 +10,8 @@ public abstract class Piece : MonoBehaviour
     [SerializeField] private PieceBaseInfo pieceBaseInfo;
 
     // Piece側でPieceBaseInfoの情報を保持するための変数を初期化
-    public string PieceType { get; set; }
-    public string PieceColor { get; set; }
+    public PieceType PieceType { get; set; }
+    public PieceColor PieceColor { get; set; }
 
     // 駒の現在位置把握用の設定
     public Vector2Int CurrentIndex { get; set; } // 駒の現在位置
@@ -37,8 +37,8 @@ public abstract class Piece : MonoBehaviour
     // スタート時にPieceBaseInfoから情報を取得しておく
     public virtual void Start()
     {
-        PieceType = pieceBaseInfo.pieceType.ToString();
-        PieceColor = pieceBaseInfo.pieceColor.ToString();
+        PieceType = pieceBaseInfo.pieceType;
+        PieceColor = pieceBaseInfo.pieceColor;
     }
 
 
@@ -46,11 +46,14 @@ public abstract class Piece : MonoBehaviour
     // ▼移動メソッド（各駒でOverrideしてカスタマイズして使用する）
     public virtual void Move(Vector2Int index)
     {
-        // 移動処理が入る予定
+        // 移動処理はデータ側はChessBoardManagerが対応、オブジェクトはPieceManagerが対応する
 
         CurrentIndex = index; // 駒の現在位置を移動先のindexで更新
 
-        HasMoved = true;
+        CurrentStatus = PieceStatus.Active;
+
+        if (HasMoved == false) HasMoved = true;
+        return;
     }
 
     // ▼プロモーションメソッド（ポーンのみOverrideして使用する）
