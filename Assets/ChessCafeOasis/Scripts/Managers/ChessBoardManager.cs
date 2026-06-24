@@ -41,6 +41,7 @@ public class ChessBoardManager : MonoBehaviour
     private ChessPieceType_SimulatedBoard[,] simulatedBoard = new ChessPieceType_SimulatedBoard[8, 8]; //【データ】8*8の盤面データ層の配列
     public Vector2Int WhiteKingPos { get; set; } //【データ】白キングの現在のポジション
     public Vector2Int BlackKingPos { get; set; } //【データ】黒キングの現在のポジション
+    public Vector2Int clickedIndex { get; set; } // 【3D】クリックされた座標
     private GameObject[,] pieceObjectBoard = new GameObject[8, 8]; //【3D】8*8配列
     private GameObject clickedGameObject; //【3D】クリックされたゲームオブジェクト保持用の変数
     private GameObject[,] tileBoard = new GameObject[8, 8]; //【タイル】 8*8のチェス盤に合わせた2次元配列
@@ -154,12 +155,12 @@ public class ChessBoardManager : MonoBehaviour
     public void IdentifyGameObject(GameObject gameObject)
     {
         // クリックされたオブジェクトがマスだった場合
-        if (gameObject.TryGetComponent<TileController>(out TileController clickedSquare))
+        if (gameObject.TryGetComponent(out TileController clickedSquare))
         {
-            Vector2Int clickedSquareIndex = clickedSquare.BoardIndex;
-            Debug.Log($"クリックされたマス:{clickedSquare.AlgebraicNotation}(インデックス:{clickedSquareIndex})");
+            clickedIndex = clickedSquare.BoardIndex;
+            Debug.Log($"クリックされたマス:{clickedSquare.AlgebraicNotation}(インデックス:{clickedIndex})");
 
-            GameObject pieceOnSquare = GetPieceAtPieceObjectBoard(clickedSquareIndex); // 共通のインデックスからマスに乗っている駒オブジェクトを取得
+            GameObject pieceOnSquare = GetPieceAtPieceObjectBoard(clickedIndex); // 共通のインデックスからマスに乗っている駒オブジェクトを取得
 
             if (pieceOnSquare != null)
             {
@@ -173,10 +174,10 @@ public class ChessBoardManager : MonoBehaviour
         }
 
         // クリックされたオブジェクトが駒だった場合
-        else if (gameObject.TryGetComponent<Piece>(out Piece clickedPiece))
+        else if (gameObject.TryGetComponent(out Piece clickedPiece))
         {
-            GameObject clickedPieceGameObject = clickedPiece.gameObject;
-            Debug.Log($"その駒は{clickedPieceGameObject.name}です。");
+            clickedIndex = clickedPiece.CurrentIndex;
+            Debug.Log($"その駒は{clickedPiece.name}です。");
             //GetClickedPieceInfo(clickedPieceGameObject); // 駒情報を取得するメソッドへ渡す
         }
         else
