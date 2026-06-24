@@ -329,7 +329,7 @@ Menu            PlayerName                 |_______|
 |17日目|6/21(日) | オフライン対戦機能実装に向けた構成の再確認、調整| 実装準備 | 3| ☑|作業の大幅な遅れあり。（休校）|
 |18日目|6/22(月) | オフライン対戦機能実装に向けた構成の再確認、調整| 実装準備 | 3| ☑|作業の大幅な遅れあり。|
 |19日目|6/23(火) | オフライン対戦機能実装作業開始| 実装作業| 3| ☑|作業の大幅な遅れあり。|
-|20日目|6/24(水) | オフライン対戦機能実装作業| 実装作業| 3|||
+|20日目|6/24(水) | オフライン対戦機能実装作業| 実装作業| 3| ☑|作業の大幅な遅れあり。|
 |21日目|6/25(木) | オフライン対戦モード実装までの調整| ■調整テスト| 3|||
 |22日目|6/26(金) | デバッグ・バランス最終調整 | ■調整テスト| 3|||
 |23日目|6/27(土) | デバッグ・バランス最終調整、完成版 | ■調整テスト| 3||（休校）|
@@ -359,7 +359,11 @@ Menu            PlayerName                 |_______|
 |6/19(金)| スクリプト実装作業。| 駒周辺のスクリプトの作成中。| 6| 駒生成周りは終わりに近づいてきたが調整中。|
 |6/22(月)| スクリプト実装作業。| 移動に関する部分を作成中。| 5||
 |6/23(火)| スクリプト実装作業。| ルール判定に関する部分を作成中。| 6||
+|6/24|(水) スクリプト実装作業。| ルール判定に関する部分を作成中。| 7||
 ||||||
+||||||
+||||||
+
 
 
 
@@ -369,17 +373,17 @@ Menu            PlayerName                 |_______|
 
 | 資料名| 添付ファイル/URL| 備考|
 |------|------|------|
-| チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)| Geminiで出力|
+| チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)| Gemini|
 | ゲームの流れ|[ゲームの流れ.pdf](https://github.com/user-attachments/files/28824492/default.pdf)| テキストで作成|
 | クラス設計試案|[クラス設計試案.pdf](https://github.com/user-attachments/files/28824497/default.pdf)| テキストで作成|
 | READMEとゲームの流れを読み込んだAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)| Gemini|
 | 2次元配列を用いたChessBoardManagerのコード例|[二次元配列を用いたコード例.pdf](https://github.com/user-attachments/files/29002379/default.pdf)| Gemini|
 | Piece.csの状態管理方法についてのGeminiへの相談回答|[Piece.csに対する状態管理についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29028937/Piece.cs.Gemini.pdf)| Gemini|
 | ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答|[ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080904/ChessBoardManager.cs.3D.Gemini.pdf)|Gemini|
-| PieceManager.csのPrefab生成に関するGeminiへ相談した回答|[PieceManager.csのPrefab生成に関するGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080910/PieceManager.cs.Prefab.Gemini.pdf)|Gemini|
-|ChessRuleReferee.csの変数やメソッドの相談のGemini回答|[ChessRuleReferee.csの変数やメソッドの相談のGemini回答.pdf](https://github.com/user-attachments/files/29187269/ChessRuleReferee.cs.Gemini.pdf)|Gemini|
-|Piece.csの移動ベクトル定義に関するGeminiへの相談の回答|[Piece.csの移動ベクトル定義に関するGeminiへの相談の回答.pdf](https://github.com/user-attachments/files/29228494/Piece.cs.Gemini.pdf)||
-|GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答|[GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答.pdf](https://github.com/user-attachments/files/29235153/GameManager.cs.Gemini.pdf)||
+| PieceManager.csのPrefab生成に関するGeminiへ相談した回答|[PieceManager.csのPrefab生成に関するGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080910/PieceManager.cs.Prefab.Gemini.pdf)| Gemini|
+|ChessRuleReferee.csの変数やメソッドの相談のGemini回答|[ChessRuleReferee.csの変数やメソッドの相談のGemini回答.pdf](https://github.com/user-attachments/files/29187269/ChessRuleReferee.cs.Gemini.pdf)| Gemini|
+|Piece.csの移動ベクトル定義に関するGeminiへの相談の回答|[Piece.csの移動ベクトル定義に関するGeminiへの相談の回答.pdf](https://github.com/user-attachments/files/29228494/Piece.cs.Gemini.pdf)| Gemini|
+|GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答|[GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答.pdf](https://github.com/user-attachments/files/29235153/GameManager.cs.Gemini.pdf)| Gemini|
 ||||
 ||||
 |オフライン対戦モードの計画試案|||
@@ -404,6 +408,7 @@ Menu            PlayerName                 |_______|
 | 6/16(火)| （ErrorLogなし）ネット上の情報についてそのまま鵜呑みにせず、最新の情報かどうかの確認や取捨選択して精度の高いものを利用する。| 情報全般。|情報の作成時期の確認、サービスの種類の合致、公式情報の照らし合わせ。||
 | 6/19(金)| （ErrorLogなし）駒の初期生成時に駒が浮いて傾く。| 各マスのオブジェクト。| これから修正作業に入るが、原因はおそらくBlender側で座標や傾き修正が出来ていなかったと推測。||
 | 6/23(火)| （ErrorLogなし）メソッドに後から追加した引数を入れる予定がはいる。| ChessRulrReferee.cs| メソッドを変更する| 今までよりは入念に準備してスクリプト実装に臨んだが後から変更はどんどん出てくる。あまり気張って完璧を目指さないのも大事か。|
+| 6/24(水)| （ErrorLogなし）Blender側の修正が必要な状態とはいえ、ここまでテストなしで進めるやり方はいかがなものか。| | 今回、スケジュールの遅れは置いておいて、計画時に駒を動かせる段階をレベル1として設けるべきだった。| 細分化し見える形、動かせる形で進捗テストを平行して次回は進めていきたい。|
 ||||||
 ---
 
@@ -464,8 +469,8 @@ Menu            PlayerName                 |_______|
 > ※ AI を使った場合は、**丸写しせずコメントで理解した内容**を README / コードに残してください。
 
 - **AI利用箇所**  
-  - チェス要素の洗い出し資料
-  - 
+  - 設計段階における全体構成の検討
+  - 実装段階におけるスクリプト骨格の洗い出し
   - 
 ---
 
