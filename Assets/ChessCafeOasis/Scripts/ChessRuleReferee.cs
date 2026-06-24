@@ -22,7 +22,7 @@ public class ChessRuleReferee : MonoBehaviour
 
     // ▼駒の移動の判定、移動時の障害物の有無、自殺手のチェックを行うメソッド。
     // 移動可能ならtrueを返す
-    public bool IsValidMove(Piece piece, Vector2Int targetPos)
+    public bool IsValidMove(Piece piece, Vector2Int targetPos, ChessPieceType_SimulatedBoard[,] simulatedBoard)
     {
         _baseMoveVectors = piece.GetMoveVectors(); // 3Dデータの各駒クラスから移動ベクトルの定義を取得
         _currentPos = piece.CurrentIndex; // 3Dデータの駒の現在位置を駒の保持情報より取得

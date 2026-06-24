@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     public GameState CurrentState { get; set; } // 現在のプレイヤーターン変数
     private Vector2Int _selectedPos; // 現在選択されている座標
+    private Piece _selectedPiece; // 現在選択されている駒
 
     public static GameManager Instance { get; private set; } // シングルトンのインスタンスを作成
 
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour
         // 既に駒を選択中で今回クリックしたマスへ移動を試みる場合
         if (CurrentState == GameState.PieceSelected)
         {
-            if (chessRuleReferee.IsValidMove(_selectedPos, clickedIndex, chessBoardManager.GetPieceAtSimulatedBoard())) // 引数の調整追加が必要
+            if (chessRuleReferee.IsValidMove(_selectedPiece, clickedIndex, chessBoardManager.GetSimulatedBoadrd())) // 引数の調整追加が必要
             {
                 // 合法手なら移動を実行
                 chessBoardManager.MovePiece(_selectedPos, clickedIndex);
@@ -95,7 +96,7 @@ public class GameManager : MonoBehaviour
         Piece piece = chessBoardManager.GetPieceAtPieceObjectBoard(pos);
         if (piece != null && IsCurrentTurnColor(piece.PieceColor))
         {
-            _selectedPos = pos;
+            _selectedPiece = piece; // 該当座標の駒オブジェクトを格納
             ChangeState(GameState.PieceSelected);
             // ＜ここにタイルを光らせる処理を後ほど追加する＞
         }
