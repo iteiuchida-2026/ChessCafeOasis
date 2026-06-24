@@ -188,5 +188,14 @@ public class ChessBoardManager : MonoBehaviour
     {
         Piece piece = pieceObjectBoard[from.x, from.y];
 
+        // 配列データの更新
+        pieceObjectBoard[to.x, to.y] = piece;
+        pieceObjectBoard[from.x, from.y] = null;
+
+        simulatedBoard[to.x, to.y] = simulatedBoard[from.x, from.y];
+        simulatedBoard[from.x, from.y] = ChessPieceType_SimulatedBoard.None;
+
+        // PieceManager.csに3Dオブジェクトの物理的な移動を指示
+        pieceManager.AnimateMove(piece, to);
     }
 }
