@@ -28,7 +28,7 @@ public class ChessRuleReferee : MonoBehaviour
         _currentPos = piece.CurrentIndex; // 3Dデータの駒の現在位置を駒の保持情報より取得
         _myColor = piece.PieceColor; // 3Dデータの駒から色を取得
 
-        if (piece.PieceType == PieceType.Pawn.ToString()) // 駒がポーンの場合の処理
+        if (piece.PieceType == PieceType.Pawn) // 駒がポーンの場合の処理
         {
             return CheckPawnMove(piece, targetPos);
         }
