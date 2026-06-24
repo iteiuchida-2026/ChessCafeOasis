@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //ChangeState(GameState.Setup);
-        ////ここでGameRoomSetUpを呼んで部屋設定を行う
+        // ＜ここでGameRoomSetUpを呼んで部屋設定を後ほど行う＞
 
         chessBoardManager.InitializeBoards(); // 盤面の初期化処理
 
