@@ -151,14 +151,14 @@ public class ChessRuleReferee : MonoBehaviour
     private bool IsWithinBoard(Vector2Int pos) => pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8;
 
     // ▼マスが空かチェックするメソッド
-    private bool IsTileEmpty(Vector2Int pos) => chessBoardManager.GetPieceAtDataLayer(pos) == ChessPieceType_SimulatedBoard.None;
+    private bool IsTileEmpty(Vector2Int pos) => chessBoardManager.GetPieceAtSimulatedBoard(pos) == ChessPieceType_SimulatedBoard.None;
 
     // ▼駒が敵の駒かどうかチェックするメソッド
     // 今回、駒の色データ等は3Dのオブジェクトにアタッチされている。
     // データ層の2次元配列と3D側の2次元配列からそれぞれ参照しているが、後から問題になる可能性があるため注意する
     private bool IsEnemyPiece(string myColor, Vector2Int pos)
     {
-        GameObject targetGameObject = chessBoardManager.GetPieceAtRealLayer(pos); // 3Dデータ層から対象マスのピースを取得
+        GameObject targetGameObject = chessBoardManager.GetPieceAtPieceObjectBoard(pos); // 3Dデータ層から対象マスのピースを取得
         string pieceColor = targetGameObject.GetComponent<Piece>().PieceColor; // ピースの色を取得
 
         // 色が最初に選択した駒と同じ色でない場合はtrueを返し、敵（相手）の駒を判断する。

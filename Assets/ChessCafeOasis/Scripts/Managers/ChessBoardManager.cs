@@ -45,14 +45,17 @@ public class ChessBoardManager : MonoBehaviour
     private GameObject clickedGameObject; //【3D】クリックされたゲームオブジェクト保持用の変数
     private GameObject[,] tileBoard = new GameObject[8, 8]; //【タイル】 8*8のチェス盤に合わせた2次元配列
 
+    private void Awake()
+    {
+        RearrangeTileObjects();// 【タイル】シリアライズしたタイルを2次元配列に変換
+    }
 
     // ▼初期化処理をまとめたメソッド
     // ＜GameManagerから呼ばれる＞
-    public void InitializeSetUp()
+    public void InitializeBoards()
     {
         InitializeSimulatedBoard(); // 【データ】初期配置に設定
         pieceManager.InitializePieceObject(); // 【3D】ピースマネジャーに各駒オブジェクトの初期化を指示
-        RearrangeTileObjects();// 【タイル】シリアライズしたタイルを2次元配列に変換
     }
 
     // ▼【データ】チェス盤面を初期配置に設定するメソッド
@@ -118,7 +121,7 @@ public class ChessBoardManager : MonoBehaviour
 
 
     // ▼【データ】インデックスから指定された座標の状態を調べるメソッド
-    public ChessPieceType_SimulatedBoard GetPieceAtDataLayer(Vector2Int index)
+    public ChessPieceType_SimulatedBoard GetPieceAtSimulatedBoard(Vector2Int index)
     {
         if (index.x < 0 || index.x >= 8 || index.y < 0 || index.y >= 8) // 盤面外を確認する場合のガード処理
         {
@@ -128,7 +131,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     // ▼【3D】インデックスから駒を取得するメソッド
-    public GameObject GetPieceAtRealLayer(Vector2Int index)
+    public GameObject GetPieceAtPieceObjectBoard(Vector2Int index)
     {
         if (index.x >= 0 && index.x < 8 && index.y >= 0 && index.y < 8)
         {
@@ -138,7 +141,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     // ▼【タイル】2次元配列からマスを取得するメソッド
-    public GameObject GetPieceAtTileObjectsArray(int x, int y)
+    public GameObject GetPieceAtTileBoard(int x, int y)
     {
         if (x >= 0 && x < 8 && y >= 0 && y < 8)
         {
@@ -156,7 +159,7 @@ public class ChessBoardManager : MonoBehaviour
             Vector2Int clickedSquareIndex = clickedSquare.BoardIndex;
             Debug.Log($"クリックされたマス:{clickedSquare.AlgebraicNotation}(インデックス:{clickedSquareIndex})");
 
-            GameObject pieceOnSquare = GetPieceAtRealLayer(clickedSquareIndex); // 共通のインデックスからマスに乗っている駒オブジェクトを取得
+            GameObject pieceOnSquare = GetPieceAtPieceObjectBoard(clickedSquareIndex); // 共通のインデックスからマスに乗っている駒オブジェクトを取得
 
             if (pieceOnSquare != null)
             {
