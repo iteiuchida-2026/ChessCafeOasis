@@ -137,7 +137,7 @@ public class ChessRuleReferee : MonoBehaviour
     }
 
     // ▼プロモーションの可否判定
-    public bool CanPromote(Piece piece) // 引数は後ほど設定
+    public bool CanPromote(Piece piece, Vector2Int _nextPos) // 引数は後ほど設定
     {
         if (piece.PieceType != PieceType.Pawn) return false;
         if (piece.IsPromoted == false)
