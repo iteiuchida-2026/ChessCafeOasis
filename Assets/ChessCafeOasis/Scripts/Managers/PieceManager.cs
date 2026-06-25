@@ -74,6 +74,8 @@ public class PieceManager : MonoBehaviour
             //spawnedPiece.transform.SetParent(targetSquare.transform); // 生成した駒をマスの子要素にする
 
             spawnedPiece.GetComponent<Piece>().CurrentIndex = targetSquare.BoardIndex; // 生成時に対象マスのインデックスを現在位置を設定
+
+            chessBoardManager.RegisterPiece(x, y, spawnedPiece.GetComponent<Piece>());
         }
     }
 
