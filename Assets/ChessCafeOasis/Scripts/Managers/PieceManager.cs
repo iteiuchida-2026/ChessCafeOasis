@@ -24,10 +24,10 @@ public class PieceManager : MonoBehaviour
     [Header("駒を生成する際のY軸（高さ）調整値")]
     [SerializeField] private float spawnY_Offset = 0f;
 
-    private void Start()
-    {
-        InitializePieceObject();
-    }
+    //private void Start()
+    //{
+    //    InitializePieceObject();
+    //}
 
     // ▼初期配置位置に各ピースを配置するメソッド
     // ★盤面の値に留意
@@ -68,7 +68,7 @@ public class PieceManager : MonoBehaviour
 
             spawnPosition.y += spawnY_Offset; // y軸の高さを調整してめり込まないようにする
 
-            GameObject spawnedPiece = Instantiate(piecePrefab, spawnPosition, Quaternion.identity);
+            GameObject spawnedPiece = Instantiate(piecePrefab, spawnPosition, piecePrefab.transform.rotation);
 
             //一度削除
             //spawnedPiece.transform.SetParent(targetSquare.transform); // 生成した駒をマスの子要素にする
