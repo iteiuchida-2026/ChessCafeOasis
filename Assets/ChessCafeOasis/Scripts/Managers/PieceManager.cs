@@ -34,8 +34,8 @@ public class PieceManager : MonoBehaviour
     public void InitializePieceObject()
     {
         SpawnPiece(WhiteRookPrefab, 0, 7);
-        SpawnPiece(WhiteBishopPrefab, 1, 7);
-        SpawnPiece(WhiteKnightPrefab, 2, 7);
+        SpawnPiece(WhiteKnightPrefab, 1, 7);
+        SpawnPiece(WhiteBishopPrefab, 2, 7);
         SpawnPiece(WhiteQueenPrefab, 3, 7);
         SpawnPiece(WhiteKingPrefab, 4, 7);
         SpawnPiece(WhiteBishopPrefab, 5, 7);
@@ -43,8 +43,8 @@ public class PieceManager : MonoBehaviour
         SpawnPiece(WhiteRookPrefab, 7, 7);
 
         SpawnPiece(BlackRookPrefab, 0, 0);
-        SpawnPiece(BlackBishopPrefab, 1, 0);
-        SpawnPiece(BlackKnightPrefab, 2, 0);
+        SpawnPiece(BlackKnightPrefab, 1, 0);
+        SpawnPiece(BlackBishopPrefab, 2, 0);
         SpawnPiece(BlackQueenPrefab, 3, 0);
         SpawnPiece(BlackKingPrefab, 4, 0);
         SpawnPiece(BlackBishopPrefab, 5, 0);
