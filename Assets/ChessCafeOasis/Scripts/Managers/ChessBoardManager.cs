@@ -81,7 +81,7 @@ public class ChessBoardManager : MonoBehaviour
         simulatedBoard[5, 7] = ChessPieceType_SimulatedBoard.WhiteBishop;
         simulatedBoard[6, 7] = ChessPieceType_SimulatedBoard.WhiteKnight;
         simulatedBoard[7, 7] = ChessPieceType_SimulatedBoard.WhiteRook;
-        for (int x = 0; x < 8; x++) simulatedBoard[x, 7] = ChessPieceType_SimulatedBoard.WhitePawn;
+        for (int x = 0; x < 8; x++) simulatedBoard[x, 6] = ChessPieceType_SimulatedBoard.WhitePawn;
 
         // 黒の駒を配置する
         simulatedBoard[0, 0] = ChessPieceType_SimulatedBoard.BlackRook;
