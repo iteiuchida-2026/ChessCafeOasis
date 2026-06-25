@@ -57,6 +57,7 @@ public class ChessBoardManager : MonoBehaviour
     public void InitializeBoards()
     {
         InitializeSimulatedBoard(); // 【データ】初期配置に設定
+        ClearPieceObjectBoard(); // 【3D】3Dチェス盤面データを白紙に戻す
         pieceManager.InitializePieceObject(); // 【3D】ピースマネジャーに各駒オブジェクトの初期化を指示
     }
 
@@ -81,7 +82,7 @@ public class ChessBoardManager : MonoBehaviour
         simulatedBoard[5, 7] = ChessPieceType_SimulatedBoard.WhiteBishop;
         simulatedBoard[6, 7] = ChessPieceType_SimulatedBoard.WhiteKnight;
         simulatedBoard[7, 7] = ChessPieceType_SimulatedBoard.WhiteRook;
-        for (int x = 0; x < 8; x++) simulatedBoard[x, 7] = ChessPieceType_SimulatedBoard.WhitePawn;
+        for (int x = 0; x < 8; x++) simulatedBoard[x, 6] = ChessPieceType_SimulatedBoard.WhitePawn;
 
         // 黒の駒を配置する
         simulatedBoard[0, 0] = ChessPieceType_SimulatedBoard.BlackRook;
@@ -93,6 +94,28 @@ public class ChessBoardManager : MonoBehaviour
         simulatedBoard[6, 0] = ChessPieceType_SimulatedBoard.BlackKnight;
         simulatedBoard[7, 0] = ChessPieceType_SimulatedBoard.BlackRook;
         for (int x = 0; x < 8; x++) simulatedBoard[x, 1] = ChessPieceType_SimulatedBoard.BlackPawn;
+    }
+
+    // ▼【3D】3Dオブジェクト用チェス盤面をすべて空にするメソッド
+    private void ClearPieceObjectBoard()
+    {
+        // すべてのマスを一旦空にする
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                pieceObjectBoard[x, y] = null;
+            }
+        }
+    }
+
+    // ▼【3D】3Dオブジェクト用チェス盤面にデータを入れるメソッド
+    public void RegisterPiece(int x, int y, Piece piece)
+    {
+        if (x >= 0 && x > 8 && y >= 0 && y > 8)
+        {
+            pieceObjectBoard[x, y] = piece;
+        }
     }
 
     // ▼【タイル】2次元配列に変換するメソッド
