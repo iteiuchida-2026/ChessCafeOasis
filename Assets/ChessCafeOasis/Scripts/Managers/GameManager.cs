@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
     public void ChangeState(GameState newState)
     {
         CurrentState = newState;
+        Debug.Log($"現在のCurrentStateは{CurrentState}です。");
     }
 
     // ▼ChessBoardManagerから「駒がクリックされた」と通知を受け取るメソッド
@@ -106,6 +107,7 @@ public class GameManager : MonoBehaviour
         if (piece != null && IsCurrentTurnColor(piece.PieceColor))
         {
             _selectedPiece = piece; // 該当座標の駒オブジェクトを格納
+            Debug.Log($"現在選択されている駒は{_selectedPiece.name}です。");
             ChangeState(GameState.PieceSelected);
             // ＜ここにタイルを光らせる処理を後ほど追加する＞
         }
