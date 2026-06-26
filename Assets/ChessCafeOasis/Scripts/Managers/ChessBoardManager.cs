@@ -118,7 +118,7 @@ public class ChessBoardManager : MonoBehaviour
     // ※PieceManagerから初期化時に呼ばれて実行される
     public void RegisterPiece(int x, int y, Piece piece)
     {
-        if (x >= 0 && x > 8 && y >= 0 && y > 8)
+        if (x >= 0 && x < 8 && y >= 0 && y < 8)
         {
             pieceObjectBoard[x, y] = piece;
         }
