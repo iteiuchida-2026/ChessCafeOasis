@@ -8,6 +8,10 @@ using UnityEngine;
 ////////　分岐：                                                          　                         　 ////////
 ////////　1回目のクリック：データの流れ③-2：＜GameManager■＞　→　＜ChessBoardManagerが■受け取る＞　 ////////
 ////////　2回目のクリック：データの流れ④：＜GameManager■＞　→　＜ChessRuleRefereeが■受け取る＞ 　////////
+////////　                                                              　                         　 ////////
+//////// データの流れ⑤：＜GameManagerr＞ → ＜ChessBoardManagerでデータおよびOBJ更新＞ → ＜GameManagerでターン更新＞////////
+//////// データの流れ⑥：＜GameManegerでターン更新時にチェックメイト確認を依頼＞ → ＜ChessRuleRefereeでチェックメイト確認＞////////
+//////// データの流れ⑧：チェックメイトの場合：＜GameManeger＞ → ＜＞　＜＞　＜＞////////
 
 // ◆概要：ゲームの状態をenumで用意する
 public enum GameState
@@ -78,7 +82,8 @@ public class GameManager : MonoBehaviour
             if (chessRuleReferee.IsValidMove(_selectedPiece, clickedIndex, chessBoardManager.GetSimulatedBoard())) // 引数の調整追加が必要
             {
                 // 合法手なら移動を実行
-                chessBoardManager.MovePiece(_selectedPos, clickedIndex);
+                chessBoardManager.UpdateBoardState(_selectedPos.x, _selectedPos.y, clickedIndex.x, clickedIndex.y); //データ層2次元配列更新
+                chessBoardManager.MovePiece(_selectedPos, clickedIndex); //3D駒オブジェクト層2次元配列更新＋オブジェクト配置更新
                 EndTurn();
             }
             else
