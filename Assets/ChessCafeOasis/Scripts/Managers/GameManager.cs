@@ -75,14 +75,18 @@ public class GameManager : MonoBehaviour
     // ▼ChessBoardManagerから「駒がクリックされた」と通知を受け取るメソッド
     public void OnBoardClicked(Vector2Int clickedIndex)
     {
+        Debug.Log($"OnBoardClicked called: clickedIndex={clickedIndex}, CurrentState={CurrentState}, SelectedPos={_selectedPos}");
+
         if (CurrentState != GameState.WhiteTurn && CurrentState != GameState.BlackTurn && CurrentState != GameState.PieceSelected) return; // ゲーム開始前の状態の場合は飛ばす
 
         // 既に駒を選択中で今回クリックしたマスへ移動を試みる場合
         if (CurrentState == GameState.PieceSelected)
         {
+            Debug.Log($"Moving: from {_selectedPos} to {clickedIndex}");
             if (chessRuleReferee.IsValidMove(_selectedPiece, clickedIndex, chessBoardManager.GetSimulatedBoard())) // 引数の調整追加が必要
             {
                 // 合法手なら移動を実行
+                Debug.Log($"Valid move executed");
                 chessBoardManager.UpdateBoardState(_selectedPos.x, _selectedPos.y, clickedIndex.x, clickedIndex.y); //データ層2次元配列更新
                 chessBoardManager.MovePiece(_selectedPos, clickedIndex); //3D駒オブジェクト層2次元配列更新＋オブジェクト配置更新
                 EndTurn();
@@ -90,6 +94,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 // 不正な手なら選択解除、または自色の別の駒なら選択変更
+                Debug.Log($"Invalid move. Resetting selection.");
                 if (_selectedPiece.PieceColor == PieceColor.White) ChangeState(GameState.WhiteTurn);
                 else if (_selectedPiece.PieceColor == PieceColor.Black) ChangeState(GameState.BlackTurn);
                 TrySelectPiece(clickedIndex);
@@ -98,6 +103,7 @@ public class GameManager : MonoBehaviour
         // まだ駒を選択していない場合
         else
         {
+            Debug.Log($"First click: attempting to select piece at {clickedIndex}");
             TrySelectPiece(clickedIndex);
         }
     }
@@ -109,9 +115,18 @@ public class GameManager : MonoBehaviour
         if (piece != null && IsCurrentTurnColor(piece.PieceColor))
         {
             _selectedPiece = piece; // 該当座標の駒オブジェクトを格納
-            Debug.Log($"現在選択されている駒は{_selectedPiece.name}です。");
+            _selectedPos = pos; // 選択された駒の座標を保存
+            Debug.Log($"現在選択されている駒は{_selectedPiece.name}です。位置: {_selectedPos}");
             ChangeState(GameState.PieceSelected);
             // ＜ここにタイルを光らせる処理を後ほど追加する＞
+        }
+        else if (piece == null)
+        {
+            Debug.Log($"クリックされた座標 {pos} は空です。");
+        }
+        else
+        {
+            Debug.Log($"クリックされた座標 {pos} には自色以外の駒があります。");
         }
     }
 

@@ -33,10 +33,17 @@ public class ChessRuleReferee : MonoBehaviour
         _currentPos = piece.CurrentIndex; // 3Dデータの駒の現在位置を駒の保持情報より取得
         _myColor = piece.PieceColor; // 3Dデータの駒から色を取得
 
+        Debug.Log($"IsValidMove called: piece={piece.name}, current={_currentPos}, target={targetPos}, color={_myColor}");
+
         if (piece.PieceType == PieceType.Pawn) // 駒がポーンの場合の処理
         {
-            return CheckPawnMove(piece, targetPos);
+            bool result = CheckPawnMove(piece, targetPos);
+            Debug.Log($"Pawn move result: {result}");
+            return result;
         }
+
+        // 移動可能な座標のリストを作成
+        List<Vector2Int> validMoves = new List<Vector2Int>();
 
         foreach (Vector2Int baseMoveVector in _baseMoveVectors)
         {
@@ -50,25 +57,43 @@ public class ChessRuleReferee : MonoBehaviour
                     // 盤面外ならこの方向の走査を終了
                     if (!IsWithinBoard(_movableRange)) break;
 
-                    if (_movableRange == targetPos)
+                    // ターゲットマスが空、または敵の駒なら移動可能座標に追加
+                    if (IsTileEmpty(_movableRange) || IsEnemyPiece(_myColor, _movableRange))
                     {
-                        // ターゲットマスが空、または敵の駒なら移動可能
-                        return IsTileEmpty(_movableRange) || IsEnemyPiece(_myColor, _movableRange);
+                        validMoves.Add(_movableRange);
+                        Debug.Log($"  Valid move added: {_movableRange}");
+
+                        // 敵の駒がある場合はその先は進めない
+                        if (IsEnemyPiece(_myColor, _movableRange)) break;
                     }
-                    // 途中に駒がある場合はその方向にそれ以上進めない
-                    if (!IsTileEmpty(_movableRange)) break;
+                    else
+                    {
+                        // 途中に自駒がある場合はその方向にそれ以上進めない
+                        Debug.Log($"  Blocked at: {_movableRange}");
+                        break;
+                    }
                 }
             }
             else
             {
                 // ②ナイト、キングの走査
-                NotRangedPieceMoveCheck(baseMoveVector, targetPos);
+                Vector2Int potentialMove = _currentPos + baseMoveVector;
+                if (IsWithinBoard(potentialMove) && (IsTileEmpty(potentialMove) || IsEnemyPiece(_myColor, potentialMove)))
+                {
+                    validMoves.Add(potentialMove);
+                    Debug.Log($"  Valid move added: {potentialMove}");
+                }
             }
         }
-        return false;
+
+        bool isValid = validMoves.Contains(targetPos);
+        Debug.Log($"IsValidMove result: {isValid}, validMoves count: {validMoves.Count}");
+        return isValid;
     }
 
-    // ▼ ナイト、キングの移動走査用補助メソッド
+    // ▼ ナイト、キングの移動走査用補助メソッド（削除予定：現在は IsValidMove 内で直接実装済み）
+    // TODO: 後で削除可能
+    [System.Obsolete("IsValidMove メソッド内で直接実装されているため、このメソッドは使用されていません")]
     private bool NotRangedPieceMoveCheck(Vector2Int baseMoveVector, Vector2Int targetPos)
     {
         _movableRange = _currentPos + baseMoveVector;
@@ -82,48 +107,66 @@ public class ChessRuleReferee : MonoBehaviour
     // ▼ポーンの移動判定メソッド
     public bool CheckPawnMove(Piece pawn, Vector2Int targetPos)
     {
-        foreach (Vector2Int baseMoveVector in _baseMoveVectors)
+        List<Vector2Int> validMoves = new List<Vector2Int>();
+
+        // ポーンの移動方向を決定（白は正の方向、黒は負の方向）
+        int moveDirection = (_myColor == PieceColor.White) ? -1 : 1;
+
+        Debug.Log($"CheckPawnMove: pawn at {_currentPos}, target at {targetPos}, moveDirection={moveDirection}, hasMovedBefore={pawn.HasMoved}");
+
+        // 1. 通常の前進移動
+        Vector2Int oneStepForward = _currentPos + new Vector2Int(0, moveDirection);
+        if (IsWithinBoard(oneStepForward) && IsTileEmpty(oneStepForward))
         {
-            if (pawn.HasMoved == true) PawnMoveCheckAssist(baseMoveVector, targetPos); // 既に移動していたら1マスしか進めない
-            else
+            validMoves.Add(oneStepForward);
+            Debug.Log($"  One step forward: {oneStepForward} is valid");
+
+            // 初回移動の場合のみ2マス前進が可能
+            if (!pawn.HasMoved)
             {
-                Vector2Int pawnFirstMoveVector = baseMoveVector + baseMoveVector; // まだ動いていないなら2マス進める
-                PawnMoveCheckAssist(pawnFirstMoveVector, targetPos);
+                Vector2Int twoStepsForward = _currentPos + new Vector2Int(0, moveDirection * 2);
+                if (IsWithinBoard(twoStepsForward) && IsTileEmpty(twoStepsForward))
+                {
+                    validMoves.Add(twoStepsForward);
+                    Debug.Log($"  Two steps forward: {twoStepsForward} is valid");
+                }
             }
         }
-        return false;
+        else
+        {
+            Debug.Log($"  One step forward: {oneStepForward} is blocked or out of bounds");
+        }
+
+        // 2. 斜めの攻撃移動（敵駒がある場合のみ）
+        Vector2Int rightAttack = _currentPos + new Vector2Int(1, moveDirection);
+        Vector2Int leftAttack = _currentPos + new Vector2Int(-1, moveDirection);
+
+        if (IsWithinBoard(rightAttack) && IsEnemyPiece(_myColor, rightAttack))
+        {
+            validMoves.Add(rightAttack);
+            Debug.Log($"  Right attack: {rightAttack} is valid");
+        }
+
+        if (IsWithinBoard(leftAttack) && IsEnemyPiece(_myColor, leftAttack))
+        {
+            validMoves.Add(leftAttack);
+            Debug.Log($"  Left attack: {leftAttack} is valid");
+        }
+
+        // 3. アンパッサン（実装は後ほど）
+        // TODO: CanEnPassant メソッドを使用して判定を追加する
+
+        bool result = validMoves.Contains(targetPos);
+        Debug.Log($"CheckPawnMove result: {result}, validMoves count: {validMoves.Count}");
+        return result;
     }
 
-    // ▼ ポーンの移動走査用の補助メソッド
+    // ▼ ポーンの移動走査用の補助メソッド（削除予定：CheckPawnMove内で直接実装済み）
+    // TODO: 後で削除可能
+    [System.Obsolete("CheckPawnMove メソッド内で直接実装されているため、このメソッドは使用されていません")]
     private bool PawnMoveCheckAssist(Vector2Int baseMoveVector, Vector2Int targetPos)
     {
-        // メソッド内の変数を共有
-        Vector2Int pawnRightAttackPos;
-        Vector2Int pawnLeftAttackPos;
-        Vector2Int pawnAttackPos;
-
-        if (_myColor == PieceColor.White) // 駒の色が白の場合は正の向きで移動マスと攻撃マスを取得
-        {
-            _movableRange = _currentPos - baseMoveVector;
-
-            pawnRightAttackPos = new Vector2Int(1, 1);
-            pawnLeftAttackPos = new Vector2Int(-1, 1);
-            pawnAttackPos = _currentPos + pawnRightAttackPos + pawnLeftAttackPos;
-        }
-        else // 駒の色が黒の場合は負の向きで移動マスと攻撃マスを取得
-        {
-            _movableRange = _currentPos + baseMoveVector;
-
-            pawnRightAttackPos = new Vector2Int(-1, -1);
-            pawnLeftAttackPos = new Vector2Int(1, -1);
-            pawnAttackPos = _currentPos + pawnRightAttackPos + pawnLeftAttackPos;
-        }
-
-        // 移動先のマスが移動可能範囲内また、攻撃先のマスに相手の駒がいある場合はtrueを返す
-        if (_movableRange == targetPos && IsWithinBoard(_movableRange) || IsEnemyPiece(_myColor, pawnAttackPos))
-        {
-            return IsTileEmpty(_movableRange) || IsEnemyPiece(_myColor, pawnAttackPos);
-        }
+        // 旧実装（削除予定）
         return false;
     }
 
