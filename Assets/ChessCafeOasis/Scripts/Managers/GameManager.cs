@@ -9,7 +9,7 @@ using UnityEngine;
 ////////　1回目のクリック：データの流れ③-2：＜GameManager■＞　→　＜ChessBoardManagerが■受け取る＞　 ////////
 ////////　2回目のクリック：データの流れ④：＜GameManager■＞　→　＜ChessRuleRefereeが■受け取る＞ 　////////
 ////////　                                                              　                         　 ////////
-//////// データの流れ⑤：＜GameManagerr＞ → ＜ChessBoardManagerでデータおよびOBJ更新＞ → ＜GameManagerでターン更新＞////////
+//////// データの流れ⑤：＜GameManagerr＞ → ＜ChessBoardManagerでデータおよびOBJ更新＞               ////////
 //////// データの流れ⑥：＜GameManegerでターン更新時にチェックメイト確認を依頼＞ → ＜ChessRuleRefereeでチェックメイト確認＞////////
 //////// データの流れ⑧：チェックメイトの場合：＜GameManeger＞ → ＜＞　＜＞　＜＞////////
 
