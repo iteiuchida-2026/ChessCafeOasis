@@ -2,13 +2,16 @@ using UnityEngine;
 
 //////// スクリプトの説明：【各スクリプト間の情報の中継ハブ役、かつ指示役。】////////
 
-//////// データの流れ③：＜ChessBoardManagerが■駒オブジェクト情報を取得＞ 　////////
-////////　→　＜GameManager：OnPieceClickedメソッドで該当ターンの駒か判別し、1回目のクリックで移動可能タイルを光らせる＞ ////////
-////////　→　＜GameManager：2回目のクリックで合法手なら移動を実行する＞ 　　////////
-////////　                                                              　　 ////////
-////////　データは状態で分岐する：                                      　　 ////////
-////////　＜A.1回目のクリックの場合：　→　ChessBoardManagerが■受け取る＞　 ////////
-////////　＜B.2回目のクリックの場合：　→　ChessRuleRefereeが■受け取る＞ 　////////
+//////// データの流れ③-1：＜ChessBoardManagerが■駒オブジェクト情報を取得＞ 　                      ////////
+////////　→　＜GameManager：OnBoardClickedメソッドで該当ターンの駒色かどうか、駒選択中かどうか判別＞ ////////
+////////　                                                              　                         　 ////////
+////////　分岐：                                                          　                         　 ////////
+////////　1回目のクリック：データの流れ③-2：＜GameManager■＞　→　＜ChessBoardManagerが■受け取る＞　 ////////
+////////　2回目のクリック：データの流れ④：＜GameManager■＞　→　＜ChessRuleRefereeが■受け取る＞ 　////////
+////////　                                                              　                         　 ////////
+//////// データの流れ⑤：＜GameManagerr＞ → ＜ChessBoardManagerでデータおよびOBJ更新＞               ////////
+//////// データの流れ⑥：＜GameManegerでターン更新時にチェックメイト確認を依頼＞ → ＜ChessRuleRefereeでチェックメイト確認＞////////
+//////// データの流れ⑧：チェックメイトの場合：＜GameManeger＞ → ＜＞　＜＞　＜＞////////
 
 // ◆概要：ゲームの状態をenumで用意する
 public enum GameState
@@ -66,27 +69,42 @@ public class GameManager : MonoBehaviour
     public void ChangeState(GameState newState)
     {
         CurrentState = newState;
+        Debug.Log($"現在のCurrentStateは{CurrentState}です。");
     }
 
     // ▼ChessBoardManagerから「駒がクリックされた」と通知を受け取るメソッド
     public void OnBoardClicked(Vector2Int clickedIndex)
     {
-        if (CurrentState != GameState.WhiteTurn && CurrentState != GameState.BlackTurn && CurrentState != GameState.PieceSelected) return;
+        Debug.Log($"OnBoardClicked called: clickedIndex={clickedIndex}, CurrentState={CurrentState}, SelectedPos={_selectedPos}");
+
+        if (CurrentState != GameState.WhiteTurn && CurrentState != GameState.BlackTurn && CurrentState != GameState.PieceSelected) return; // ゲーム開始前の状態の場合は飛ばす
 
         // 既に駒を選択中で今回クリックしたマスへ移動を試みる場合
         if (CurrentState == GameState.PieceSelected)
         {
+            Debug.Log($"Moving: from {_selectedPos} to {clickedIndex}");
             if (chessRuleReferee.IsValidMove(_selectedPiece, clickedIndex, chessBoardManager.GetSimulatedBoard())) // 引数の調整追加が必要
             {
                 // 合法手なら移動を実行
-                chessBoardManager.MovePiece(_selectedPos, clickedIndex);
+                Debug.Log($"Valid move executed");
+                chessBoardManager.UpdateBoardState(_selectedPos.x, _selectedPos.y, clickedIndex.x, clickedIndex.y); //データ層2次元配列更新
+                chessBoardManager.MovePiece(_selectedPos, clickedIndex); //3D駒オブジェクト層2次元配列更新＋オブジェクト配置更新
                 EndTurn();
             }
             else
             {
                 // 不正な手なら選択解除、または自色の別の駒なら選択変更
+                Debug.Log($"Invalid move. Resetting selection.");
+                if (_selectedPiece.PieceColor == PieceColor.White) ChangeState(GameState.WhiteTurn);
+                else if (_selectedPiece.PieceColor == PieceColor.Black) ChangeState(GameState.BlackTurn);
                 TrySelectPiece(clickedIndex);
             }
+        }
+        // まだ駒を選択していない場合
+        else
+        {
+            Debug.Log($"First click: attempting to select piece at {clickedIndex}");
+            TrySelectPiece(clickedIndex);
         }
     }
 
@@ -97,8 +115,18 @@ public class GameManager : MonoBehaviour
         if (piece != null && IsCurrentTurnColor(piece.PieceColor))
         {
             _selectedPiece = piece; // 該当座標の駒オブジェクトを格納
+            _selectedPos = pos; // 選択された駒の座標を保存
+            Debug.Log($"現在選択されている駒は{_selectedPiece.name}です。位置: {_selectedPos}");
             ChangeState(GameState.PieceSelected);
             // ＜ここにタイルを光らせる処理を後ほど追加する＞
+        }
+        else if (piece == null)
+        {
+            Debug.Log($"クリックされた座標 {pos} は空です。");
+        }
+        else
+        {
+            Debug.Log($"クリックされた座標 {pos} には自色以外の駒があります。");
         }
     }
 
@@ -117,11 +145,9 @@ public class GameManager : MonoBehaviour
         // ＜ここにチェックメイト判定を後ほど追加する＞
         if (CurrentState == GameState.PieceSelected || CurrentState == GameState.Moving)
         {
-            GameState nextTurn = (_selectedPos == Vector2Int.zero) ?
-                GameState.BlackTurn : GameState.WhiteTurn; // 簡易判定
+            GameState nextTurn = (_selectedPos == Vector2Int.zero) ? GameState.BlackTurn : GameState.WhiteTurn; // 簡易判定
             // 実際は直前に動かした駒の色と逆にする
-            ChangeState(chessBoardManager.GetPieceAtPieceObjectBoard(_selectedPos)?.PieceColor == // PieceObjectBoardにPieceが入っていないためエラー
-                PieceColor.White ? GameState.BlackTurn : GameState.WhiteTurn);
+            ChangeState(chessBoardManager.GetPieceAtPieceObjectBoard(_selectedPos)?.PieceColor == PieceColor.White ? GameState.BlackTurn : GameState.WhiteTurn);
         }
     }
 }

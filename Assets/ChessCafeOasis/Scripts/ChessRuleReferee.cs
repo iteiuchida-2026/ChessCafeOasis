@@ -3,7 +3,13 @@ using UnityEngine;
 
 //////// スクリプトの説明：【チェスのルール審判係。主に移動における判定を担当する】////////
 
-// ★アンパッサン、プロモーション、キャスリングは未処理
+////////　データの流れ④：＜GameManager■＞　→　＜ChessRuleRefereeのIsValidMoveメソッドで合法手か判別＞　→　＜GameManager＞　////////
+////////　データの流れ⑦：＜GameManager■＞　→　＜ChessRuleRefereeのIsValidMoveメソッドでチェックメイトか判別＞　→　＜GameManager＞　////////
+
+// ★追加が必要なもの
+// ①キャスリング判定用：＜KingとRookの間のマスに敵駒の利きがないかチェックするメソッド＞
+// ②public bool IsKingInCheck()
+// ③public bool IsKingInCheckmate()
 
 
 public class ChessRuleReferee : MonoBehaviour
@@ -17,21 +23,27 @@ public class ChessRuleReferee : MonoBehaviour
     // クラス内で共有する変数を宣言
     private PieceColor _myColor;
     private Vector2Int _currentPos;
-    private Vector2Int _nextPos;
+    private Vector2Int _movableRange;
     private List<Vector2Int> _baseMoveVectors;
 
     // ▼駒の移動の判定、移動時の障害物の有無、自殺手のチェックを行うメソッド。
-    // 移動可能ならtrueを返す
     public bool IsValidMove(Piece piece, Vector2Int targetPos, ChessPieceType_SimulatedBoard[,] simulatedBoard)
     {
         _baseMoveVectors = piece.GetMoveVectors(); // 3Dデータの各駒クラスから移動ベクトルの定義を取得
         _currentPos = piece.CurrentIndex; // 3Dデータの駒の現在位置を駒の保持情報より取得
         _myColor = piece.PieceColor; // 3Dデータの駒から色を取得
 
+        Debug.Log($"IsValidMove called: piece={piece.name}, current={_currentPos}, target={targetPos}, color={_myColor}");
+
         if (piece.PieceType == PieceType.Pawn) // 駒がポーンの場合の処理
         {
-            return CheckPawnMove(piece, targetPos);
+            bool result = CheckPawnMove(piece, targetPos);
+            Debug.Log($"Pawn move result: {result}");
+            return result;
         }
+
+        // 移動可能な座標のリストを作成
+        List<Vector2Int> validMoves = new List<Vector2Int>();
 
         foreach (Vector2Int baseMoveVector in _baseMoveVectors)
         {
@@ -40,91 +52,126 @@ public class ChessRuleReferee : MonoBehaviour
                 // ①ビショップ、ルーク、クイーンの走査
                 for (int i = 1; i < 8; i++)
                 {
-                    _nextPos = _currentPos + (baseMoveVector * i);
+                    _movableRange = _currentPos + (baseMoveVector * i);
 
                     // 盤面外ならこの方向の走査を終了
-                    if (!IsWithinBoard(_nextPos)) break;
+                    if (!IsWithinBoard(_movableRange)) break;
 
-                    if (_nextPos == targetPos)
+                    // ターゲットマスが空、または敵の駒なら移動可能座標に追加
+                    if (IsTileEmpty(_movableRange) || IsEnemyPiece(_myColor, _movableRange))
                     {
-                        // ターゲットマスが空、または敵の駒なら移動可能
-                        return IsTileEmpty(_nextPos) || IsEnemyPiece(_myColor, _nextPos);
-                    }
+                        validMoves.Add(_movableRange);
+                        Debug.Log($"  Valid move added: {_movableRange}");
 
-                    // 途中に駒がある場合はその方向にそれ以上進めない
-                    if (!IsTileEmpty(_nextPos)) break;
+                        // 敵の駒がある場合はその先は進めない
+                        if (IsEnemyPiece(_myColor, _movableRange)) break;
+                    }
+                    else
+                    {
+                        // 途中に自駒がある場合はその方向にそれ以上進めない
+                        Debug.Log($"  Blocked at: {_movableRange}");
+                        break;
+                    }
                 }
             }
             else
             {
                 // ②ナイト、キングの走査
-                NotRangedPieceMoveCheck(baseMoveVector, targetPos);
+                Vector2Int potentialMove = _currentPos + baseMoveVector;
+                if (IsWithinBoard(potentialMove) && (IsTileEmpty(potentialMove) || IsEnemyPiece(_myColor, potentialMove)))
+                {
+                    validMoves.Add(potentialMove);
+                    Debug.Log($"  Valid move added: {potentialMove}");
+                }
             }
         }
-        return false;
+
+        bool isValid = validMoves.Contains(targetPos);
+        Debug.Log($"IsValidMove result: {isValid}, validMoves count: {validMoves.Count}");
+        return isValid;
     }
 
-    // ▼ポーンの移動判定
-    public bool CheckPawnMove(Piece pawn, Vector2Int targetPos)
-    {
-        foreach (Vector2Int baseMoveVector in _baseMoveVectors)
-        {
-            if (pawn.HasMoved == true) PawnMoveCheckAssist(baseMoveVector, targetPos); // 既に移動していたら1マスしか進めない
-            else
-            {
-                Vector2Int pawnFirstMoveVector = baseMoveVector + baseMoveVector; // まだ動いていないなら2マス進める
-                PawnMoveCheckAssist(pawnFirstMoveVector, targetPos);
-            }
-        }
-        return false;
-    }
-
-    // ▼ 移動走査用の補助メソッド（ナイト、キング用）
+    // ▼ ナイト、キングの移動走査用補助メソッド（削除予定：現在は IsValidMove 内で直接実装済み）
+    // TODO: 後で削除可能
+    [System.Obsolete("IsValidMove メソッド内で直接実装されているため、このメソッドは使用されていません")]
     private bool NotRangedPieceMoveCheck(Vector2Int baseMoveVector, Vector2Int targetPos)
     {
-        _nextPos = _currentPos + baseMoveVector;
-        if (_nextPos == targetPos && IsWithinBoard(_nextPos))
+        _movableRange = _currentPos + baseMoveVector;
+        if (_movableRange == targetPos && IsWithinBoard(_movableRange))
         {
-            return IsTileEmpty(_nextPos) || IsEnemyPiece(_myColor, _nextPos);
+            return IsTileEmpty(_movableRange) || IsEnemyPiece(_myColor, _movableRange);
         }
         return false;
     }
 
-    // ▼ 移動走査用の補助メソッド（ポーン用）
+    // ▼ポーンの移動判定メソッド
+    public bool CheckPawnMove(Piece pawn, Vector2Int targetPos)
+    {
+        List<Vector2Int> validMoves = new List<Vector2Int>();
+
+        // ポーンの移動方向を決定（白は正の方向、黒は負の方向）
+        int moveDirection = (_myColor == PieceColor.White) ? -1 : 1;
+
+        Debug.Log($"CheckPawnMove: pawn at {_currentPos}, target at {targetPos}, moveDirection={moveDirection}, hasMovedBefore={pawn.HasMoved}");
+
+        // 1. 通常の前進移動
+        Vector2Int oneStepForward = _currentPos + new Vector2Int(0, moveDirection);
+        if (IsWithinBoard(oneStepForward) && IsTileEmpty(oneStepForward))
+        {
+            validMoves.Add(oneStepForward);
+            Debug.Log($"  One step forward: {oneStepForward} is valid");
+
+            // 初回移動の場合のみ2マス前進が可能
+            if (!pawn.HasMoved)
+            {
+                Vector2Int twoStepsForward = _currentPos + new Vector2Int(0, moveDirection * 2);
+                if (IsWithinBoard(twoStepsForward) && IsTileEmpty(twoStepsForward))
+                {
+                    validMoves.Add(twoStepsForward);
+                    Debug.Log($"  Two steps forward: {twoStepsForward} is valid");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log($"  One step forward: {oneStepForward} is blocked or out of bounds");
+        }
+
+        // 2. 斜めの攻撃移動（敵駒がある場合のみ）
+        Vector2Int rightAttack = _currentPos + new Vector2Int(1, moveDirection);
+        Vector2Int leftAttack = _currentPos + new Vector2Int(-1, moveDirection);
+
+        if (IsWithinBoard(rightAttack) && IsEnemyPiece(_myColor, rightAttack))
+        {
+            validMoves.Add(rightAttack);
+            Debug.Log($"  Right attack: {rightAttack} is valid");
+        }
+
+        if (IsWithinBoard(leftAttack) && IsEnemyPiece(_myColor, leftAttack))
+        {
+            validMoves.Add(leftAttack);
+            Debug.Log($"  Left attack: {leftAttack} is valid");
+        }
+
+        // 3. アンパッサン（実装は後ほど）
+        // TODO: CanEnPassant メソッドを使用して判定を追加する
+
+        bool result = validMoves.Contains(targetPos);
+        Debug.Log($"CheckPawnMove result: {result}, validMoves count: {validMoves.Count}");
+        return result;
+    }
+
+    // ▼ ポーンの移動走査用の補助メソッド（削除予定：CheckPawnMove内で直接実装済み）
+    // TODO: 後で削除可能
+    [System.Obsolete("CheckPawnMove メソッド内で直接実装されているため、このメソッドは使用されていません")]
     private bool PawnMoveCheckAssist(Vector2Int baseMoveVector, Vector2Int targetPos)
     {
-        // メソッド内の変数を共有
-        Vector2Int pawnRightAttackPos;
-        Vector2Int pawnLeftAttackPos;
-        Vector2Int pawnAttackPos;
-
-        if (_myColor == PieceColor.White) // 駒の色が白の場合は正の向きで移動マスと攻撃マスを取得
-        {
-            _nextPos = _currentPos + baseMoveVector;
-
-            pawnRightAttackPos = new Vector2Int(1, 1);
-            pawnLeftAttackPos = new Vector2Int(-1, 1);
-            pawnAttackPos = _currentPos + pawnRightAttackPos + pawnLeftAttackPos;
-        }
-        else // 駒の色が黒の場合は負の向きで移動マスと攻撃マスを取得
-        {
-            _nextPos = _currentPos - baseMoveVector;
-
-            pawnRightAttackPos = new Vector2Int(-1, -1);
-            pawnLeftAttackPos = new Vector2Int(1, -1);
-            pawnAttackPos = _currentPos + pawnRightAttackPos + pawnLeftAttackPos;
-        }
-
-        // 移動先のマスが移動可能範囲内また、攻撃先のマスに相手の駒がいある場合はtrueを返す
-        if (_nextPos == targetPos && IsWithinBoard(_nextPos) || IsEnemyPiece(_myColor, pawnAttackPos))
-        {
-            return IsTileEmpty(_nextPos) || IsEnemyPiece(_myColor, pawnAttackPos);
-        }
+        // 旧実装（削除予定）
         return false;
     }
 
-    // ▼キャスリングの可否判定
-    // キングとルークの位置を変更する
+    // ▼キャスリングの可否判定メソッド
+    // キャスリング：キングとルークの位置を変更するチェスの特殊ルール
     // 条件① キングとキャスリング先のルークが一度も動いていない
     // 条件② キングとキャスリング先のルークの間に駒がない
     // 条件③ キングがチェックされていない
@@ -137,78 +184,62 @@ public class ChessRuleReferee : MonoBehaviour
         if (piece.HasMoved == false && targetRook.HasMoved == false) // 条件①
         {
             CanCastlingAssistCheckNone(piece, targetRookPos); // 条件②
-            // ＜KingとRookの間のマスに敵駒の利きがないかチェックするメソッド＞ // 条件④
+            // ＜KingとRookの間のマスに敵駒の利きがないかチェックするメソッドを後から追加する＞ // 条件④
 
             return true;
         }
         return false;
     }
 
-    // ▼キャスリング補助メソッド：キングとルークの間の駒があるか調べる
-    // このメソッドではキングとルークが既に動いているか等は考慮していない
+    // ▼キャスリング補助メソッド（キングとルークの間の駒があるか調べる）
+    // ※キングとルークが既に動いているか等は考慮していない
     public bool CanCastlingAssistCheckNone(Piece piece, Vector2Int targetRookPos)
     {
         // 白の場合： ルークの位置は a1(0, 7) もしくは h1(7, 7)となる
         // キングの位置： e1(4, 7)
-        // 駒の有無チェック対象マス： b1(1, 7) c1(2, 7) d1(3, 7) f1(5, 7) g1(6, 7)
+        // a1ルーク側（クイーンサイド）の対象座標：b1(1, 7) c1(2, 7) d1(3, 7) / h1ルーク側（キングサイド）の対象座標： f1(5, 7) g1(6, 7)
         if (piece.PieceColor == PieceColor.White)　//
         {
-            if (targetRookPos.x == 7 && targetRookPos.y == 7) // キャスリング対象：h1ルークの場合(7, 7)
+            if (targetRookPos.x == 7 && targetRookPos.y == 7) // キャスリング対象がh1(7, 7)ルークの場合
             {
-                ChessPieceType_SimulatedBoard f1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(5, 7).BoardIndex);
-                ChessPieceType_SimulatedBoard g1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(6, 7).BoardIndex);
-
-                if (f1 == ChessPieceType_SimulatedBoard.None && g1 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
-                {
-                    return true;
-                }
+                Vector2Int f1 = chessBoardManager.GetPieceAtTileBoard(5, 7).BoardIndex;
+                Vector2Int g1 = chessBoardManager.GetPieceAtTileBoard(6, 7).BoardIndex;
+                if (IsTileEmpty(f1) && IsTileEmpty(g1)) return true; // SimulatedBoard上でNone（マスが空）ならtrueを返す
             }
-            else // キャスリング対象：a1ルークの場合(0, 7)
+            else // キャスリング対象がa1(0, 7)ルークの場合
             {
-                ChessPieceType_SimulatedBoard b1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(1, 7).BoardIndex);
-                ChessPieceType_SimulatedBoard c1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(2, 7).BoardIndex);
-                ChessPieceType_SimulatedBoard d1 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(3, 7).BoardIndex);
-
-                if (b1 == ChessPieceType_SimulatedBoard.None && c1 == ChessPieceType_SimulatedBoard.None && d1 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
-                {
-                    return true;
-                }
+                Vector2Int b1 = chessBoardManager.GetPieceAtTileBoard(1, 7).BoardIndex;
+                Vector2Int c1 = chessBoardManager.GetPieceAtTileBoard(2, 7).BoardIndex;
+                Vector2Int d1 = chessBoardManager.GetPieceAtTileBoard(3, 7).BoardIndex;
+                if (IsTileEmpty(b1) && IsTileEmpty(c1) && IsTileEmpty(d1)) return true; // SimulatedBoard上でNone（マスが空）ならtrueを返す
             }
             return false;
         }
 
         // 黒の場合： ルークの位置は a8(0, 0) もしくは h8(7, 0)となる
         // キングの位置： e8(4, 0)
-        // 駒の有無チェック対象マス： b8(1, 0) c8(2, 0) d8(3, 0) f8(5, 0) g8(6, 0)
+        // a8ルーク側（クイーンサイド）の対象座標： b8(1, 0) c8(2, 0) d8(3, 0) / h8ルーク側（キングサイド）の対象座標： f8(5, 0) g8(6, 0)
         else
         {
-            if (targetRookPos.x == 7 && targetRookPos.y == 0) // キャスリング対象：h8ルークの場合(7, 0)
+            if (targetRookPos.x == 7 && targetRookPos.y == 0) // キャスリング対象がh8ルーク(7, 0)の場合
             {
-                ChessPieceType_SimulatedBoard f8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(5, 0).BoardIndex);
-                ChessPieceType_SimulatedBoard g8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(6, 0).BoardIndex);
-
-                if (f8 == ChessPieceType_SimulatedBoard.None && g8 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
-                {
-                    return true;
-                }
+                Vector2Int f8 = chessBoardManager.GetPieceAtTileBoard(5, 0).BoardIndex;
+                Vector2Int g8 = chessBoardManager.GetPieceAtTileBoard(6, 0).BoardIndex;
+                if (IsTileEmpty(f8) && IsTileEmpty(g8)) return true; // SimulatedBoard上でNone（マスが空）ならtrueを返す
             }
-            else // a8ルークの場合(0, 0)
+            else // キャスリング対象がa8ルーク(0, 0)の場合
             {
-                ChessPieceType_SimulatedBoard b8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(1, 0).BoardIndex);
-                ChessPieceType_SimulatedBoard c8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(2, 0).BoardIndex);
-                ChessPieceType_SimulatedBoard d8 = chessBoardManager.GetPieceAtSimulatedBoard(chessBoardManager.GetPieceAtTileBoard(3, 0).BoardIndex);
-
-                if (b8 == ChessPieceType_SimulatedBoard.None && c8 == ChessPieceType_SimulatedBoard.None && d8 == ChessPieceType_SimulatedBoard.None) // SimulatedBoard上でNone（マスが空）ならtrueを返す
-                {
-                    return true;
-                }
+                Vector2Int b8 = chessBoardManager.GetPieceAtTileBoard(1, 0).BoardIndex;
+                Vector2Int c8 = chessBoardManager.GetPieceAtTileBoard(2, 0).BoardIndex;
+                Vector2Int d8 = chessBoardManager.GetPieceAtTileBoard(3, 0).BoardIndex;
+                if (IsTileEmpty(b8) && IsTileEmpty(c8) && IsTileEmpty(d8)) return true; // SimulatedBoard上でNone（マスが空）ならtrueを返す
             }
             return false;
         }
     }
 
-    // ▼アンパッサンの可否判定
-    // 相手のポーンが2マス進んで来た次の自分のターンに、自分のポーンが相手のポーンをとれる
+    // ▼アンパッサンの可否判定メソッド
+    // アンパッサン：相手のポーンが2マス進んで来た次の自分のターンに、自分のポーンが相手のポーンをとれるチェスの特殊ルール
     // 条件① 自分のポーンが自陣から数えて5段目にいる
     // 条件② 自分のポーンの真横（同じ段の隣の列）にいる相手のポーンが最初の位置から2マス進んだ
     // 条件③ 相手のポーンが2マス進んだ直後のターン
@@ -227,8 +258,8 @@ public class ChessRuleReferee : MonoBehaviour
         return false;
     }
 
-    // ▼プロモーションの可否判定
-    // ポーンがキング以外の好きな駒に昇格できる
+    // ▼プロモーションの可否判定メソッド
+    // プロモーション：ポーンがキング以外の好きな駒に昇格できるチェスの特殊ルール
     // 条件① 自分のポーンが敵陣最奥に到達
     public bool CanPromote(Piece piece, Vector2Int _nextPos)
     {
@@ -247,7 +278,8 @@ public class ChessRuleReferee : MonoBehaviour
         return false;
     }
 
-    // ▼キングのチェック判定
+    // ▼キングのチェック判定メソッド
+    // ※キングが相手の駒の攻撃に当たっているかどうか
     public bool IsKingInCheck() // 引数は後ほど設定
     {
         return true;
@@ -259,13 +291,14 @@ public class ChessRuleReferee : MonoBehaviour
     // ▼マスが空かチェックするメソッド
     private bool IsTileEmpty(Vector2Int pos) => chessBoardManager.GetPieceAtSimulatedBoard(pos) == ChessPieceType_SimulatedBoard.None;
 
-    // ▼駒が敵の駒かどうかチェックするメソッド
-    // 今回、駒の色データ等は3Dのオブジェクトにアタッチされている。
-    // データ層の2次元配列と3D側の2次元配列からそれぞれ参照しているが、後から問題になる可能性があるため注意する
+    // ▼対象座標の駒が相手の駒かチェックするメソッド
+    // ※今回、駒の色データ等は3Dのオブジェクトにアタッチされている。
+    // ※データ層の2次元配列と3D側の2次元配列からそれぞれ参照しているが、後から問題になる可能性があるため注意する
     private bool IsEnemyPiece(PieceColor myColor, Vector2Int pos)
     {
-        Piece targetGameObject = chessBoardManager.GetPieceAtPieceObjectBoard(pos); // 3Dデータ層から対象マスのピースを取得
-        PieceColor pieceColor = targetGameObject.GetComponent<Piece>().PieceColor; // ピースの色を取得
+        Piece targetPiece = chessBoardManager.GetPieceAtPieceObjectBoard(pos); // 3Dデータ層から対象マスのピースを取得
+        if (targetPiece == null) return false;
+        PieceColor pieceColor = targetPiece.PieceColor; // ピースの色を取得
 
         // 色が最初に選択した駒と同じ色でない場合はtrueを返し、敵（相手）の駒を判断する。
         if (pieceColor != myColor)
@@ -273,5 +306,11 @@ public class ChessRuleReferee : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    // ▼チェックメイトか確認するメソッド
+    public bool IsKingInCheckmate()
+    {
+        return true;
     }
 }

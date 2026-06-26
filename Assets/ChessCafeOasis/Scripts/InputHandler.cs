@@ -62,7 +62,6 @@ public class InputHandler : MonoBehaviour
 
             chessBoardManager.IdentifyGameObject(clickedGameObject); // ChessBoardManagerにクリックされたゲームオブジェクトの情報を渡す
         }
-        Debug.Log("選択先のコライダーがありません。");
         return;
 
     }

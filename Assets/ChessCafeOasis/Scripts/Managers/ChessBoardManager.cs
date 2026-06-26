@@ -2,7 +2,8 @@ using UnityEngine;
 
 //////// スクリプトの説明：【チェス盤の各マスにどの駒が存在するかデータで記録し管理する】////////
 
-//////// データの流れ②：＜InputManagerでクリックした■オブジェクト情報　→　ChessBoardManager：IdentifyGameObjectメソッドで■駒オブジェクト情報を取得＞　→　＜GameManagerが■受け取る＞ ////////
+//////// データの流れ②：＜InputManager■オブジェクト情報　→　＜ChessBoardManager：IdentifyGameObjectメソッドで■オブジェクト座標を取得＞　→　＜GameManager＞ ////////
+//////// データの流れ③-2：＜GameMangerで駒を選択したと判別＞　→　＜ChessBoardManager：メソッドで■指定座標のマスを光らせる＞　→　＜各TileControllerで処理＞ ////////
 
 ////// ★盤面の値：                                                                              //////
 ////// すべての配列および座標は以下のとおりに統一する。
@@ -52,7 +53,11 @@ public class ChessBoardManager : MonoBehaviour
         RearrangeTileObjects();// 【タイル】シリアライズしたタイルを2次元配列に変換
     }
 
-    // ▼初期化処理をまとめたメソッド
+    //////////////////////////////////////
+    ////////【初期化関連メソッド】////////
+    //////////////////////////////////////
+
+    // ▼初期化処理をまとめて実行するメソッド
     // ＜GameManagerから呼ばれる＞
     public void InitializeBoards()
     {
@@ -110,9 +115,10 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     // ▼【3D】3Dオブジェクト用チェス盤面にデータを入れるメソッド
+    // ※PieceManagerから初期化時に呼ばれて実行される
     public void RegisterPiece(int x, int y, Piece piece)
     {
-        if (x >= 0 && x > 8 && y >= 0 && y > 8)
+        if (x >= 0 && x < 8 && y >= 0 && y < 8)
         {
             pieceObjectBoard[x, y] = piece;
         }
@@ -130,6 +136,10 @@ public class ChessBoardManager : MonoBehaviour
             }
         }
     }
+
+    ////////////////////////////////////
+    ////////【取得関連メソッド】////////
+    ////////////////////////////////////
 
     // ▼【データ】インデックスから指定された座標の状態を調べるメソッド
     public ChessPieceType_SimulatedBoard GetPieceAtSimulatedBoard(Vector2Int index)
@@ -162,6 +172,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     // ▼【3D】オブジェクトの座標を調べてGamaManagerへ渡すメソッド
+    // ※InputHandlerでオブジェクトがクリックされて呼ばれる
     public void IdentifyGameObject(GameObject gameObject)
     {
         // クリックされたオブジェクトがマスだった場合
@@ -196,6 +207,10 @@ public class ChessBoardManager : MonoBehaviour
             return;
         }
     }
+
+    //////////////////////////////////////////////////
+    ////////【移動確定後のデータ更新メソッド】////////
+    //////////////////////////////////////////////////
 
     // ▼【データ】駒の移動許可後のデータ層の盤面データ更新メソッド
     public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
