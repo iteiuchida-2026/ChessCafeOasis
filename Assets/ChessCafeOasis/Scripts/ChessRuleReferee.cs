@@ -3,11 +3,13 @@ using UnityEngine;
 
 //////// スクリプトの説明：【チェスのルール審判係。主に移動における判定を担当する】////////
 
-////////　データの流れ④：＜GameManager■＞　→　＜ChessRuleRefereeのIsValidMoveメソッドで合法手か判別＞　→ 　////////
+////////　データの流れ④：＜GameManager■＞　→　＜ChessRuleRefereeのIsValidMoveメソッドで合法手か判別＞　→　＜GameManager＞　////////
+////////　データの流れ⑦：＜GameManager■＞　→　＜ChessRuleRefereeのIsValidMoveメソッドでチェックメイトか判別＞　→　＜GameManager＞　////////
 
 // ★追加が必要なもの
 // ①キャスリング判定用：＜KingとRookの間のマスに敵駒の利きがないかチェックするメソッド＞
-// ②    public bool IsKingInCheck()
+// ②public bool IsKingInCheck()
+// ③public bool IsKingInCheckmate()
 
 
 public class ChessRuleReferee : MonoBehaviour
@@ -260,5 +262,11 @@ public class ChessRuleReferee : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    // ▼チェックメイトか確認するメソッド
+    public bool IsKingInCheckmate()
+    {
+        return true;
     }
 }
