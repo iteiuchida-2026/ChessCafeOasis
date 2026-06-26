@@ -23,7 +23,7 @@ public class ChessRuleReferee : MonoBehaviour
     // クラス内で共有する変数を宣言
     private PieceColor _myColor;
     private Vector2Int _currentPos;
-    private Vector2Int _nextPos;
+    private Vector2Int _movableRange;
     private List<Vector2Int> _baseMoveVectors;
 
     // ▼駒の移動の判定、移動時の障害物の有無、自殺手のチェックを行うメソッド。
@@ -45,18 +45,18 @@ public class ChessRuleReferee : MonoBehaviour
                 // ①ビショップ、ルーク、クイーンの走査
                 for (int i = 1; i < 8; i++)
                 {
-                    _nextPos = _currentPos + (baseMoveVector * i);
+                    _movableRange = _currentPos + (baseMoveVector * i);
 
                     // 盤面外ならこの方向の走査を終了
-                    if (!IsWithinBoard(_nextPos)) break;
+                    if (!IsWithinBoard(_movableRange)) break;
 
-                    if (_nextPos == targetPos)
+                    if (_movableRange == targetPos)
                     {
                         // ターゲットマスが空、または敵の駒なら移動可能
-                        return IsTileEmpty(_nextPos) || IsEnemyPiece(_myColor, _nextPos);
+                        return IsTileEmpty(_movableRange) || IsEnemyPiece(_myColor, _movableRange);
                     }
                     // 途中に駒がある場合はその方向にそれ以上進めない
-                    if (!IsTileEmpty(_nextPos)) break;
+                    if (!IsTileEmpty(_movableRange)) break;
                 }
             }
             else
@@ -64,6 +64,17 @@ public class ChessRuleReferee : MonoBehaviour
                 // ②ナイト、キングの走査
                 NotRangedPieceMoveCheck(baseMoveVector, targetPos);
             }
+        }
+        return false;
+    }
+
+    // ▼ ナイト、キングの移動走査用補助メソッド
+    private bool NotRangedPieceMoveCheck(Vector2Int baseMoveVector, Vector2Int targetPos)
+    {
+        _movableRange = _currentPos + baseMoveVector;
+        if (_movableRange == targetPos && IsWithinBoard(_movableRange))
+        {
+            return IsTileEmpty(_movableRange) || IsEnemyPiece(_myColor, _movableRange);
         }
         return false;
     }
@@ -83,17 +94,6 @@ public class ChessRuleReferee : MonoBehaviour
         return false;
     }
 
-    // ▼ ナイト、キングの移動走査用補助メソッド
-    private bool NotRangedPieceMoveCheck(Vector2Int baseMoveVector, Vector2Int targetPos)
-    {
-        _nextPos = _currentPos + baseMoveVector;
-        if (_nextPos == targetPos && IsWithinBoard(_nextPos))
-        {
-            return IsTileEmpty(_nextPos) || IsEnemyPiece(_myColor, _nextPos);
-        }
-        return false;
-    }
-
     // ▼ ポーンの移動走査用の補助メソッド
     private bool PawnMoveCheckAssist(Vector2Int baseMoveVector, Vector2Int targetPos)
     {
@@ -104,7 +104,7 @@ public class ChessRuleReferee : MonoBehaviour
 
         if (_myColor == PieceColor.White) // 駒の色が白の場合は正の向きで移動マスと攻撃マスを取得
         {
-            _nextPos = _currentPos + baseMoveVector;
+            _movableRange = _currentPos - baseMoveVector;
 
             pawnRightAttackPos = new Vector2Int(1, 1);
             pawnLeftAttackPos = new Vector2Int(-1, 1);
@@ -112,7 +112,7 @@ public class ChessRuleReferee : MonoBehaviour
         }
         else // 駒の色が黒の場合は負の向きで移動マスと攻撃マスを取得
         {
-            _nextPos = _currentPos - baseMoveVector;
+            _movableRange = _currentPos + baseMoveVector;
 
             pawnRightAttackPos = new Vector2Int(-1, -1);
             pawnLeftAttackPos = new Vector2Int(1, -1);
@@ -120,9 +120,9 @@ public class ChessRuleReferee : MonoBehaviour
         }
 
         // 移動先のマスが移動可能範囲内また、攻撃先のマスに相手の駒がいある場合はtrueを返す
-        if (_nextPos == targetPos && IsWithinBoard(_nextPos) || IsEnemyPiece(_myColor, pawnAttackPos))
+        if (_movableRange == targetPos && IsWithinBoard(_movableRange) || IsEnemyPiece(_myColor, pawnAttackPos))
         {
-            return IsTileEmpty(_nextPos) || IsEnemyPiece(_myColor, pawnAttackPos);
+            return IsTileEmpty(_movableRange) || IsEnemyPiece(_myColor, pawnAttackPos);
         }
         return false;
     }
@@ -253,8 +253,9 @@ public class ChessRuleReferee : MonoBehaviour
     // ※データ層の2次元配列と3D側の2次元配列からそれぞれ参照しているが、後から問題になる可能性があるため注意する
     private bool IsEnemyPiece(PieceColor myColor, Vector2Int pos)
     {
-        Piece targetGameObject = chessBoardManager.GetPieceAtPieceObjectBoard(pos); // 3Dデータ層から対象マスのピースを取得
-        PieceColor pieceColor = targetGameObject.GetComponent<Piece>().PieceColor; // ピースの色を取得
+        Piece targetPiece = chessBoardManager.GetPieceAtPieceObjectBoard(pos); // 3Dデータ層から対象マスのピースを取得
+        if (targetPiece == null) return false;
+        PieceColor pieceColor = targetPiece.PieceColor; // ピースの色を取得
 
         // 色が最初に選択した駒と同じ色でない場合はtrueを返し、敵（相手）の駒を判断する。
         if (pieceColor != myColor)
