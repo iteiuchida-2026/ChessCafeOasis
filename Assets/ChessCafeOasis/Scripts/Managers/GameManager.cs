@@ -88,6 +88,11 @@ public class GameManager : MonoBehaviour
                 TrySelectPiece(clickedIndex);
             }
         }
+        // まだ駒を選択していない場合
+        else
+        {
+            TrySelectPiece(clickedIndex);
+        }
     }
 
     // ▼選択先の駒を取得するメソッド
