@@ -53,7 +53,11 @@ public class ChessBoardManager : MonoBehaviour
         RearrangeTileObjects();// 【タイル】シリアライズしたタイルを2次元配列に変換
     }
 
-    // ▼初期化処理をまとめたメソッド
+    //////////////////////////////////////
+    ////////【初期化関連メソッド】////////
+    //////////////////////////////////////
+
+    // ▼初期化処理をまとめて実行するメソッド
     // ＜GameManagerから呼ばれる＞
     public void InitializeBoards()
     {
@@ -111,6 +115,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     // ▼【3D】3Dオブジェクト用チェス盤面にデータを入れるメソッド
+    // ※PieceManagerから初期化時に呼ばれて実行される
     public void RegisterPiece(int x, int y, Piece piece)
     {
         if (x >= 0 && x > 8 && y >= 0 && y > 8)
@@ -131,6 +136,10 @@ public class ChessBoardManager : MonoBehaviour
             }
         }
     }
+
+    ////////////////////////////////////
+    ////////【取得関連メソッド】////////
+    ////////////////////////////////////
 
     // ▼【データ】インデックスから指定された座標の状態を調べるメソッド
     public ChessPieceType_SimulatedBoard GetPieceAtSimulatedBoard(Vector2Int index)
@@ -163,6 +172,7 @@ public class ChessBoardManager : MonoBehaviour
     }
 
     // ▼【3D】オブジェクトの座標を調べてGamaManagerへ渡すメソッド
+    // ※InputHandlerでオブジェクトがクリックされて呼ばれる
     public void IdentifyGameObject(GameObject gameObject)
     {
         // クリックされたオブジェクトがマスだった場合
@@ -197,6 +207,10 @@ public class ChessBoardManager : MonoBehaviour
             return;
         }
     }
+
+    //////////////////////////////////////////////////
+    ////////【移動確定後のデータ更新メソッド】////////
+    //////////////////////////////////////////////////
 
     // ▼【データ】駒の移動許可後のデータ層の盤面データ更新メソッド
     public void UpdateBoardState(int fromX, int fromY, int toX, int toY)
