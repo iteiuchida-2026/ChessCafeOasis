@@ -2,8 +2,8 @@ using UnityEngine;
 
 //////// スクリプトの説明：【チェス盤の各マスにどの駒が存在するかデータで記録し管理する】////////
 
-//////// データの流れ②：＜InputManager■オブジェクト情報　→　ChessBoardManager：IdentifyGameObjectメソッドで■オブジェクト座標を取得＞　→　＜GameManager＞ ////////
-//////// データの流れ④：＜InputManagerでクリックした■オブジェクト情報　→　ChessBoardManager：IdentifyGameObjectメソッドで■オブジェクト座標を取得＞　→　＜GameManagerが■受け取る＞ ////////
+//////// データの流れ②：＜InputManager■オブジェクト情報　→　＜ChessBoardManager：IdentifyGameObjectメソッドで■オブジェクト座標を取得＞　→　＜GameManager＞ ////////
+//////// データの流れ③-2：＜GameMangerで駒を選択したと判別＞　→　＜ChessBoardManager：メソッドで■指定座標のマスを光らせる＞　→　＜各TileControllerで処理＞ ////////
 
 ////// ★盤面の値：                                                                              //////
 ////// すべての配列および座標は以下のとおりに統一する。

@@ -1,6 +1,9 @@
 using UnityEngine;
 
 // ◆概要：3Dのチェス盤のマスの座標設定とマスのアクション
+
+//////// データの流れ③-3：＜ChessBoardManager■指定座標のマスを光らせる＞　→　＜各TileControllerで光る処理＞ ////////
+
 public class TileController : MonoBehaviour
 {
     [Header("チェス盤の座標設定")]
