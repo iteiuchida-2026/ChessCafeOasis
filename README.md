@@ -285,6 +285,38 @@ Menu            PlayerName                 |_______|
                                           ├─  [TileController]
                                           └─  [inputHandler]
 ```
+
+- **チェスゲームのデータの流れ**  
+```
+0.ゲーム開始準備段階
+[GameRoomSetUp] プレイヤーの設定を保存する → [GameManager]
+[GameManager] 起動時にチェス盤面の初期化を指示 → [ChessBoardManager] ─ [PieceManager]
+
+1.プレイヤーのオブジェクトへのクリック（タッチ）を取得
+[inputHandler] → [ChessBoardManager]
+
+2.オブジェクトの座標を取得
+[ChessBoardManager] → [GameManager]
+
+3.現在ターンの駒か、駒を選択中か判別
+（駒を選択した場合）[GameManager] → [ChessBoardManager] ─ [TileController] 移動可能マスを光らせる
+
+4.駒の移動が可能か判別を依頼
+（既に駒を選択済みの場合）[GameManager] → [ChessRuleReferee]  
+
+5.可能な場合は移動を依頼
+[GameManager] → [ChessBoardManager] ─ [PieceManager] データ層/OBJ層の2次元配列を更新+オブジェクト配置更新
+
+6.ターン更新処理
+[GameManager]
+
+7.チェックメイト判定
+[ChessRuleReferee]
+
+8.ゲーム終了、各スクリプトへ指示
+[GameManager] → [ChessBoardManager] / [UIManager] / [AudioManager] / [RecordManager]
+
+```
 ---
 
 ## 使用予定のUnity機能 <a id="unity-features"></a>
