@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     // ▼ChessBoardManagerから「駒がクリックされた」と通知を受け取るメソッド
     public void OnBoardClicked(Vector2Int clickedIndex)
     {
-        if (CurrentState != GameState.WhiteTurn && CurrentState != GameState.BlackTurn && CurrentState != GameState.PieceSelected) return;
+        if (CurrentState != GameState.WhiteTurn && CurrentState != GameState.BlackTurn && CurrentState != GameState.PieceSelected) return; // ゲーム開始前の状態の場合は飛ばす
 
         // 既に駒を選択中で今回クリックしたマスへ移動を試みる場合
         if (CurrentState == GameState.PieceSelected)
@@ -90,6 +90,8 @@ public class GameManager : MonoBehaviour
             else
             {
                 // 不正な手なら選択解除、または自色の別の駒なら選択変更
+                if (_selectedPiece.PieceColor == PieceColor.White) ChangeState(GameState.WhiteTurn);
+                else if (_selectedPiece.PieceColor == PieceColor.Black) ChangeState(GameState.BlackTurn);
                 TrySelectPiece(clickedIndex);
             }
         }
@@ -128,11 +130,9 @@ public class GameManager : MonoBehaviour
         // ＜ここにチェックメイト判定を後ほど追加する＞
         if (CurrentState == GameState.PieceSelected || CurrentState == GameState.Moving)
         {
-            GameState nextTurn = (_selectedPos == Vector2Int.zero) ?
-                GameState.BlackTurn : GameState.WhiteTurn; // 簡易判定
+            GameState nextTurn = (_selectedPos == Vector2Int.zero) ? GameState.BlackTurn : GameState.WhiteTurn; // 簡易判定
             // 実際は直前に動かした駒の色と逆にする
-            ChangeState(chessBoardManager.GetPieceAtPieceObjectBoard(_selectedPos)?.PieceColor == // PieceObjectBoardにPieceが入っていないためエラー
-                PieceColor.White ? GameState.BlackTurn : GameState.WhiteTurn);
+            ChangeState(chessBoardManager.GetPieceAtPieceObjectBoard(_selectedPos)?.PieceColor == PieceColor.White ? GameState.BlackTurn : GameState.WhiteTurn);
         }
     }
 }
