@@ -55,7 +55,7 @@
 | **勝利条件** | 相手のキングをチェックメイト（逃げ場のない状態に置く）にする、相手が降参する。 |
 | **失敗条件** | 自分のキングがチェックメイトされる、自分が降参する。 |
 | **引き分け条件** | お互いにチェックメイトにできる駒の組み合わせがない、3回以上同じ盤面となる、ドローの提案を受ける（受けられる）。 |
-| **特徴・工夫点** | |
+| **特徴・工夫点** | 設計段階を可能な限り準備し、それに則り制作を進めた。|
 
 
 ---
@@ -325,16 +325,16 @@ Menu            PlayerName                 |_______|
 
 > 使用予定の機能は `[ ]` を `[x]` に変更してください。
 
-- [x] PlayerController（移動・入力）
+- [] PlayerController（移動・入力）
 - [x] Trigger / Collider
 - [x] UI（Canvas, Button, TextMeshPro）
 - [x] ScriptableObject / JSONデータ
-- [x] アニメーション / DOTween
+- [] アニメーション / DOTween
 - [x] サウンド（BGM・SE）
-- [x] NavMesh / AI
-- [x] Timeline / Cinemachine
-- [x] 物理（Rigidbody / CharacterController 等）
-- [x] その他（Observer /　シングルトン　　　　　　　　　　　　　　　　　　　）
+- [] NavMesh / AI
+- [] Timeline / Cinemachine
+- [] 物理（Rigidbody / CharacterController 等）
+- [x] その他（シングルトン　　　　　　　　　　　　　　　　　　　）
 
 ---
 
@@ -363,10 +363,10 @@ Menu            PlayerName                 |_______|
 |19日目|6/23(火) | オフライン対戦機能実装作業開始| 実装作業| 3| ☑|作業の大幅な遅れあり。|
 |20日目|6/24(水) | オフライン対戦機能実装作業| 実装作業| 3| ☑|作業の大幅な遅れあり。|
 |21日目|6/25(木) | オフライン対戦モード実装までの調整| ■調整テスト| 3| ☑|作業の大幅な遅れあり。|
-|22日目|6/26(金) | デバッグ・バランス最終調整 | ■調整テスト| 3|||
-|23日目|6/27(土) | デバッグ・バランス最終調整、完成版 | ■調整テスト| 3||（休校）|
-|24日目|6/28(日) | README整理、発表資料作成（パワーポイント）、動画化、ビルド | 発表資料準備|- ||（休校）|
-|25日目|6/29(月) | 発表会 | プレゼン＋作品公開|-||6/30(火)も発表会と試遊会|
+|22日目|6/26(金) | デバッグ・バランス最終調整 | ■調整テスト| 3| ☑|作業の大幅な遅れあり。|
+|23日目|6/27(土) | デバッグ・バランス最終調整、完成版 | ■調整テスト| 3| ☑|（休校）|
+|24日目|6/28(日) | README整理、発表資料作成（パワーポイント）、動画化、ビルド | 発表資料準備|- | ☑|（休校）|
+|25日目|6/29(月) | 発表会 | プレゼン＋作品公開|-| ☑|6/30(火)も発表会と試遊会|
 
 ---
 
@@ -391,9 +391,11 @@ Menu            PlayerName                 |_______|
 |6/19(金)| スクリプト実装作業。| 駒周辺のスクリプトの作成中。| 6| 駒生成周りは終わりに近づいてきたが調整中。|
 |6/22(月)| スクリプト実装作業。| 移動に関する部分を作成中。| 5||
 |6/23(火)| スクリプト実装作業。| ルール判定に関する部分を作成中。| 6||
-|6/24|(水) スクリプト実装作業。| ルール判定に関する部分を作成中。| 7||
+|6/24(水)| スクリプト実装作業。| ルール判定に関する部分を作成中。| 7||
 |6/25(木)| スクリプト実装作業、Blenderでチェスセットの修正作業。| 6+2|||
-||||||
+|6/26(金)| スクリプト実装作業。| 駒が移動しない不具合の調査。| 6||
+|6/27(土)| スクリプト修正作業。| 駒が移動しない不具合の修正。| 3||
+|6/28(日)| 発表資料作成。|| 4||
 ||||||
 
 
@@ -403,23 +405,21 @@ Menu            PlayerName                 |_______|
 
 ## ドキュメント <a id="document"></a>
 
-| 資料名| 添付ファイル/URL| 備考|
-|------|------|------|
-| チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)| Gemini|
-| ゲームの流れ|[ゲームの流れ.pdf](https://github.com/user-attachments/files/28824492/default.pdf)| テキストで作成|
-| クラス設計試案|[クラス設計試案.pdf](https://github.com/user-attachments/files/28824497/default.pdf)| テキストで作成|
-| READMEとゲームの流れを読み込んだAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)| Gemini|
-| 2次元配列を用いたChessBoardManagerのコード例|[二次元配列を用いたコード例.pdf](https://github.com/user-attachments/files/29002379/default.pdf)| Gemini|
-| Piece.csの状態管理方法についてのGeminiへの相談回答|[Piece.csに対する状態管理についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29028937/Piece.cs.Gemini.pdf)| Gemini|
-| ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答|[ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080904/ChessBoardManager.cs.3D.Gemini.pdf)|Gemini|
+| 資料名| 添付ファイル/URL| 備考| 抜粋画像|
+|------|------|------|------|
+| チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)| Gemini||
+| ゲームの流れ|[ゲームの流れ.pdf](https://github.com/user-attachments/files/28824492/default.pdf)| テキストで作成||
+| クラス設計試案|[クラス設計試案.pdf](https://github.com/user-attachments/files/28824497/default.pdf)| テキストで作成||
+| READMEとゲームの流れを読み込んだAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)| Gemini||
+| 2次元配列を用いたChessBoardManagerのコード例|[二次元配列を用いたコード例.pdf](https://github.com/user-attachments/files/29002379/default.pdf)| Gemini||
+| Piece.csの状態管理方法についてのGeminiへの相談回答|[Piece.csに対する状態管理についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29028937/Piece.cs.Gemini.pdf)| Gemini||
+| ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答|[ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080904/ChessBoardManager.cs.3D.Gemini.pdf)|Gemini||
 | PieceManager.csのPrefab生成に関するGeminiへ相談した回答|[PieceManager.csのPrefab生成に関するGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080910/PieceManager.cs.Prefab.Gemini.pdf)| Gemini|
-|ChessRuleReferee.csの変数やメソッドの相談のGemini回答|[ChessRuleReferee.csの変数やメソッドの相談のGemini回答.pdf](https://github.com/user-attachments/files/29187269/ChessRuleReferee.cs.Gemini.pdf)| Gemini|
-|Piece.csの移動ベクトル定義に関するGeminiへの相談の回答|[Piece.csの移動ベクトル定義に関するGeminiへの相談の回答.pdf](https://github.com/user-attachments/files/29228494/Piece.cs.Gemini.pdf)| Gemini|
-|GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答|[GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答.pdf](https://github.com/user-attachments/files/29235153/GameManager.cs.Gemini.pdf)| Gemini|
-||||
-||||
-|オフライン対戦モードの計画試案|||
-|UML図|||
+| ChessRuleReferee.csの変数やメソッドのGeminiへ相談した回答||Gemini||
+| Piece.csの移動ベクトル定義に関するGeminiへの相談の回答|[Piece.csの移動ベクトル定義に関するGeminiへの相談の回答.pdf](https://github.com/user-attachments/files/29228494/Piece.cs.Gemini.pdf)| Gemini||
+| GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答|[GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答.pdf](https://github.com/user-attachments/files/29235153/GameManager.cs.Gemini.pdf)| Gemini||
+| CopilotによるChessRuleReferee.csとGameManager.csのfix|[CopilotによるChessRuleReferee.csとGameManager.csのfix相談.pdf](https://github.com/user-attachments/files/29437430/Copilot.ChessRuleReferee.cs.GameManager.cs.fix.pdf)|Gemini||
+|||||
 
 ---
 
