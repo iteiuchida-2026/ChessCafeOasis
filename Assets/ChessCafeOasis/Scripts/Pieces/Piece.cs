@@ -1,55 +1,77 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 //////// スクリプトの説明：【Pieceの基本スクリプト、これを継承して各駒用のスクリプトを作成する】////////
 
-public class Piece : MonoBehaviour
+public abstract class Piece : MonoBehaviour
 {
     // PieceBaseInfoをアタッチして駒の基本情報を設定する
     [Header("駒の基本情報を設定")]
     [SerializeField] private PieceBaseInfo pieceBaseInfo;
 
     // Piece側でPieceBaseInfoの情報を保持するための変数を初期化
-    public string pieceName { get; set; } // 駒の名前
-    public string pieceType { get; set; } // 駒の種類
-    public string pieceColor { get; set; } // 駒の色
-    public int maxMoveSquares { get; set; } // 駒の最大移動可能マス数
-    public string startingSquare { get; set; } // 駒の初期配置マス
+    public PieceType PieceType { get; set; }
+    public PieceColor PieceColor { get; set; }
 
     // 駒の現在位置把握用の設定
-    public string currentSquare { get; set; } // 駒の現在位置
+    public Vector2Int CurrentIndex { get; set; } // 駒の現在位置
 
+    // ルール判定用のフラグ
+    public bool HasMoved { get; private set; } = false; // キャスリング判定用
+    public bool IsPromoted { get; private set; } = false; // ポーンのプロモーション用
+
+    // オブジェクトの現在の状態管理用
+    public enum PieceStatus
+    {
+        Active,
+        Moving, // クリックして移動待機中
+        Destroyed
+    }
+
+    public PieceStatus CurrentStatus { get; private set; } = PieceStatus.Active;
+
+    public abstract List<Vector2Int> GetMoveVectors(); // 派生クラス側で移動ベクトルを定義して返す
+
+    public abstract bool IsRangedPiece(); // 連続して移動できる駒かどうか（ルーク、ビショップ、クイーンはtrue）
 
     // スタート時にPieceBaseInfoから情報を取得しておく
     public virtual void Start()
     {
-        pieceName = pieceBaseInfo.pieceName; // 駒の名前をPieceBaseInfoから取得
-        pieceType = pieceBaseInfo.pieceType.ToString(); // 駒の種類をPieceBaseInfoから取得
-        pieceColor = pieceBaseInfo.pieceColor.ToString(); // 駒の色をPieceBaseInfoから取得
-        maxMoveSquares = pieceBaseInfo.maxMoveSquares; // 駒の最大移動可能マス数をPieceBaseInfoから取得
-        startingSquare = pieceBaseInfo.startingSquare.ToString(); // 駒の初期配置マスをPieceBaseInfoから取得
+        PieceType = pieceBaseInfo.pieceType;
+        PieceColor = pieceBaseInfo.pieceColor;
     }
 
-    private void Update()
+
+
+    // ▼移動メソッド（各駒でOverrideしてカスタマイズして使用する）
+    public virtual void Move(Vector2Int index)
     {
+        // 移動処理はデータ側はChessBoardManagerが対応、オブジェクトはPieceManagerが対応する
 
+        CurrentIndex = index; // 駒の現在位置を移動先のindexで更新
+
+        CurrentStatus = PieceStatus.Active;
+
+        if (HasMoved == false) HasMoved = true;
+        return;
     }
 
-    // 移動処理
-    public virtual void Move()
+    // ▼プロモーションメソッド（ポーンのみOverrideして使用する）
+    public virtual void Promote()
     {
+        IsPromoted = true;
 
+        // 変更処理が入る予定
     }
 
-    // 駒を取る処理
-    public virtual void Take()
-    {
 
-    }
-
-    // 駒が取られる処理（thisObject）
+    // ▼駒が取られるメソッド（各駒でOverrideしてカスタマイズして使用する）
     public virtual void OnTaken()
     {
+        CurrentStatus = PieceStatus.Destroyed;
 
+        // 現時点では削除処理とするが、今後はチェス盤外へ移動する演出としたい
+        gameObject.SetActive(false);
     }
 
 }
