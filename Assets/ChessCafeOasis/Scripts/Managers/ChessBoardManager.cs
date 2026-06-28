@@ -197,19 +197,21 @@ public class ChessBoardManager : MonoBehaviour
             if (pieceOnSquare != null)
             {
                 Debug.Log($"そのマスには{pieceOnSquare.name}が乗っています。");
-                GameManager.Instance.OnBoardClicked(clickedIndex); // GammeManagerへクリックされた座標を渡す
             }
             else
             {
                 Debug.Log("そのマスは空です。");
             }
+
+            // マスがクリックされた場合は、駒がいるかいないかにかかわらず GameManager に通知
+            GameManager.Instance.OnBoardClicked(clickedIndex);
         }
 
         // クリックされたオブジェクトが駒だった場合
         else if (gameObject.TryGetComponent(out Piece clickedPiece))
         {
             clickedIndex = clickedPiece.CurrentIndex;
-            Debug.Log($"その駒は{clickedPiece.name}です。");
+            Debug.Log($"その駒は{clickedPiece.name}です。(位置:{clickedIndex})");
             GameManager.Instance.OnBoardClicked(clickedIndex); // GammeManagerへクリックされた座標を渡す
         }
         else
