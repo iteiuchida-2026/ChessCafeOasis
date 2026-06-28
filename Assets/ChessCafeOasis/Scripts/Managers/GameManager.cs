@@ -141,13 +141,20 @@ public class GameManager : MonoBehaviour
     // ▼ターン終了メソッド
     private void EndTurn()
     {
-        // ターン交代処理
         // ＜ここにチェックメイト判定を後ほど追加する＞
-        if (CurrentState == GameState.PieceSelected || CurrentState == GameState.Moving)
-        {
-            GameState nextTurn = (_selectedPos == Vector2Int.zero) ? GameState.BlackTurn : GameState.WhiteTurn; // 簡易判定
-            // 実際は直前に動かした駒の色と逆にする
-            ChangeState(chessBoardManager.GetPieceAtPieceObjectBoard(_selectedPos)?.PieceColor == PieceColor.White ? GameState.BlackTurn : GameState.WhiteTurn);
+        // ターン交代処理
+        GameState nextTurn = GameState.WhiteTurn; 
+        if (_selectedPiece != null) 
+        { 
+            nextTurn = (_selectedPiece.PieceColor == PieceColor.White) ? GameState.BlackTurn : GameState.WhiteTurn;
         }
+        ChangeState(nextTurn);
+        
+        //if (CurrentState == GameState.PieceSelected || CurrentState == GameState.Moving)
+        //{
+        //    GameState nextTurn = (_selectedPos == Vector2Int.zero) ? GameState.BlackTurn : GameState.WhiteTurn; // 簡易判定
+        //    // 実際は直前に動かした駒の色と逆にする
+        //    ChangeState(chessBoardManager.GetPieceAtPieceObjectBoard(_selectedPos)?.PieceColor == PieceColor.White ? GameState.BlackTurn : GameState.WhiteTurn);
+        //}
     }
 }
