@@ -101,7 +101,8 @@ public class PieceManager : MonoBehaviour
             Debug.Log($"[AnimateMove] movePosition after offset: {movePosition}");
 
             // 移動先に敵駒がある場合のみ OnTaken() を実行
-            if (destinationEnemyPiece != null)
+            // ただし、移動する駒自身ではないことを確認
+            if (destinationEnemyPiece != null && destinationEnemyPiece != piece)
             {
                 Debug.Log($"敵駒 {destinationEnemyPiece.name} を捕獲しました。");
                 destinationEnemyPiece.OnTaken(); // 移動先の敵の駒を削除処理
