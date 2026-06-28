@@ -128,13 +128,21 @@ public class ChessBoardManager : MonoBehaviour
     private void RearrangeTileObjects()
     {
         // serializeしたtileObjectsを2次元配列に変換
+        Debug.Log($"[RearrangeTileObjects] START - tileObjects.Length={tileObjects.Length}");
         for (int y = 0; y < 8; y++)
         {
             for (int x = 0; x < 8; x++)
             {
-                tileBoard[x, y] = tileObjects[y * 8 + x];
+                int index = y * 8 + x;
+                TileController tile = tileObjects[index];
+                tileBoard[x, y] = tile;
+                if (tile == null)
+                {
+                    Debug.LogWarning($"[RearrangeTileObjects] tileObjects[{index}] (for position [{x},{y}]) is NULL!");
+                }
             }
         }
+        Debug.Log($"[RearrangeTileObjects] COMPLETE");
     }
 
     ////////////////////////////////////
@@ -228,7 +236,10 @@ public class ChessBoardManager : MonoBehaviour
     // ▼【3D】駒の移動許可後の3D駒オブジェクト層のデータ更新 + 3Dオブジェクトの移動指示メソッド
     public void MovePiece(Vector2Int from, Vector2Int to)
     {
+        Debug.Log($"[MovePiece] Called: from={from}, to={to}");
+
         Piece piece = pieceObjectBoard[from.x, from.y];
+        Debug.Log($"[MovePiece] piece={piece.name}");
 
         // 配列データの更新
         pieceObjectBoard[to.x, to.y] = piece;
@@ -237,6 +248,7 @@ public class ChessBoardManager : MonoBehaviour
         simulatedBoard[to.x, to.y] = simulatedBoard[from.x, from.y];
         simulatedBoard[from.x, from.y] = ChessPieceType_SimulatedBoard.None;
 
+        Debug.Log($"[MovePiece] Data updated. Calling AnimateMove...");
         // PieceManager.csに3Dオブジェクトの物理的な移動を指示
         pieceManager.AnimateMove(piece, to);
     }
