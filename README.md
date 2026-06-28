@@ -405,21 +405,20 @@ Menu            PlayerName                 |_______|
 
 ## ドキュメント <a id="document"></a>
 
-| 資料名| 添付ファイル/URL| 備考| 抜粋画像|
-|------|------|------|------|
-| チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)| Gemini||
-| ゲームの流れ|[ゲームの流れ.pdf](https://github.com/user-attachments/files/28824492/default.pdf)| テキストで作成||
-| クラス設計試案|[クラス設計試案.pdf](https://github.com/user-attachments/files/28824497/default.pdf)| テキストで作成||
-| READMEとゲームの流れを読み込んだAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)| Gemini||
-| 2次元配列を用いたChessBoardManagerのコード例|[二次元配列を用いたコード例.pdf](https://github.com/user-attachments/files/29002379/default.pdf)| Gemini||
-| Piece.csの状態管理方法についてのGeminiへの相談回答|[Piece.csに対する状態管理についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29028937/Piece.cs.Gemini.pdf)| Gemini||
-| ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答|[ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080904/ChessBoardManager.cs.3D.Gemini.pdf)|Gemini||
+| 資料名| 添付ファイル/URL| 備考|
+|------|------|------|
+| チェスの要素洗い出し資料|[チェスの要素洗い出し資料.pdf](https://github.com/user-attachments/files/28660633/default.pdf)| Gemini|
+| ゲームの流れ|[ゲームの流れ.pdf](https://github.com/user-attachments/files/28824492/default.pdf)| テキストで作成|
+| クラス設計試案|[クラス設計試案.pdf](https://github.com/user-attachments/files/28824497/default.pdf)| テキストで作成|
+| READMEとゲームの流れを読み込んだAIによる改善案|[設計に関するAIの改善案.pdf](https://github.com/user-attachments/files/28824563/AI.pdf)| Gemini|
+| 2次元配列を用いたChessBoardManagerのコード例|[二次元配列を用いたコード例.pdf](https://github.com/user-attachments/files/29002379/default.pdf)| Gemini|
+| Piece.csの状態管理方法についてのGeminiへの相談回答|[Piece.csに対する状態管理についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29028937/Piece.cs.Gemini.pdf)| Gemini|
+| ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答|[ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080904/ChessBoardManager.cs.3D.Gemini.pdf)|Gemini|
 | PieceManager.csのPrefab生成に関するGeminiへ相談した回答|[PieceManager.csのPrefab生成に関するGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080910/PieceManager.cs.Prefab.Gemini.pdf)| Gemini|
-| ChessRuleReferee.csの変数やメソッドのGeminiへ相談した回答||Gemini||
-| Piece.csの移動ベクトル定義に関するGeminiへの相談の回答|[Piece.csの移動ベクトル定義に関するGeminiへの相談の回答.pdf](https://github.com/user-attachments/files/29228494/Piece.cs.Gemini.pdf)| Gemini||
-| GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答|[GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答.pdf](https://github.com/user-attachments/files/29235153/GameManager.cs.Gemini.pdf)| Gemini||
-| CopilotによるChessRuleReferee.csとGameManager.csのfix|[CopilotによるChessRuleReferee.csとGameManager.csのfix相談.pdf](https://github.com/user-attachments/files/29437430/Copilot.ChessRuleReferee.cs.GameManager.cs.fix.pdf)|Gemini||
-|||||
+| ChessRuleReferee.csの変数やメソッドのGeminiへ相談した回答||Gemini|
+| Piece.csの移動ベクトル定義に関するGeminiへの相談の回答|[Piece.csの移動ベクトル定義に関するGeminiへの相談の回答.pdf](https://github.com/user-attachments/files/29228494/Piece.cs.Gemini.pdf)| Gemini|
+| GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答|[GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答.pdf](https://github.com/user-attachments/files/29235153/GameManager.cs.Gemini.pdf)| Gemini|
+| CopilotによるChessRuleReferee.csとGameManager.csのfix|[CopilotによるChessRuleReferee.csとGameManager.csのfix相談.pdf](https://github.com/user-attachments/files/29437430/Copilot.ChessRuleReferee.cs.GameManager.cs.fix.pdf)|Gemini|
 
 ---
 
@@ -441,8 +440,7 @@ Menu            PlayerName                 |_______|
 | 6/19(金)| （ErrorLogなし）駒の初期生成時に駒が浮いて傾く。| 各マスのオブジェクト。| これから修正作業に入るが、原因はおそらくBlender側で座標や傾き修正が出来ていなかったと推測。||
 | 6/23(火)| （ErrorLogなし）メソッドに後から追加した引数を入れる予定がはいる。| ChessRulrReferee.cs| メソッドを変更する| 今までよりは入念に準備してスクリプト実装に臨んだが後から変更はどんどん出てくる。あまり気張って完璧を目指さないのも大事か。|
 | 6/24(水)| （ErrorLogなし）Blender側の修正が必要な状態とはいえ、ここまでテストなしで進めるやり方はいかがなものか。| | 今回、スケジュールの遅れは置いておいて、計画時に駒を動かせる段階をレベル1として設けるべきだった。| 細分化し見える形、動かせる形で進捗テストを平行して次回は進めていきたい。|
-| 6/26(金)| 駒が動かない| GameManager.cs/ChessRuleReferee.cs| コードのリファクタリング：変数から配列へ変更等をCopilotと相談共有して修正| https://github.com/users/KazunoriUchida2026/projects/2/views/1?pane=issue&itemId=205156072&issue=KazunoriUchida2026%7CChessCafeOasis%7C53|
-||||||
+| 6/26(金)| 駒が動かない| GameManager.cs/ChessRuleReferee.cs| コードのリファクタリング：変数から配列へ変更等をCopilotと相談共有して修正||
 ||||||
 
 ---
@@ -477,8 +475,6 @@ Menu            PlayerName                 |_______|
 |ソフトライム|Unityでのシングルトン入門|https://soft-rime.com/post-28282/|
 |ソフトライム|Unity/C# 抽象クラスと override 入門|https://soft-rime.com/post-25912/|
 |LIGHT11|【Unity】【Blender】【解説編】BlenderでFBXをエクスポートしてUnityに取り込む（スケールと回転の問題を解消）|https://light11.hatenadiary.com/entry/2019/01/06/215851|
-||||
-||||
 
 ---
 
@@ -488,10 +484,6 @@ Menu            PlayerName                 |_______|
 |------|------|------|
 |Blender| チェスセットの作成|https://www.blender.jp/|
 |ambientCG| チェスの木目の表現に使用したマテリアル|https://ambientcg.com/|
-||||
-||||
-||||
-||||
 
 ---
 
