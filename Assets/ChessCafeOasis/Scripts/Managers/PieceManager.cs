@@ -82,7 +82,11 @@ public class PieceManager : MonoBehaviour
     // ▼駒のオブジェクトの移動メソッド
     public void AnimateMove(Piece piece, Vector2Int to)
     {
+        Debug.Log($"[AnimateMove] Called: piece={piece.name}, to={to}");
+
         TileController destinationSquare = chessBoardManager.GetPieceAtTileBoard(to.x, to.y); // 移動先のタイルを取得
+
+        Debug.Log($"[AnimateMove] destinationSquare is {(destinationSquare == null ? "null" : "not null")}");
 
         Piece destinationEnemyPiece = chessBoardManager.GetPieceAtPieceObjectBoard(to); // 移動先の敵の駒を取得
 
@@ -90,13 +94,29 @@ public class PieceManager : MonoBehaviour
         {
             Vector3 movePosition = destinationSquare.transform.position; // 移動先の座標を取得
 
+            Debug.Log($"[AnimateMove] movePosition before offset: {movePosition}");
+
             movePosition.y += spawnY_Offset;
 
-            destinationEnemyPiece.OnTaken(); // 移動先の敵の駒を削除処理
+            Debug.Log($"[AnimateMove] movePosition after offset: {movePosition}");
 
+            // 移動先に敵駒がある場合のみ OnTaken() を実行
+            if (destinationEnemyPiece != null)
+            {
+                Debug.Log($"敵駒 {destinationEnemyPiece.name} を捕獲しました。");
+                destinationEnemyPiece.OnTaken(); // 移動先の敵の駒を削除処理
+            }
+
+            Debug.Log($"[AnimateMove] Setting piece.transform.position to {movePosition}");
             piece.transform.position = movePosition;
+            Debug.Log($"[AnimateMove] piece.transform.position is now {piece.transform.position}");
 
             piece.Move(to); // 駒側で現在位置の更新とHasMovedフラグをOnにする
+            Debug.Log($"[AnimateMove] piece.Move({to}) called");
+        }
+        else
+        {
+            Debug.LogError("[AnimateMove] destinationSquare is null! Movement not executed.");
         }
     }
 }

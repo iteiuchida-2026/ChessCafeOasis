@@ -164,10 +164,13 @@ public class ChessBoardManager : MonoBehaviour
     // ▼【タイル】2次元配列からマスを取得するメソッド
     public TileController GetPieceAtTileBoard(int x, int y)
     {
+        Debug.Log($"[GetPieceAtTileBoard] Called with x={x}, y={y}");
         if (x >= 0 && x < 8 && y >= 0 && y < 8)
         {
+            Debug.Log($"[GetPieceAtTileBoard] Returning tileBoard[{x}, {y}]");
             return tileBoard[x, y];
         }
+        Debug.LogWarning($"[GetPieceAtTileBoard] Out of bounds: x={x}, y={y}");
         return null;
     }
 
