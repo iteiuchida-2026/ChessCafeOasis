@@ -1,3 +1,4 @@
+[ChessRuleReferee.csの変数やメソッドの相談のGemini回答.pdf](https://github.com/user-attachments/files/29447694/ChessRuleReferee.cs.Gemini.pdf)
 <img width="1408" height="768" alt="image_d2da9eb0" src="https://github.com/user-attachments/assets/d7bf2450-c03e-4ed5-9b1d-5929c2bdc161" />
 # Unity 個人制作②
 
@@ -396,7 +397,7 @@ Menu            PlayerName                 |_______|
 |6/26(金)| スクリプト実装作業。| 駒が移動しない不具合の調査。| 6||
 |6/27(土)| スクリプト修正作業。| 駒が移動しない不具合の修正。| 3||
 |6/28(日)| 発表資料作成。|| 4||
-|6/29(月)|||発表までの作業時間:約130時間| 制作期間の割に作業時間を確保できなかった|
+|6/29(月)| ビルド、動画化。||発表までの作業時間:約130時間| 制作期間の割に作業時間を確保できなかった|
 
 
 
@@ -415,7 +416,7 @@ Menu            PlayerName                 |_______|
 | Piece.csの状態管理方法についてのGeminiへの相談回答|[Piece.csに対する状態管理についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29028937/Piece.cs.Gemini.pdf)| Gemini|
 | ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答|[ChessBoardManager.csの3Dチェス盤のマスの値についてGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080904/ChessBoardManager.cs.3D.Gemini.pdf)|Gemini|
 | PieceManager.csのPrefab生成に関するGeminiへ相談した回答|[PieceManager.csのPrefab生成に関するGeminiへ相談した回答.pdf](https://github.com/user-attachments/files/29080910/PieceManager.cs.Prefab.Gemini.pdf)| Gemini|
-| ChessRuleReferee.csの変数やメソッドのGeminiへ相談した回答||Gemini|
+| ChessRuleReferee.csの変数やメソッドのGeminiへ相談した回答|[ChessRuleReferee.csの変数やメソッドの相談のGemini回答.pdf](https://github.com/user-attachments/files/29447717/ChessRuleReferee.cs.Gemini.pdf)|Gemini|
 | Piece.csの移動ベクトル定義に関するGeminiへの相談の回答|[Piece.csの移動ベクトル定義に関するGeminiへの相談の回答.pdf](https://github.com/user-attachments/files/29228494/Piece.cs.Gemini.pdf)| Gemini|
 | GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答|[GameManager.cs周辺に関する大まかな枠組みの作成補助と整理をGeminiに相談した回答.pdf](https://github.com/user-attachments/files/29235153/GameManager.cs.Gemini.pdf)| Gemini|
 | CopilotによるChessRuleReferee.csとGameManager.csのfix|[CopilotによるChessRuleReferee.csとGameManager.csのfix相談.pdf](https://github.com/user-attachments/files/29437430/Copilot.ChessRuleReferee.cs.GameManager.cs.fix.pdf)|Gemini|
