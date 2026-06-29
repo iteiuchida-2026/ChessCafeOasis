@@ -3700,7 +3700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fe26e309b6712408203d4d10b6aaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileController
-  boardIndex: {x: 6, y: 1}
+  boardIndex: {x: 6, y: 0}
 --- !u!114 &2774864887279946038
 MonoBehaviour:
   m_ObjectHideFlags: 0
