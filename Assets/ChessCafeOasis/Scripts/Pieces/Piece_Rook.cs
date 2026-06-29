@@ -24,7 +24,7 @@ public class Piece_Rook : Piece
 
     public override void Move(Vector2Int index)
     {
-        // 駒それぞれの移動処理を後ほど追加する
+        base.Move(index);
     }
 
     public override void OnTaken()
