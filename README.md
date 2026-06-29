@@ -1,5 +1,3 @@
-[ChessRuleReferee.csの変数やメソッドの相談のGemini回答.pdf](https://github.com/user-attachments/files/29447694/ChessRuleReferee.cs.Gemini.pdf)
-<img width="1408" height="768" alt="image_d2da9eb0" src="https://github.com/user-attachments/assets/d7bf2450-c03e-4ed5-9b1d-5929c2bdc161" />
 # Unity 個人制作②
 
 **2週間開発プロジェクト — 個人用 README テンプレート**  
