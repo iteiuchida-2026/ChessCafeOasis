@@ -247,6 +247,7 @@ public class ChessBoardManager : MonoBehaviour
         pieceObjectBoard[to.x, to.y] = piece;
         pieceObjectBoard[from.x, from.y] = null;
 
+        // UpdataBoardStateと更新作業が重なる。どちらか削除する。
         simulatedBoard[to.x, to.y] = simulatedBoard[from.x, from.y];
         simulatedBoard[from.x, from.y] = ChessPieceType_SimulatedBoard.None;
 
