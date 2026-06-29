@@ -48,11 +48,17 @@ public abstract class Piece : MonoBehaviour
     {
         // 移動処理はデータ側はChessBoardManagerが対応、オブジェクトはPieceManagerが対応する
 
+        Debug.Log($"[Piece.Move] Called for {name}: CurrentIndex={CurrentIndex} -> {index}");
+
         CurrentIndex = index; // 駒の現在位置を移動先のindexで更新
+
+        Debug.Log($"[Piece.Move] CurrentIndex updated to {CurrentIndex}");
 
         CurrentStatus = PieceStatus.Active;
 
         if (HasMoved == false) HasMoved = true;
+
+        Debug.Log($"[Piece.Move] Move complete for {name}, CurrentIndex is now {CurrentIndex}");
         return;
     }
 
