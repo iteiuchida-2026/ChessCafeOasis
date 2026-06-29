@@ -77,7 +77,9 @@ public abstract class Piece : MonoBehaviour
         CurrentStatus = PieceStatus.Destroyed;
 
         // 現時点では削除処理とするが、今後はチェス盤外へ移動する演出としたい
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        gameObject.GetComponent<MeshRenderer>().enabled = false; // MeshRendererを無効化して見えなくする
+        gameObject.GetComponent<MeshCollider>().enabled = false; // Colliderを無効化して衝突判定をなくす
     }
 
 }
